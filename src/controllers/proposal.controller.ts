@@ -1,0 +1,398 @@
+import fs from 'fs';
+import { AreaService } from '@/services/area.service';
+import { CategoryService } from '@/services/category.controller';
+import { ProposalService } from '@/services/proposal.service';
+import { ProposalStatusService } from '@/services/proposalStatus.service';
+import { UserService } from '@/services/user.service';
+import { Request, Response } from 'express';
+import Validator from 'fastest-validator';
+import path from 'path';
+
+export class ProposalController {
+    static async create(req: Request, res: Response) {
+        const { userId, areaId, categoryId, title, description, customCategory } = req.body;
+
+        const file = req.file;
+
+        const v = new Validator();
+
+        const schema = {
+            userId: { type: "string" },
+            areaId: { type: "string" },
+            categoryId: { type: "string", optional: true },
+            title: { type: "string" },
+            description: { type: "string" },
+            customCategory: { type: "string", optional: true }
+        };
+
+        let finalPath: string | null = null;
+
+        try {
+            const check = v.compile(schema);
+            const validationResponse = check({ userId, areaId, categoryId, title, description, customCategory });
+
+            if (validationResponse !== true) {
+                if (file) fs.unlinkSync(file.path);
+                return res.status(400).json({
+                    status: "error",
+                    message: validationResponse
+                });
+            }
+
+            if (!categoryId && !customCategory) {
+                if (file) fs.unlinkSync(file.path);
+                return res.status(400).json({
+                    status: "error",
+                    message: "Salah satu kategori wajib diisi"
+                });
+            }
+
+            const userExist = await UserService.getOneById(userId);
+            if (!userExist) {
+                if (file) fs.unlinkSync(file.path);
+                return res.status(400).json({
+                    status: "error",
+                    message: "User tidak ditemukan"
+                });
+            }
+
+            const areaExist = await AreaService.getOneById(areaId);
+            if (!areaExist) {
+                if (file) fs.unlinkSync(file.path);
+                return res.status(400).json({
+                    status: "error",
+                    message: "Area tidak ditemukan"
+                });
+            }
+
+            let finalCategoryId = categoryId || null;
+            let finalCustomCategory: string | null = null;
+
+            if (categoryId) {
+                const categoryExist = await CategoryService.getOneById(categoryId);
+                if (!categoryExist) {
+                    if (file) fs.unlinkSync(file.path);
+                    return res.status(400).json({
+                        status: "error",
+                        message: "Kategori tidak ditemukan"
+                    });
+                }
+            }
+
+            if (customCategory) {
+                const categoryByName = await CategoryService.getOneByName(customCategory);
+
+                if (categoryId) {
+                    finalCustomCategory = null;
+                }
+                else if (categoryByName) {
+                    finalCategoryId = categoryByName.id;
+                    finalCustomCategory = null;
+                }
+                else {
+                    finalCategoryId = null;
+                    finalCustomCategory = customCategory;
+                }
+            }
+
+            const data = await ProposalService.create({
+                userId,
+                areaId,
+                categoryId: finalCategoryId,
+                status: "baru",
+                title,
+                description,
+                customCategory: finalCustomCategory
+            });
+
+            await ProposalStatusService.create({ proposalId: data.id, userId, status: "baru" });
+
+            const fileData: any = {};
+
+            if (file) {
+                const finalFolder = path.join(__dirname, "../../uploads/files/proposals", data.id);
+                if (!fs.existsSync(finalFolder)) fs.mkdirSync(finalFolder, { recursive: true });
+
+                finalPath = path.join(finalFolder, file.filename);
+
+                fs.renameSync(file.path, finalPath);
+
+                fileData.fileName = file.originalname;
+                fileData.filePath = finalPath;
+                fileData.fileUrl = `${process.env.APP_URL}/uploads/files/proposals/${data.id}/${file.filename}`;
+            }
+
+            const updatedData = await ProposalService.update(data.id, { fileName: fileData.fileName, filePath: fileData.filePath, fileUrl: fileData.fileUrl });
+
+            return res.status(201).json({
+                status: "success",
+                message: "Proposal berhasil dibuat",
+                data: updatedData
+            });
+
+        } catch (err) {
+
+            if (finalPath && fs.existsSync(finalPath)) {
+                fs.unlinkSync(finalPath);
+            }
+
+            if (file && (!finalPath || !fs.existsSync(finalPath))) {
+                fs.unlinkSync(file.path);
+            }
+
+            console.error(err);
+            return res.status(500).json({ error: "Gagal membuat proposal" });
+        }
+    }
+
+    static async getAll(req: Request, res: Response) {
+
+        const { search, page, limit } = req.query as { search?: string, page?: number, limit?: number };
+
+        try {
+
+            const data = await ProposalService.getAll(search, Number(page), Number(limit));
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Data proposal berhasil didapatkan',
+                data: data.data,
+                totalData: data.totalData,
+                totalPage: data.totalPages
+            });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: 'Gagal mendapatkan data proposal' });
+        }
+    }
+
+    static async getOneById(req: Request, res: Response) {
+
+        const { id } = req.params;
+
+        try {
+
+            const data = await ProposalService.getOneById(id);
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Data proposal berhasil didapatkan',
+                data
+            });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: 'Gagal mendapatkan data proposal' });
+        }
+    }
+
+    static async update(req: Request, res: Response) {
+        
+        const { id } = req.params;
+
+        const { userId, areaId, categoryId, title, description, customCategory } = req.body;
+
+        const file = req.file;
+
+        let finalPath: string | null = null;
+
+        const v = new Validator();
+
+        const schema = {
+            userId: { type: "string" },
+            areaId: { type: "string" },
+            categoryId: { type: "string", optional: true },
+            title: { type: "string" },
+            description: { type: "string" },
+            customCategory: { type: "string", optional: true }
+        };
+
+        try {
+            const check = v.compile(schema);
+            const validationResponse = check({ userId, areaId, categoryId, title, description, customCategory });
+
+            if (validationResponse !== true) {
+                if (file) fs.unlinkSync(file.path);
+                return res.status(400).json({
+                    status: "error",
+                    message: validationResponse
+                });
+            }
+
+            if (!categoryId && !customCategory) {
+                if (file) fs.unlinkSync(file.path);
+                return res.status(400).json({
+                    status: "error",
+                    message: "Salah satu kategori wajib diisi"
+                });
+            }
+
+            const proposalExist = await ProposalService.getOneById(id);
+            if (!proposalExist) {
+                if (file) fs.unlinkSync(file.path);
+                return res.status(404).json({
+                    status: "error",
+                    message: "Proposal tidak ditemukan"
+                });
+            }
+
+            if (proposalExist.status !== "baru") {
+                if (file) fs.unlinkSync(file.path);
+                return res.status(400).json({
+                    status: "error",
+                    message: "Proposal sudah diproses"
+                });
+            }
+
+            const userExist = await UserService.getOneById(userId);
+            if (!userExist) {
+                if (file) fs.unlinkSync(file.path);
+                return res.status(400).json({
+                    status: "error",
+                    message: "User tidak ditemukan"
+                });
+            }
+
+            const areaExist = await AreaService.getOneById(areaId);
+            if (!areaExist) {
+                if (file) fs.unlinkSync(file.path);
+                return res.status(400).json({
+                    status: "error",
+                    message: "Area tidak ditemukan"
+                });
+            }
+
+            let finalCategoryId = categoryId || null;
+            let finalCustomCategory: string | null = null;
+
+            if (categoryId) {
+                const categoryExist = await CategoryService.getOneById(categoryId);
+                if (!categoryExist) {
+                    if (file) fs.unlinkSync(file.path);
+                    return res.status(400).json({
+                        status: "error",
+                        message: "Kategori tidak ditemukan"
+                    });
+                }
+            }
+
+            if (customCategory) {
+                const categoryByName = await CategoryService.getOneByName(customCategory);
+
+                if (categoryId) {
+                    finalCustomCategory = null;
+                }
+                else if (categoryByName) {
+                    finalCategoryId = categoryByName.id;
+                    finalCustomCategory = null;
+                }
+                else {
+                    finalCategoryId = null;
+                    finalCustomCategory = customCategory;
+                }
+            }
+
+            const fileData: any = {};
+
+            if (file) {
+
+                const oldFilePath = proposalExist.filePath;
+
+                if (oldFilePath && fs.existsSync(oldFilePath)) {
+                    try {
+                        fs.unlinkSync(oldFilePath);
+                        console.log("🗑️ File lama dihapus:", oldFilePath);
+                    } catch (err) {
+                        console.error("❌ Gagal menghapus file lama:", err);
+                    }
+                }
+
+                const finalFolder = path.join(__dirname, "../../uploads/files/proposals", proposalExist.id);
+                if (!fs.existsSync(finalFolder)) fs.mkdirSync(finalFolder, { recursive: true });
+
+                finalPath = path.join(finalFolder, file.filename);
+
+                fs.renameSync(file.path, finalPath);
+
+                fileData.fileName = file.originalname;
+                fileData.filePath = finalPath;
+                fileData.fileUrl = `${process.env.APP_URL}/uploads/files/proposals/${proposalExist.id}/${file.filename}`;
+            }
+
+            const data = await ProposalService.update(id, {
+                userId,
+                areaId,
+                categoryId: finalCategoryId,
+                title,
+                description,
+                customCategory: finalCustomCategory,
+                fileName: fileData.fileName,
+                filePath: fileData.filePath,
+                fileUrl: fileData.fileUrl
+            });
+
+            return res.status(200).json({
+                status: "success",
+                message: "Data proposal berhasil diupdate",
+                data
+            });
+
+        } catch (error) {
+
+            if (finalPath && fs.existsSync(finalPath)) {
+                fs.unlinkSync(finalPath);
+            }
+
+            if (file && (!finalPath || !fs.existsSync(finalPath))) {
+                fs.unlinkSync(file.path);
+            }
+
+            console.error(error);
+            return res.status(500).json({ error: "Gagal update data proposal" });
+        }
+    }
+
+    static async delete(req: Request, res: Response) {
+        const { id } = req.params;
+
+        try {
+
+            const proposalExist = await ProposalService.getOneById(id);
+
+            if (!proposalExist) {
+                return res.status(404).json({
+                    status: "error",
+                    message: "Proposal tidak ditemukan"
+                });
+            }
+
+            if (proposalExist.filePath && fs.existsSync(proposalExist.filePath)) {
+                fs.unlinkSync(proposalExist.filePath);
+
+                const parentFolder = path.dirname(proposalExist.filePath);
+                try {
+                    if (fs.existsSync(parentFolder)) {
+                        fs.rmSync(parentFolder, { recursive: true, force: true });
+                    }
+                } catch (err) {
+                    console.error("Gagal menghapus folder:", err);
+                }
+            }
+
+            await ProposalStatusService.deleteByProposalId(id);
+
+            const data = await ProposalService.delete(id);
+
+            return res.status(200).json({
+                status: "success",
+                message: "Data proposal berhasil dihapus",
+                data
+            });
+
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: "Gagal hapus data proposal" });
+        }
+    }
+}

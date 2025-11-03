@@ -8,6 +8,7 @@ import { areaRouter } from './area.routes';
 import { fractionRouter } from './fraction.routes';
 import { userAccessRouter } from './userAccess.routes';
 import { categoryRouter } from './category.routes';
+import { proposalRouter } from './proposal.routes';
 
 export const router = Router();
 router.use('/users', userRouter);
@@ -19,3 +20,4 @@ router.use('/areas', areaRouter);
 router.use('/fractions', fractionRouter);
 router.use('/userAccesses', userAccessRouter);
 router.use('/categories', categoryRouter);
+router.use('/proposals', proposalRouter);

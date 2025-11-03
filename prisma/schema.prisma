@@ -16,82 +16,82 @@ datasource db {
 }
 
 model Role {
-  id          String           @id @default(uuid())
-  name        String           @unique
-  description String?
-  users       User[]
+  id              String           @id @default(uuid())
+  name            String           @unique
+  description     String?
+  users           User[]
   rolePermissions RolePermission[]
 
   proposalAssignments ProposalAssignment[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model Permission {
-  id          String           @id @default(uuid())
-  name        String           @unique
+  id          String  @id @default(uuid())
+  name        String  @unique
   group       String
   description String?
 
   rolePermissions RolePermission[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model RolePermission {
-  id            String       @id @default(uuid())
-  roleId        String
-  permissionId  String
+  id           String @id @default(uuid())
+  roleId       String
+  permissionId String
 
-  role        Role        @relation(fields: [roleId], references: [id])
-  permission  Permission  @relation(fields: [permissionId], references: [id])
+  role       Role       @relation(fields: [roleId], references: [id])
+  permission Permission @relation(fields: [permissionId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model User {
-  id            String           @id @default(uuid())
-  roleId        String?
-  email         String           @unique
-  password      String
-  lastActiveAt  DateTime?
+  id           String    @id @default(uuid())
+  roleId       String?
+  email        String    @unique
+  password     String
+  lastActiveAt DateTime?
 
-  role          Role?            @relation(fields: [roleId], references: [id])
-  profile       UserProfile?
-  accesses      UserAccess[]
-  proposals     Proposal[]
-  proposalVotes ProposalVote[]
-  proposalStatuses ProposalStatus[]
-  proposalDiscussions ProposalDiscussion[]
+  role                    Role?                    @relation(fields: [roleId], references: [id])
+  profile                 UserProfile?
+  accesses                UserAccess[]
+  proposals               Proposal[]
+  proposalVotes           ProposalVote[]
+  proposalStatuses        ProposalStatus[]
+  proposalDiscussions     ProposalDiscussion[]
   proposalDiscussionVotes ProposalDiscussionVote[]
-  notifications Notification[]
+  notifications           Notification[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model UserProfile {
-  id           String    @id @default(uuid())
-  userId       String    @unique
-  name         String
-  age          Int?
-  gender       Gender?
-  phoneNumber  String?
-  imageName    String?
-  imagePath    String?
-  imageUrl     String?
+  id          String  @id @default(uuid())
+  userId      String  @unique
+  name        String
+  age         Int?
+  gender      Gender?
+  phoneNumber String?
+  imageName   String?
+  imagePath   String?
+  imageUrl    String?
 
-  user         User      @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
@@ -101,80 +101,83 @@ enum Gender {
 }
 
 model Area {
-  id          String     @id @default(uuid())
-  name        String     @unique
+  id   String @id @default(uuid())
+  name String @unique
 
   userAccesses UserAccess[]
   proposals    Proposal[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model Fraction {
-  id          String     @id @default(uuid())
-  name        String     @unique
-  imageName   String?
-  imagePath   String?
-  imageUrl    String?
+  id        String  @id @default(uuid())
+  name      String  @unique
+  imageName String?
+  imagePath String?
+  imageUrl  String?
 
   userAccesses UserAccess[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model UserAccess {
-  id          String     @id @default(uuid())
-  userId      String     @unique
-  areaId      String
-  fractionId  String
-  public      Boolean
+  id         String  @id @default(uuid())
+  userId     String  @unique
+  areaId     String
+  fractionId String
+  public     Boolean
 
-  user      User     @relation(fields: [userId], references: [id])
-  area      Area     @relation(fields: [areaId], references: [id])
-  fraction  Fraction @relation(fields: [fractionId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+  area     Area     @relation(fields: [areaId], references: [id])
+  fraction Fraction @relation(fields: [fractionId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model Category {
-  id        String     @id @default(uuid())
-  name      String     @unique
+  id   String @id @default(uuid())
+  name String @unique
 
   proposals Proposal[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model Proposal {
-  id              String     @id @default(uuid())
-  userId          String
-  areaId          String
-  categoryId      String?
-  status          ProposalStatusEnum
-  title           String
-  description     String
-  customCategory  String?
+  id             String             @id @default(uuid())
+  userId         String
+  areaId         String
+  categoryId     String?
+  status         ProposalStatusEnum
+  title          String
+  description    String
+  customCategory String?
+  fileName       String?
+  filePath       String?
+  fileUrl        String?
 
-  user        User       @relation(fields: [userId], references: [id])
-  area        Area       @relation(fields: [areaId], references: [id])
-  category    Category?  @relation(fields: [categoryId], references: [id])
+  user     User      @relation(fields: [userId], references: [id])
+  area     Area      @relation(fields: [areaId], references: [id])
+  category Category? @relation(fields: [categoryId], references: [id])
 
-  votes       ProposalVote[]
-  statuses    ProposalStatus[]
-  assignments ProposalAssignment[]
-  discussions ProposalDiscussion[]
+  votes         ProposalVote[]
+  statuses      ProposalStatus[]
+  assignments   ProposalAssignment[]
+  discussions   ProposalDiscussion[]
   notifications Notification[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
@@ -185,64 +188,64 @@ enum ProposalStatusEnum {
 }
 
 model ProposalVote {
-  id          String     @id @default(uuid())
-  userId      String
-  proposalId  String
-  agree       Boolean
+  id         String  @id @default(uuid())
+  userId     String
+  proposalId String
+  agree      Boolean
 
-  user      User     @relation(fields: [userId], references: [id])
-  proposal  Proposal @relation(fields: [proposalId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+  proposal Proposal @relation(fields: [proposalId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model ProposalStatus {
-  id          String     @id @default(uuid())
-  userId      String
-  proposalId  String
-  status      ProposalStatusEnum
-  note        String?
+  id         String             @id @default(uuid())
+  userId     String
+  proposalId String
+  status     ProposalStatusEnum
+  note       String?
 
-  user      User     @relation(fields: [userId], references: [id])
-  proposal  Proposal @relation(fields: [proposalId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+  proposal Proposal @relation(fields: [proposalId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model ProposalAssignment {
-  id          String     @id @default(uuid())
-  proposalId  String
-  roleId      String
+  id         String @id @default(uuid())
+  proposalId String
+  roleId     String
 
-  proposal  Proposal @relation(fields: [proposalId], references: [id])
-  role      Role     @relation(fields: [roleId], references: [id])
+  proposal Proposal @relation(fields: [proposalId], references: [id])
+  role     Role     @relation(fields: [roleId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model ProposalDiscussion {
-  id          String     @id @default(uuid())
-  proposalId  String
-  userId      String
-  message     String
+  id         String @id @default(uuid())
+  proposalId String
+  userId     String
+  message    String
 
-  proposal  Proposal @relation(fields: [proposalId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
-  votes     ProposalDiscussionVote[]
+  proposal Proposal                 @relation(fields: [proposalId], references: [id])
+  user     User                     @relation(fields: [userId], references: [id])
+  votes    ProposalDiscussionVote[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model ProposalDiscussionVote {
-  id                   String     @id @default(uuid())
+  id                   String  @id @default(uuid())
   proposalDiscussionId String
   userId               String
   agree                Boolean
@@ -250,21 +253,21 @@ model ProposalDiscussionVote {
   discussion ProposalDiscussion @relation(fields: [proposalDiscussionId], references: [id])
   user       User               @relation(fields: [userId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model Notification {
-  id          String     @id @default(uuid())
-  userId      String
-  proposalId  String
-  status      ProposalStatusEnum
+  id         String             @id @default(uuid())
+  userId     String
+  proposalId String
+  status     ProposalStatusEnum
 
-  user      User     @relation(fields: [userId], references: [id])
-  proposal  Proposal @relation(fields: [proposalId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+  proposal Proposal @relation(fields: [proposalId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
