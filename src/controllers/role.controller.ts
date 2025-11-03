@@ -13,7 +13,7 @@ export class RoleController {
 
             const schema = {
                 name: { type: "string" },
-                description: { type: "string", nullable: true }
+                description: { type: "string", optional: true }
             }
 
             const check = v.compile(schema);
@@ -38,7 +38,7 @@ export class RoleController {
 
             const data = await RoleService.create({ name, description });
 
-            res.status(200).json({
+            res.status(201).json({
                 status: 'success',
                 message: 'Data role berhasil ditambahkan',
                 data
@@ -59,7 +59,7 @@ export class RoleController {
 
         try {
 
-            const data = await RoleService.getAll(search, page, limit);
+            const data = await RoleService.getAll(search, Number(page), Number(limit));
 
             res.status(200).json({
                 status: 'success',
@@ -110,7 +110,7 @@ export class RoleController {
 
             const schema = {
                 name: { type: "string" },
-                description: { type: "string", nullable: true }
+                description: { type: "string", optional: true }
             }
 
             const check = v.compile(schema);
