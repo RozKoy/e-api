@@ -1,11 +1,13 @@
+import { PermissionService } from '@/services/permission.service';
 import { RoleService } from '@/services/role.service';
+import { RolePermissionService } from '@/services/rolePermission.service';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 
 export class RoleController {
     static async create(req: Request, res: Response) {
 
-        const { name, description } = req.body;
+        const { name, description, permissionIds } = req.body;
 
         try {
 
@@ -13,12 +15,22 @@ export class RoleController {
 
             const schema = {
                 name: { type: "string" },
-                description: { type: "string", optional: true }
+                description: { type: "string", optional: true },
+                permissionIds: {
+                    type: "array", 
+                    items: {
+                        type: "object",
+                        props: {
+                            id: { type: "string", empty: false }
+                        }
+                    }, 
+                    optional: true
+                }
             }
 
             const check = v.compile(schema);
 
-            const validationResponse = check({ name, description });
+            const validationResponse = check({ name, description, permissionIds });
 
             if (validationResponse !== true) {
                 return res.status(400).json({
@@ -37,6 +49,29 @@ export class RoleController {
             }
 
             const data = await RoleService.create({ name, description });
+
+            let permissions = [];
+
+            for (const permissionId of permissionIds) {
+
+                const permission = await PermissionService.getOneById(permissionId.id);
+
+                if (!permission) {
+                    return res.status(400).json({
+                        status: 'error',
+                        message: `Permission ${permissionId.id} tidak ditemukan`
+                    });
+                }
+
+                permissions.push({
+                    permissionId: permission.id,
+                    roleId : data.id
+                });
+            }
+
+            if (permissions.length > 0) {
+                await RoleService.assignMany(permissions);
+            }
 
             res.status(201).json({
                 status: 'success',
@@ -102,20 +137,30 @@ export class RoleController {
     static async update(req: Request, res: Response) {
 
         const { id } = req.params;
-        const { name, description } = req.body;
+        const { name, description, permissionIds } = req.body;
 
         try {
 
             const v = new Validator();
 
             const schema = {
-                name: { type: "string" },
-                description: { type: "string", optional: true }
+                name: { type: "string", optional: true },
+                description: { type: "string", optional: true },
+                permissionIds: {
+                    type: "array", 
+                    items: {
+                        type: "object",
+                        props: {
+                            id: { type: "string", empty: false }
+                        }
+                    }, 
+                    optional: true
+                }
             }
 
             const check = v.compile(schema);
 
-            const validationResponse = check({ name, description });
+            const validationResponse = check({ name, description, permissionIds });
 
             if (validationResponse !== true) {
                 return res.status(400).json({
@@ -143,6 +188,30 @@ export class RoleController {
             }
 
             const data = await RoleService.update(id, { name, description });
+
+            let permissions = [];
+
+            for (const permissionId of permissionIds) {
+
+                const permission = await PermissionService.getOneById(permissionId.id);
+
+                if (!permission) {
+                    return res.status(400).json({
+                        status: 'error',
+                        message: `Permission ${permissionId.id} tidak ditemukan`
+                    });
+                }
+
+                permissions.push({
+                    permissionId: permission.id,
+                    roleId : data.id
+                });
+            }
+
+            if(permissions.length > 0) {
+                await RolePermissionService.deleteByRoleId(data.id);
+                await RoleService.assignMany(permissions);
+            }
 
             res.status(200).json({
                 status: 'success',

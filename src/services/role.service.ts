@@ -18,6 +18,7 @@ export class RoleService {
                     id: true,
                     name: true,
                     description: true,
+                    rolePermissions: true,
                     createdAt: true,
                     updatedAt: true,
                 },
@@ -45,6 +46,7 @@ export class RoleService {
                     id: true,
                     name: true,
                     description: true,
+                    rolePermissions: true,
                     createdAt: true,
                     updatedAt: true,
                 },
@@ -81,5 +83,9 @@ export class RoleService {
 
     static async delete(id: string) {
         return await prisma.role.delete({ where: { id } });
+    }
+
+    static async assignMany(data: Prisma.RolePermissionUncheckedCreateInput[]) {
+        return await prisma.rolePermission.createMany({ data }); 
     }
 }
