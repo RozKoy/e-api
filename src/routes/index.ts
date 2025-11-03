@@ -7,6 +7,7 @@ import { userProfileRoutes } from './userProfile.routes';
 import { areaRouter } from './area.routes';
 import { fractionRouter } from './fraction.routes';
 import { userAccessRouter } from './userAccess.routes';
+import { categoryRouter } from './category.routes';
 
 export const router = Router();
 router.use('/users', userRouter);
@@ -17,3 +18,4 @@ router.use('/userProfiles', userProfileRoutes);
 router.use('/areas', areaRouter);
 router.use('/fractions', fractionRouter);
 router.use('/userAccesses', userAccessRouter);
+router.use('/categories', categoryRouter);
