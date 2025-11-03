@@ -76,7 +76,7 @@ export class UserProfileController {
             if (image) {
                 newProfileData.imageName = image.originalname;
                 newProfileData.imagePath = image.path;
-                newProfileData.imageUrl = `${process.env.APP_URL}/uploads/${image.filename}`;
+                newProfileData.imageUrl = `${process.env.APP_URL}/uploads/images/${userId}/${image.filename}`;
             }
 
             const data = await UserProfileService.create(newProfileData);
@@ -166,7 +166,7 @@ export class UserProfileController {
 
                 newProfileData.imageName = image.originalname;
                 newProfileData.imagePath = image.path;
-                newProfileData.imageUrl = `${process.env.APP_URL}/uploads/${image.filename}`;
+                newProfileData.imageUrl = `${process.env.APP_URL}/uploads/images/${userProfileExist.userId}/${image.filename}`;
             }
 
             const data = await UserProfileService.update(id, newProfileData);
