@@ -1,0 +1,193 @@
+import { RoleService } from '@/services/role.service';
+import { Request, Response } from 'express';
+import Validator from 'fastest-validator';
+
+export class RoleController {
+    static async create(req: Request, res: Response) {
+
+        const { name, description } = req.body;
+
+        try {
+
+            const v = new Validator();
+
+            const schema = {
+                name: { type: "string" },
+                description: { type: "string", nullable: true }
+            }
+
+            const check = v.compile(schema);
+
+            const validationResponse = check({ name, description });
+
+            if (validationResponse !== true) {
+                return res.status(400).json({
+                    status: 'error',
+                    message: validationResponse
+                });
+            }
+
+            const roleExist = await RoleService.getOneByName(name);
+
+            if (roleExist) {
+                return res.status(400).json({
+                    status: 'error',
+                    message: 'Role sudah terdaftar'
+                });
+            }
+
+            const data = await RoleService.create({ name, description });
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Data role berhasil ditambahkan',
+                data
+            });
+
+        } catch (error) {
+
+            console.log(error);
+
+            return res.status(500).json({ error: 'Gagal menambahkan data role' });
+
+        }
+    }
+
+    static async getAll(req: Request, res: Response) {
+
+        const { search, page, limit } = req.query as { search?: string, page?: number, limit?: number };
+
+        try {
+
+            const data = await RoleService.getAll(search, page, limit);
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Data role berhasil didapatkan',
+                data
+            });
+
+        } catch (error) {
+
+            console.log(error);
+
+            return res.status(500).json({ error: 'Gagal mendapatkan data role' });
+
+        }
+    }
+
+    static async getOneById(req: Request, res: Response) {
+
+        const { id } = req.params;
+
+        try {
+
+            const data = await RoleService.getOneById(id);
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Data role berhasil didapatkan',
+                data
+            });
+
+        } catch (error) {
+
+            console.log(error);
+
+            return res.status(500).json({ error: 'Gagal mendapatkan data role' });
+
+        }
+    }
+
+    static async update(req: Request, res: Response) {
+
+        const { id } = req.params;
+        const { name, description } = req.body;
+
+        try {
+
+            const v = new Validator();
+
+            const schema = {
+                name: { type: "string" },
+                description: { type: "string", nullable: true }
+            }
+
+            const check = v.compile(schema);
+
+            const validationResponse = check({ name, description });
+
+            if (validationResponse !== true) {
+                return res.status(400).json({
+                    status: 'error',
+                    message: validationResponse
+                });
+            }
+
+            const roleExist = await RoleService.getOneById(id);
+
+            if (!roleExist) {
+                return res.status(400).json({
+                    status: 'error',
+                    message: 'Role tidak ditemukan'
+                });
+            }
+
+            const roleNameExist = await RoleService.getOneByName(name, id);
+
+            if (roleNameExist) {
+                return res.status(400).json({
+                    status: 'error',
+                    message: 'Role sudah terdaftar'
+                });
+            }
+
+            const data = await RoleService.update(id, { name, description });
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Data role berhasil diupdate',
+                data
+            });
+
+        } catch (error) {
+
+            console.log(error);
+
+            return res.status(500).json({ error: 'Gagal update data role' });
+
+        }
+    }
+
+    static async delete(req: Request, res: Response) {
+
+        const { id } = req.params;
+
+        try {
+
+            const roleExist = await RoleService.getOneById(id);
+
+            if (!roleExist) {
+                return res.status(400).json({
+                    status: 'error',
+                    message: 'Role tidak ditemukan'
+                });
+            }
+
+            const data = await RoleService.delete(id);
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Data role berhasil dihapus',
+                data
+            });
+
+        } catch (error) {
+
+            console.log(error);
+
+            return res.status(500).json({ error: 'Gagal hapus data role' });
+
+        }
+    }
+}
