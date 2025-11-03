@@ -1,6 +1,8 @@
+import { RoleService } from '@/services/role.service';
 import { UserService } from '@/services/user.service';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
+import bcrypt from 'bcrypt';
 
 export class UserController {
   static async create(req: Request, res: Response) {
@@ -37,7 +39,18 @@ export class UserController {
         });
       }
 
-      const data = await UserService.create({ email, password, roleId });
+      const roleExist = await RoleService.getOneById(roleId);
+
+      if (!roleExist) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Role tidak ditemukan'
+        });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const data = await UserService.create({ email, password: hashedPassword, roleId });
 
       const { password: _pass, ...user } = data;
 
@@ -62,7 +75,7 @@ export class UserController {
 
     try {
 
-      const data = await UserService.getAll(search, page, limit);
+      const data = await UserService.getAll(search, Number(page), Number(limit));
 
       res.status(200).json({
         status: 'success',
@@ -107,6 +120,16 @@ export class UserController {
     const { id } = req.params;
     const { email, password, roleId } = req.body;
 
+    console.log(req.body);
+    console.log(id);
+
+    if (!id) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Id wajib diisi'
+      });
+    }
+
     try {
 
       const userExist = await UserService.getOneById(id);
@@ -125,6 +148,19 @@ export class UserController {
           status: 'error',
           message: 'Email sudah terdaftar'
         });
+      }
+
+      if (roleId) {
+
+        const roleExist = await RoleService.getOneById(roleId);
+
+        if (!roleExist) {
+          return res.status(400).json({
+            status: 'error',
+            message: 'Role tidak ditemukan'
+          });
+        }
+
       }
 
       const data = await UserService.update(id, { email, password, roleId });

@@ -19,6 +19,7 @@ export class UserService {
                     id: true,
                     email: true,
                     roleId: true,
+                    role: true,
                     createdAt: true,
                     updatedAt: true,
                 },
@@ -46,6 +47,7 @@ export class UserService {
                     id: true,
                     email: true,
                     roleId: true,
+                    role: true,
                     createdAt: true,
                     updatedAt: true,
                 },
@@ -69,7 +71,7 @@ export class UserService {
     }
 
     static async getOneById(id: string) {
-        return await prisma.user.findUnique({ where: { id } });
+        return await prisma.user.findUnique({ where: { id }, select: { id: true, email: true, roleId: true, role: true, createdAt: true, updatedAt: true } });
     }
     
     static async update(id: string, data: Prisma.UserUncheckedUpdateInput) {
