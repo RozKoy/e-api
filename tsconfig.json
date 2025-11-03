@@ -23,6 +23,7 @@
       "@controllers/*": ["src/controllers/*"],
       "@routes/*": ["src/routes/*"],
       "@middlewares/*": ["src/middlewares/*"],
+      "@libs/*": ["src/libs/*"],
       "@utils/*": ["src/utils/*"]
     }
   },
