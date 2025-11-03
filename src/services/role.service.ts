@@ -68,7 +68,7 @@ export class RoleService {
     }
 
     static async getOneById(id: string) {
-        return await prisma.role.findUnique({ where: { id } });
+        return await prisma.role.findUnique({ where: { id }, include: { rolePermissions: true } });
     }
 
     static async getOneByName(name: string, id?: string) {
