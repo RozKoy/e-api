@@ -5,6 +5,7 @@ import { roleRouter } from './role.routes';
 import { rolePermissionRouter } from './rolePermission.routes';
 import { userProfileRoutes } from './userProfile.routes';
 import { areaRouter } from './area.routes';
+import { fractionRouter } from './fraction.routes';
 
 export const router = Router();
 router.use('/users', userRouter);
@@ -13,3 +14,4 @@ router.use('/roles', roleRouter);
 router.use('/rolePermissions', rolePermissionRouter);
 router.use('/userProfiles', userProfileRoutes);
 router.use('/areas', areaRouter);
+router.use('/fractions', fractionRouter);

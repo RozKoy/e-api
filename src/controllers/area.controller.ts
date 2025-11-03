@@ -144,6 +144,15 @@ export class AreaController {
                 });
             }
 
+            const areaNameExist = await AreaService.getOneByName(name);
+
+            if (areaNameExist) {
+                return res.status(400).json({
+                    status: 'error',
+                    message: 'Area sudah terdaftar'
+                });
+            }
+
             const data = await AreaService.update(id, { name });
 
             res.status(200).json({

@@ -4,6 +4,7 @@ import { Gender } from '@prisma/client';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 import fs from "fs";
+import path from 'path';
 
 export class UserProfileController {
     static async create(req: Request, res: Response) {
@@ -21,7 +22,10 @@ export class UserProfileController {
 
         const image = req.file;
 
+        let finalPath: string | null = null;
+
         if (!userId) {
+            if (image) fs.unlinkSync(image.path);
             return res.status(400).json({
                 status: 'error',
                 message: 'userId wajib diisi'
@@ -44,12 +48,14 @@ export class UserProfileController {
             const validationResponse = check({ name, parsedAge, gender, phoneNumber });
 
             if (validationResponse !== true) {
+                if (image) fs.unlinkSync(image.path);
                 return res.status(400).json({ error: validationResponse });
             }
 
             const userExist = await UserService.getOneById(userId);
 
             if (!userExist) {
+                if (image) fs.unlinkSync(image.path);
                 return res.status(400).json({
                     status: 'error',
                     message: 'User tidak ditemukan'
@@ -59,6 +65,7 @@ export class UserProfileController {
             const userProfileExist = await UserProfileService.getOneByUserId(userId);
 
             if (userProfileExist) {
+                if (image) fs.unlinkSync(image.path);
                 return res.status(400).json({
                     status: 'error',
                     message: 'User profile sudah terdaftar'
@@ -74,8 +81,15 @@ export class UserProfileController {
             };
 
             if (image) {
+                const finalFolder = path.join(__dirname, "../../uploads/images/profiles", userId);
+                if (!fs.existsSync(finalFolder)) fs.mkdirSync(finalFolder, { recursive: true });
+
+                finalPath = path.join(finalFolder, image.filename);
+
+                fs.renameSync(image.path, finalPath);
+
                 newProfileData.imageName = image.originalname;
-                newProfileData.imagePath = image.path;
+                newProfileData.imagePath = finalPath;
                 newProfileData.imageUrl = `${process.env.APP_URL}/uploads/images/profiles/${userId}/${image.filename}`;
             }
 
@@ -88,6 +102,15 @@ export class UserProfileController {
             });
 
         } catch (error) {
+
+            if (finalPath && fs.existsSync(finalPath)) {
+                fs.unlinkSync(finalPath);
+            }
+    
+            if (image && (!finalPath || !fs.existsSync(finalPath))) {
+                fs.unlinkSync(image.path);
+            }
+
             console.log(error);
             return res.status(500).json({ error: 'Gagal mendapatkan data user profile' });
         }
@@ -106,6 +129,8 @@ export class UserProfileController {
 
         const image = req.file;
 
+        let finalPath: string | null = null;
+
         if (!id) {
             return res.status(400).json({
                 status: 'error',
@@ -114,7 +139,7 @@ export class UserProfileController {
         }
 
         const parsedAge = age ? Number(age) : undefined;
-        
+
         try {
 
             const v = new Validator();
@@ -131,12 +156,14 @@ export class UserProfileController {
             const validationResponse = check({ name, parsedAge, gender, phoneNumber });
 
             if (validationResponse !== true) {
+                if (image) fs.unlinkSync(image.path);
                 return res.status(400).json({ error: validationResponse });
             }
 
             const userProfileExist = await UserProfileService.getOneById(id);
 
             if (!userProfileExist) {
+                if (image) fs.unlinkSync(image.path);
                 return res.status(400).json({
                     status: 'error',
                     message: 'User profile tidak ditemukan'
@@ -164,8 +191,15 @@ export class UserProfileController {
                     }
                 }
 
+                const finalFolder = path.join(__dirname, "../../uploads/images/profiles", userProfileExist.userId);
+                if (!fs.existsSync(finalFolder)) fs.mkdirSync(finalFolder, { recursive: true });
+
+                finalPath = path.join(finalFolder, image.filename);
+
+                fs.renameSync(image.path, finalPath);
+
                 newProfileData.imageName = image.originalname;
-                newProfileData.imagePath = image.path;
+                newProfileData.imagePath = finalPath;
                 newProfileData.imageUrl = `${process.env.APP_URL}/uploads/images/profiles/${userProfileExist.userId}/${image.filename}`;
             }
 
@@ -178,6 +212,15 @@ export class UserProfileController {
             });
 
         } catch (error) {
+            
+            if (finalPath && fs.existsSync(finalPath)) {
+                fs.unlinkSync(finalPath);
+            }
+    
+            if (image && (!finalPath || !fs.existsSync(finalPath))) {
+                fs.unlinkSync(image.path);
+            }
+            
             console.log(error);
             return res.status(500).json({ error: 'Gagal mendapatkan data user profile' });
         }
