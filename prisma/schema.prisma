@@ -1,0 +1,270 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id          String           @id @default(uuid())
+  name        String           @unique
+  description String?
+  users       User[]
+  rolePermissions RolePermission[]
+
+  proposalAssignments ProposalAssignment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Permission {
+  id          String           @id @default(uuid())
+  name        String           @unique
+  group       String
+  description String?
+
+  rolePermissions RolePermission[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model RolePermission {
+  id            String       @id @default(uuid())
+  roleId        String
+  permissionId  String
+
+  role        Role        @relation(fields: [roleId], references: [id])
+  permission  Permission  @relation(fields: [permissionId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model User {
+  id            String           @id @default(uuid())
+  roleId        String?
+  email         String           @unique
+  password      String
+  lastActiveAt  DateTime?
+
+  role          Role?            @relation(fields: [roleId], references: [id])
+  profile       UserProfile?
+  accesses      UserAccess[]
+  proposals     Proposal[]
+  proposalVotes ProposalVote[]
+  proposalStatuses ProposalStatus[]
+  proposalDiscussions ProposalDiscussion[]
+  proposalDiscussionVotes ProposalDiscussionVote[]
+  notifications Notification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model UserProfile {
+  id           String    @id @default(uuid())
+  userId       String    @unique
+  name         String
+  age          Int?
+  gender       Gender?
+  phoneNumber  String?
+  imageName    String?
+  imagePath    String?
+  imageUrl     String?
+
+  user         User      @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+enum Gender {
+  l
+  p
+}
+
+model Area {
+  id          String     @id @default(uuid())
+  name        String     @unique
+
+  userAccesses UserAccess[]
+  proposals    Proposal[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Fraction {
+  id          String     @id @default(uuid())
+  name        String     @unique
+  imageName   String?
+  imagePath   String?
+  imageUrl    String?
+
+  userAccesses UserAccess[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model UserAccess {
+  id          String     @id @default(uuid())
+  userId      String     @unique
+  areaId      String
+  fractionId  String
+  public      Boolean
+
+  user      User     @relation(fields: [userId], references: [id])
+  area      Area     @relation(fields: [areaId], references: [id])
+  fraction  Fraction @relation(fields: [fractionId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Category {
+  id        String     @id @default(uuid())
+  name      String     @unique
+
+  proposals Proposal[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Proposal {
+  id              String     @id @default(uuid())
+  userId          String
+  areaId          String
+  categoryId      String?
+  status          ProposalStatusEnum
+  title           String
+  description     String
+  customCategory  String?
+
+  user        User       @relation(fields: [userId], references: [id])
+  area        Area       @relation(fields: [areaId], references: [id])
+  category    Category?  @relation(fields: [categoryId], references: [id])
+
+  votes       ProposalVote[]
+  statuses    ProposalStatus[]
+  assignments ProposalAssignment[]
+  discussions ProposalDiscussion[]
+  notifications Notification[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+enum ProposalStatusEnum {
+  baru
+  diproses
+  selesai
+}
+
+model ProposalVote {
+  id          String     @id @default(uuid())
+  userId      String
+  proposalId  String
+  agree       Boolean
+
+  user      User     @relation(fields: [userId], references: [id])
+  proposal  Proposal @relation(fields: [proposalId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model ProposalStatus {
+  id          String     @id @default(uuid())
+  userId      String
+  proposalId  String
+  status      ProposalStatusEnum
+  note        String?
+
+  user      User     @relation(fields: [userId], references: [id])
+  proposal  Proposal @relation(fields: [proposalId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model ProposalAssignment {
+  id          String     @id @default(uuid())
+  proposalId  String
+  roleId      String
+
+  proposal  Proposal @relation(fields: [proposalId], references: [id])
+  role      Role     @relation(fields: [roleId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model ProposalDiscussion {
+  id          String     @id @default(uuid())
+  proposalId  String
+  userId      String
+  message     String
+
+  proposal  Proposal @relation(fields: [proposalId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  votes     ProposalDiscussionVote[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model ProposalDiscussionVote {
+  id                   String     @id @default(uuid())
+  proposalDiscussionId String
+  userId               String
+  agree                Boolean
+
+  discussion ProposalDiscussion @relation(fields: [proposalDiscussionId], references: [id])
+  user       User               @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
+
+model Notification {
+  id          String     @id @default(uuid())
+  userId      String
+  proposalId  String
+  status      ProposalStatusEnum
+
+  user      User     @relation(fields: [userId], references: [id])
+  proposal  Proposal @relation(fields: [proposalId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+}
