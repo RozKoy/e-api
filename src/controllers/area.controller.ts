@@ -62,7 +62,9 @@ export class AreaController {
             res.status(200).json({
                 status: 'success',
                 message: 'Data area berhasil didapatkan',
-                data
+                data : data.data,
+                totalData: data.totalData,
+                totalPage: data.totalPages
             });
 
         } catch (error) {

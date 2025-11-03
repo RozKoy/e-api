@@ -115,7 +115,7 @@ export class UserController {
             message: 'Role tidak ditemukan'
           });
         }
-      
+
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -153,9 +153,11 @@ export class UserController {
       res.status(200).json({
         status: 'success',
         message: 'Data user berhasil didapatkan',
-        data
-
+        data: data.data,
+        totalData: data.totalData,
+        totalPage: data.totalPages
       });
+      
     } catch (error) {
 
       console.log(error);
