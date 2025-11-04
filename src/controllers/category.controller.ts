@@ -1,4 +1,4 @@
-import { CategoryService } from '@/services/category.controller';
+import { CategoryService } from '@/services/category.service';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 

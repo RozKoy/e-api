@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { AreaService } from '@/services/area.service';
-import { CategoryService } from '@/services/category.controller';
+import { CategoryService } from '@/services/category.service';
 import { ProposalService } from '@/services/proposal.service';
 import { ProposalStatusService } from '@/services/proposalStatus.service';
 import { UserService } from '@/services/user.service';

@@ -1,21 +1,21 @@
-import { ProposalService } from '@/services/proposal.service';
-import { ProposalVoteService } from '@/services/proposalVote.service';
+import { ProposalDiscussionService } from '@/services/proposalDiscussion.service';
+import { ProposalDiscussionVoteService } from '@/services/proposalDiscussionVote.service';
 import { AuthenticatedRequest } from '@/types/authenticatedRequest';
 import { Response } from 'express';
 import Validator from 'fastest-validator';
 
-export class ProposalVoteController {
+export class ProposalDiscussionVoteController {
 
     static async vote(req: AuthenticatedRequest, res: Response) {
 
-        const { proposalId } = req.params;
+        const { proposalDiscussionId } = req.params;
 
         const { userId } = req.payload!;
 
-        if(!proposalId) {
+        if(!proposalDiscussionId) {
             return res.status(400).json({
                 status: 'error',
-                message: 'Id proposal wajib diisi'
+                message: 'Id diskusi proposal wajib diisi'
             });
         }
 
@@ -40,41 +40,41 @@ export class ProposalVoteController {
                 });
             }
 
-            const proposalExist = await ProposalService.getOneById(proposalId);
+            const proposalDiscussionExist = await ProposalDiscussionService.getOneById(proposalDiscussionId);
 
-            if (!proposalExist) {
+            if (!proposalDiscussionExist) {
                 return res.status(404).json({
                     status: "error",
-                    message: "Proposal tidak ditemukan"
+                    message: "Diskusi proposal tidak ditemukan"
                 });
             }
 
-            const voteExist = await ProposalVoteService.getOneByUserIdAndProposalId(userId, proposalId);
+            const voteExist = await ProposalDiscussionVoteService.getOneByUserIdAndProposalDiscussionId(userId, proposalDiscussionId);
 
             if (voteExist) {
                 
                 if(voteExist.agree == agree) {
-                    await ProposalVoteService.delete(voteExist.id);
+                    await ProposalDiscussionVoteService.delete(voteExist.id);
                     return res.status(200).json({
                         status: 'success',
-                        message: 'Proposal berhasil di unvote',
+                        message: 'Diskusi proposal berhasil di unvote',
                     })
                 }
 
-                const data = await ProposalVoteService.update(voteExist.id, { agree });
+                const data = await ProposalDiscussionVoteService.update(voteExist.id, { agree });
 
                 return res.status(200).json({
                     status: 'success',
-                    message: 'Proposal vote berhasil diubah',
+                    message: 'Vote diskusi proposal berhasil diubah',
                     data
                 });
             }
 
-            const data = await ProposalVoteService.create({ userId, proposalId, agree });
+            const data = await ProposalDiscussionVoteService.create({ userId, proposalDiscussionId, agree });
 
             res.status(201).json({
                 status: 'success',
-                message: 'Proposal berhasil di vote',
+                message: 'Diskusi proposal berhasil di vote',
                 data
             });
 
@@ -82,37 +82,37 @@ export class ProposalVoteController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal vote proposal' });
+            return res.status(500).json({ error: 'Gagal vote diskusi proposal' });
 
         }
     }
 
     static async count(req: AuthenticatedRequest, res: Response) {
-        const { proposalId } = req.params;
+        const { proposalDiscussionId } = req.params;
 
-        if(!proposalId) {
+        if(!proposalDiscussionId) {
             return res.status(400).json({
                 status: 'error',
-                message: 'Id proposal wajib diisi'
+                message: 'Id diskusi proposal wajib diisi'
             });
         }
 
         try {
 
-            const proposalExist = await ProposalService.getOneById(proposalId);
+            const proposalDiscussionExist = await ProposalDiscussionService.getOneById(proposalDiscussionId);
 
-            if (!proposalExist) {
+            if (!proposalDiscussionExist) {
                 return res.status(404).json({
                     status: "error",
-                    message: "Proposal tidak ditemukan"
+                    message: "Diskusi proposal tidak ditemukan"
                 });
             }
 
-            const data = await ProposalVoteService.count(proposalId);
+            const data = await ProposalDiscussionVoteService.count(proposalDiscussionId);
 
             res.status(200).json({
                 status: 'success',
-                message: 'Data vote proposal berhasil didapatkan',
+                message: 'Data vote diskusi proposal berhasil didapatkan',
                 data
             });
 
@@ -120,7 +120,7 @@ export class ProposalVoteController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data vote proposal' });
+            return res.status(500).json({ error: 'Gagal mendapatkan data vote diskusi proposal' });
 
         }
     }
