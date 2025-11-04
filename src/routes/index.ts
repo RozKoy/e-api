@@ -9,6 +9,7 @@ import { fractionRouter } from './fraction.routes';
 import { userAccessRouter } from './userAccess.routes';
 import { categoryRouter } from './category.routes';
 import { proposalRouter } from './proposal.routes';
+import { authRouter } from './auth.routes';
 
 export const router = Router();
 router.use('/users', userRouter);
@@ -21,3 +22,4 @@ router.use('/fractions', fractionRouter);
 router.use('/userAccesses', userAccessRouter);
 router.use('/categories', categoryRouter);
 router.use('/proposals', proposalRouter);
+router.use('/auth', authRouter);

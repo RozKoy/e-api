@@ -81,7 +81,10 @@ export class UserService {
     }
 
     static async getOneByEmail(email: string, id? : string) {
-        return await prisma.user.findFirst({ where: { email, NOT: { id } } });
+        return await prisma.user.findFirst({ 
+            where: { email, NOT: { id }, },
+            include: { role: true , accesses: true , profile: true }, 
+        });
     }
 
     static async delete(id: string) {
