@@ -11,6 +11,7 @@ import { categoryRouter } from './category.routes';
 import { proposalRouter } from './proposal.routes';
 import { authRouter } from './auth.routes';
 import { proposalAssignmentRouter } from './proposalAssignment.routes';
+import { proposalVoteRouter } from './proposalVote.routes';
 import { authentication } from '@/middlewares/authentication';
 
 export const router = Router();
@@ -27,3 +28,4 @@ router.use('/userAccesses', userAccessRouter);
 router.use('/categories', categoryRouter);
 router.use('/proposals', proposalRouter);
 router.use('/proposalAssignments', proposalAssignmentRouter);
+router.use('/proposalVotes', proposalVoteRouter);
