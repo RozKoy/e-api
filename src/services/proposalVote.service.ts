@@ -17,4 +17,13 @@ export class ProposalVoteService {
     static async delete(id: string) {
         return await prisma.proposalVote.delete({ where: { id } });
     }
+
+    static async count(proposalId: string) {
+
+        const total = await prisma.proposalVote.count({ where: { proposalId } });
+        
+        const agree = await prisma.proposalVote.count({ where: { proposalId, agree: true } });
+
+        return { total, agree, disagree: total - agree };
+    }
 }

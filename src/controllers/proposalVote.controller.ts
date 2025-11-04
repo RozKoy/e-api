@@ -86,4 +86,42 @@ export class ProposalVoteController {
         }
     }
 
+    static async count(req: AuthenticatedRequest, res: Response) {
+        const { proposalId } = req.params;
+
+        if(!proposalId) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Id proposal wajib diisi'
+            });
+        }
+
+        try {
+
+            const proposalExist = await ProposalService.getOneById(proposalId);
+
+            if (!proposalExist) {
+                return res.status(404).json({
+                    status: "error",
+                    message: "Proposal tidak ditemukan"
+                });
+            }
+
+            const data = await ProposalVoteService.count(proposalId);
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Data vote proposal berhasil didapatkan',
+                data
+            });
+
+        } catch (error) {
+
+            console.log(error);
+
+            return res.status(500).json({ error: 'Gagal mendapatkan data vote proposal' });
+
+        }
+    }
+
 }
