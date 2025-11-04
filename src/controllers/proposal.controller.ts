@@ -7,10 +7,14 @@ import { UserService } from '@/services/user.service';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 import path from 'path';
+import { AuthenticatedRequest } from '@/types/authenticatedRequest';
 
 export class ProposalController {
-    static async create(req: Request, res: Response) {
-        const { userId, areaId, categoryId, title, description, customCategory } = req.body;
+    static async create(req: AuthenticatedRequest, res: Response) {
+        
+        const { areaId, categoryId, title, description, customCategory } = req.body;
+
+        const userId = req.payload?.userId as string;
 
         const file = req.file;
 
@@ -191,7 +195,7 @@ export class ProposalController {
         
         const { id } = req.params;
 
-        const { userId, areaId, categoryId, title, description, customCategory } = req.body;
+        const { areaId, categoryId, title, description, customCategory } = req.body;
 
         const file = req.file;
 
@@ -200,7 +204,6 @@ export class ProposalController {
         const v = new Validator();
 
         const schema = {
-            userId: { type: "string" },
             areaId: { type: "string" },
             categoryId: { type: "string", optional: true },
             title: { type: "string" },
@@ -210,7 +213,7 @@ export class ProposalController {
 
         try {
             const check = v.compile(schema);
-            const validationResponse = check({ userId, areaId, categoryId, title, description, customCategory });
+            const validationResponse = check({ areaId, categoryId, title, description, customCategory });
 
             if (validationResponse !== true) {
                 if (file) fs.unlinkSync(file.path);
@@ -242,15 +245,6 @@ export class ProposalController {
                 return res.status(400).json({
                     status: "error",
                     message: "Proposal sudah diproses"
-                });
-            }
-
-            const userExist = await UserService.getOneById(userId);
-            if (!userExist) {
-                if (file) fs.unlinkSync(file.path);
-                return res.status(400).json({
-                    status: "error",
-                    message: "User tidak ditemukan"
                 });
             }
 
@@ -321,7 +315,6 @@ export class ProposalController {
             }
 
             const data = await ProposalService.update(id, {
-                userId,
                 areaId,
                 categoryId: finalCategoryId,
                 title,

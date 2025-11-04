@@ -10,8 +10,11 @@ import { userAccessRouter } from './userAccess.routes';
 import { categoryRouter } from './category.routes';
 import { proposalRouter } from './proposal.routes';
 import { authRouter } from './auth.routes';
+import { authentication } from '@/middlewares/authentication';
 
 export const router = Router();
+router.use('/auth', authRouter);
+router.use(authentication);
 router.use('/users', userRouter);
 router.use('/permissions', permissionRouter);
 router.use('/roles', roleRouter);
@@ -22,4 +25,3 @@ router.use('/fractions', fractionRouter);
 router.use('/userAccesses', userAccessRouter);
 router.use('/categories', categoryRouter);
 router.use('/proposals', proposalRouter);
-router.use('/auth', authRouter);
