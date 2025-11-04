@@ -48,7 +48,7 @@ export class ProposalAssingmentController {
 
             if (proposalExist.status == "baru") {
 
-                const hasPermission = userRolePermission.some((rolePermission) => rolePermission.permission.name === 'DISPOSISI PROPOSAL');
+                const hasPermission = userRolePermission.some((rolePermission) => rolePermission.permission.name === 'Disposisi Proposal');
 
                 if (!hasPermission) {
                     return res.status(403).json({
@@ -59,22 +59,26 @@ export class ProposalAssingmentController {
 
             }
 
-            const lastAssignedRole = await ProposalAssignmentService.getLastAssignedRole(proposalId);
+            if (proposalExist.status !== "baru") {
 
-            if (lastAssignedRole && lastAssignedRole.roleId === userRoleId) {
-                return res.status(400).json({
-                    status: 'error',
-                    message: 'Anda tidak memiliki izin untuk mendisposisi proposal ini'
-                });
-            }
+                const lastAssignedRole = await ProposalAssignmentService.getLastAssignedRole(proposalId);
 
-            const hasAccess = await UserAccessService.getByUserId(userId);
+                if (lastAssignedRole && lastAssignedRole.roleId === userRoleId) {
+                    return res.status(403).json({
+                        status: 'error',
+                        message: 'Anda tidak memiliki izin untuk mendisposisi proposal ini'
+                    });
+                }
 
-            if (!hasAccess.some((access) => access.areaId === proposalExist.areaId)) {
-                return res.status(403).json({
-                    status: 'error',
-                    message: 'Anda tidak memiliki izin untuk mendisposisi proposal ini'
-                });
+                const hasAccess = await UserAccessService.getByUserId(userId);
+
+                if (!hasAccess.some((access) => access.areaId === proposalExist.areaId)) {
+                    return res.status(403).json({
+                        status: 'error',
+                        message: 'Anda tidak memiliki izin untuk mendisposisi proposal ini'
+                    });
+                }
+
             }
 
             const proposalAssignment = await ProposalAssignmentService.create({ proposalId, roleId });
@@ -83,7 +87,7 @@ export class ProposalAssingmentController {
 
             await ProposalStatusService.create({ proposalId, userId, status: "diproses" });
 
-            return res.status(200).json({
+            return res.status(201).json({
                 status: 'success',
                 message: 'Proposal assignment berhasil ditambahkan',
                 data: proposalAssignment
