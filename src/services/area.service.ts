@@ -36,7 +36,7 @@ export class AreaService {
             };
         }
 
-        const take = limit ?? 10;
+        const take = limit && !isNaN(limit) ? limit : 10;
         const skip = (page - 1) * take;
 
         const [areas, totalData] = await Promise.all([

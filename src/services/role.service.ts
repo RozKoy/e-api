@@ -30,7 +30,7 @@ export class RoleService {
             };
         }
 
-        const take = limit ?? 10;
+        const take = limit && !isNaN(limit) ? limit : 10;
         const skip = (page - 1) * take;
 
         const [roles, totalData] = await Promise.all([
@@ -86,6 +86,6 @@ export class RoleService {
     }
 
     static async assignMany(data: Prisma.RolePermissionUncheckedCreateInput[]) {
-        return await prisma.rolePermission.createMany({ data }); 
+        return await prisma.rolePermission.createMany({ data });
     }
 }

@@ -3,7 +3,7 @@ import { Prisma } from "@prisma/client";
 
 export class UserService {
 
-    static async create(data: Prisma.UserUncheckedCreateInput){
+    static async create(data: Prisma.UserUncheckedCreateInput) {
         return await prisma.user.create({ data });
     }
 
@@ -32,7 +32,7 @@ export class UserService {
             };
         }
 
-        const take = limit ?? 10;
+        const take = limit && !isNaN(limit) ? limit : 10;
         const skip = (page - 1) * take;
 
         const [users, totalData] = await Promise.all([
@@ -75,15 +75,15 @@ export class UserService {
     static async getOneById(id: string) {
         return await prisma.user.findUnique({ where: { id }, select: { id: true, email: true, roleId: true, profile: true, role: true, createdAt: true, updatedAt: true } });
     }
-    
+
     static async update(id: string, data: Prisma.UserUncheckedUpdateInput) {
         return await prisma.user.update({ where: { id }, data });
     }
 
-    static async getOneByEmail(email: string, id? : string) {
-        return await prisma.user.findFirst({ 
+    static async getOneByEmail(email: string, id?: string) {
+        return await prisma.user.findFirst({
             where: { email, NOT: { id }, },
-            include: { role: true , accesses: true , profile: true }, 
+            include: { role: true, accesses: true, profile: true },
         });
     }
 

@@ -147,6 +147,7 @@ model Category {
   name String @unique
 
   proposals Proposal[]
+  news      News[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -266,6 +267,22 @@ model Notification {
 
   user     User     @relation(fields: [userId], references: [id])
   proposal Proposal @relation(fields: [proposalId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model News {
+  id   String @id @default(uuid())
+  title String
+  content String @db.Text
+  imageName String?
+  imagePath String?
+  imageUrl  String?
+
+  categoryId String
+  category Category @relation(fields: [categoryId], references: [id])
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

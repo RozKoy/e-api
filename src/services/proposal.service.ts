@@ -39,7 +39,7 @@ export class ProposalService {
             };
         }
 
-        const take = limit ?? 10;
+        const take = limit && !isNaN(limit) ? limit : 10;
         const skip = (page - 1) * take;
 
         const [proposals, totalData] = await Promise.all([
