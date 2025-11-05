@@ -4,3 +4,5 @@ import { ProposalAssingmentController } from '../controllers/proposalAssingment.
 export const proposalAssignmentRouter = Router();
 
 proposalAssignmentRouter.post('/assign', ProposalAssingmentController.assign);
+proposalAssignmentRouter.post('/finish/:proposalId', ProposalAssingmentController.finishAssignment);
+proposalAssignmentRouter.get('/:proposalId', ProposalAssingmentController.getByProposalId);

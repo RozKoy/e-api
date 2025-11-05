@@ -99,4 +99,88 @@ export class ProposalAssingmentController {
         }
     }
 
+    static async finishAssignment(req: AuthenticatedRequest, res: Response) {
+
+        const { proposalId } = req.params;
+
+        const { userId, roleId } = req.payload!;
+
+        if (!proposalId) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Id proposal wajib diisi'
+            });
+        }
+
+        try {
+
+            const proposalExist = await ProposalService.getOneById(proposalId);
+
+            if (!proposalExist) {
+                return res.status(404).json({
+                    status: 'error',
+                    message: 'Proposal tidak ditemukan'
+                });
+            }
+
+            const lastAssignedRole = await ProposalAssignmentService.getLastAssignedRole(proposalId);
+
+            if (lastAssignedRole && lastAssignedRole.roleId === roleId) {
+                return res.status(403).json({
+                    status: 'error',
+                    message: 'Anda tidak memiliki izin untuk mendisposisi proposal ini'
+                });
+            }
+
+            const hasAccess = await UserAccessService.getByUserId(userId);
+
+            if (!hasAccess.some((access) => access.areaId === proposalExist.areaId)) {
+                return res.status(403).json({
+                    status: 'error',
+                    message: 'Anda tidak memiliki izin untuk mendisposisi proposal ini'
+                });
+            }
+
+            await ProposalService.update(proposalId, { status: "selesai" });
+
+            await ProposalStatusService.create({ proposalId, userId, status: "selesai" });
+
+            return res.status(200).json({
+                status: 'success',
+                message: 'Disposisi proposal berhasil diselesaikan'
+            });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: 'Gagal menyelesaikan disposisi proposal' });
+        }
+    }
+
+    static async getByProposalId(req: AuthenticatedRequest, res: Response) {
+
+        const { proposalId } = req.params;
+
+        if (!proposalId) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Id proposal wajib diisi'
+            });
+        }
+
+        try {
+
+            const data = await ProposalAssignmentService.getByProposalId(proposalId);
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Data proposal assignment berhasil didapatkan',
+                data
+            });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: 'Gagal mendapatkan data proposal assignment' });
+        }
+    }
+
 }
