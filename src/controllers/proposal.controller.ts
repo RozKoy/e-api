@@ -8,6 +8,7 @@ import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 import path from 'path';
 import { AuthenticatedRequest } from '@/types/authenticatedRequest';
+import { NotificationService } from '@/services/notification.service';
 
 export class ProposalController {
     static async create(req: AuthenticatedRequest, res: Response) {
@@ -125,6 +126,8 @@ export class ProposalController {
                 fileData.filePath = finalPath;
                 fileData.fileUrl = `${process.env.APP_URL}/uploads/files/proposals/${data.id}/${file.filename}`;
             }
+
+            await NotificationService.create({ userId: userId, proposalId: data.id, status: "baru" });
 
             const updatedData = await ProposalService.update(data.id, { fileName: fileData.fileName, filePath: fileData.filePath, fileUrl: fileData.fileUrl });
 

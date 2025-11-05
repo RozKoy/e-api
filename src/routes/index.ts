@@ -14,6 +14,8 @@ import { proposalAssignmentRouter } from './proposalAssignment.routes';
 import { proposalVoteRouter } from './proposalVote.routes';
 import { proposalDiscussionRouter } from './proposalDiscussion.routes';
 import { proposalDiscussionVoteRouter } from './proposalDiscussionVote.routes';
+import { proposalStatusRouter } from './proposalStatus.routes';
+import { NotificationRouter } from './notification.routes';
 import { authentication } from '@/middlewares/authentication';
 
 export const router = Router();
@@ -33,3 +35,5 @@ router.use('/proposalAssignments', proposalAssignmentRouter);
 router.use('/proposalVotes', proposalVoteRouter);
 router.use('/proposalDiscussions', proposalDiscussionRouter);
 router.use('/proposalDiscussionVotes', proposalDiscussionVoteRouter);
+router.use('/proposalStatuses', proposalStatusRouter);
+router.use('/notifications', NotificationRouter);

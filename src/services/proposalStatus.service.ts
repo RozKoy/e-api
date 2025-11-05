@@ -9,4 +9,8 @@ export class ProposalStatusService {
     static async deleteByProposalId(proposalId: string) {
         return await prisma.proposalStatus.deleteMany({ where: { proposalId } });
     }
+
+    static async getByProposalId(proposalId: string) {
+        return await prisma.proposalStatus.findMany({ where: { proposalId } });
+    }
 }
