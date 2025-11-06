@@ -18,7 +18,9 @@ export class RoleService {
                     id: true,
                     name: true,
                     description: true,
-                    rolePermissions: true,
+                    rolePermissions: {
+                        include: { permission: true },
+                    },
                     createdAt: true,
                     updatedAt: true,
                 },
@@ -46,7 +48,9 @@ export class RoleService {
                     id: true,
                     name: true,
                     description: true,
-                    rolePermissions: true,
+                    rolePermissions: {
+                        include: { permission: true },
+                    },
                     createdAt: true,
                     updatedAt: true,
                 },
@@ -70,7 +74,7 @@ export class RoleService {
     }
 
     static async getOneById(id: string) {
-        return await prisma.role.findUnique({ where: { id }, include: { rolePermissions: true } });
+        return await prisma.role.findUnique({ where: { id }, include: { rolePermissions: { include: { permission: true } } } });
     }
 
     static async getOneByName(name: string, id?: string) {
