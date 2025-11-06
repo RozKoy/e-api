@@ -24,6 +24,7 @@ export class CategoryService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             });
             return {
                 data: categories,
@@ -50,6 +51,7 @@ export class CategoryService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             }),
             prisma.category.count({
                 where: {

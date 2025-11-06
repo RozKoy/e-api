@@ -7,6 +7,6 @@ export class NotificationService {
     }
 
     static async getByUserId(userId: string) {
-        return await prisma.notification.findMany({ where: { userId } });
+        return await prisma.notification.findMany({ where: { userId }, orderBy: { createdAt: "desc" } });
     } 
 }

@@ -28,6 +28,7 @@ export class FractionService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             });
             return {
                 data: fractions,
@@ -54,6 +55,7 @@ export class FractionService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             }),
             prisma.fraction.count({
                 where: {

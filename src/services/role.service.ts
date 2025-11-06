@@ -24,6 +24,7 @@ export class RoleService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             });
             return {
                 data: roles,
@@ -54,6 +55,7 @@ export class RoleService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             }),
             prisma.role.count({
                 where: {

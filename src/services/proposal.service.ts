@@ -31,6 +31,7 @@ export class ProposalService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             });
             return {
                 data: proposals,
@@ -67,6 +68,7 @@ export class ProposalService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             }),
             prisma.proposal.count({
                 where: search

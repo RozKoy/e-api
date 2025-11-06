@@ -28,6 +28,7 @@ export class AreaService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             });
             return {
                 data: areas,
@@ -54,6 +55,7 @@ export class AreaService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             }),
             prisma.area.count({
                 where: {

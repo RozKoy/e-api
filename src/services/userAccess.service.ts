@@ -11,7 +11,7 @@ export class UserAccessService {
     }
 
     static async getByUserId(userId: string) {
-        return prisma.userAccess.findMany({ where: { userId } });
+        return prisma.userAccess.findMany({ where: { userId }, orderBy: { createdAt: "desc" }, });
     }
 
     static async getAll(search?: string, page?: number, limit?: number) {
@@ -34,6 +34,7 @@ export class UserAccessService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             });
             return {
                 data: userAccesses,
@@ -66,6 +67,7 @@ export class UserAccessService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             }),
             prisma.userAccess.count({
                 where: search

@@ -12,7 +12,7 @@ export class ProposalAssignmentService {
     }
 
     static async getByProposalId(proposalId: string) {
-        return await prisma.proposalAssignment.findMany({ where: { proposalId }, include: { proposal: true, role: true } }); 
+        return await prisma.proposalAssignment.findMany({ where: { proposalId }, include: { proposal: true, role: true }, orderBy: { createdAt: "desc" }, }); 
     }
 
 }

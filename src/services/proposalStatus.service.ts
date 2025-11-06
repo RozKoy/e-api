@@ -11,6 +11,6 @@ export class ProposalStatusService {
     }
 
     static async getByProposalId(proposalId: string) {
-        return await prisma.proposalStatus.findMany({ where: { proposalId } });
+        return await prisma.proposalStatus.findMany({ where: { proposalId }, orderBy: { createdAt: "desc" }, });
     }
 }

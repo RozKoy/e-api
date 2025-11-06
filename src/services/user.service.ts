@@ -24,6 +24,7 @@ export class UserService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             });
             return {
                 data: users,
@@ -53,6 +54,7 @@ export class UserService {
                     createdAt: true,
                     updatedAt: true,
                 },
+                orderBy: { createdAt: "desc" },
             }),
             prisma.user.count({
                 where: {

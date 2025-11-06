@@ -15,7 +15,7 @@ export class RolePermissionService {
     }
 
     static async getAllByRoleId(roleId: string) {
-        return await prisma.rolePermission.findMany({ where: { roleId }, include: { permission: true } });
+        return await prisma.rolePermission.findMany({ where: { roleId }, include: { permission: true }, orderBy: { createdAt: "desc" }, });
     }
 
     static async deleteByRoleId(roleId: string) {
