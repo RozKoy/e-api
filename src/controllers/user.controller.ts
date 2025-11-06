@@ -122,9 +122,6 @@ export class UserController {
     const { id } = req.params;
     const { email, password, roleId } = req.body;
 
-    console.log(req.body);
-    console.log(id);
-
     if (!id) {
       return res.status(400).json({
         status: 'error',
