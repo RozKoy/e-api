@@ -1,5 +1,5 @@
 import prisma from "@/libs/prisma";
-import { Prisma } from "@prisma/client";
+import { Prisma, ProposalStatusEnum } from "@prisma/client";
 
 export class ProposalService {
 
@@ -7,25 +7,29 @@ export class ProposalService {
         return await prisma.proposal.create({ data });
     }
 
-    static async getAll(search?: string, page?: number, limit?: number) {
+    static async getAll(search?: string, page?: number, limit?: number, areaId?: string, status?: string, categoryId?: string) {
         if (!page) {
             const proposals = await prisma.proposal.findMany({
-                where: search
-                    ? {
+                where: {
+                    ...(categoryId ? { categoryId } : undefined),
+                    ...(areaId ? { areaId } : undefined),
+                    ...(status && { status: status as ProposalStatusEnum }),
+                    ...(search ? {
                         OR: [
                             { title: { contains: search, mode: "insensitive" } },
                             { area: { name: { contains: search, mode: "insensitive" } } },
                             { user: { profile: { name: { contains: search, mode: "insensitive" } } } },
-                            { category: { name: { contains: search, mode: "insensitive" } } },
-                        ],
-                    }
-                    : undefined,
+                            {customCategory: { contains : search, mode: "insensitive" }},
+                        ]
+                    } : undefined),
+                },
                 select: {
                     id: true,
                     status: true,
                     title: true,
                     description: true,
                     area: true,
+                    customCategory: true,
                     category: true,
                     user: true,
                     createdAt: true,
@@ -47,16 +51,19 @@ export class ProposalService {
             prisma.proposal.findMany({
                 skip,
                 take,
-                where: search
-                    ? {
+                where: {
+                    ...(categoryId ? { categoryId } : undefined),
+                    ...(areaId ? { areaId } : undefined),
+                    ...(status && { status: status as ProposalStatusEnum }),
+                    ...(search ? {
                         OR: [
                             { title: { contains: search, mode: "insensitive" } },
                             { area: { name: { contains: search, mode: "insensitive" } } },
                             { user: { profile: { name: { contains: search, mode: "insensitive" } } } },
-                            { category: { name: { contains: search, mode: "insensitive" } } },
-                        ],
-                    }
-                    : undefined,
+                            {customCategory: { contains : search, mode: "insensitive" }},
+                        ]
+                    } : undefined),
+                },
                 select: {
                     id: true,
                     status: true,
@@ -64,6 +71,7 @@ export class ProposalService {
                     description: true,
                     area: true,
                     category: true,
+                    customCategory: true,
                     user: true,
                     createdAt: true,
                     updatedAt: true,
@@ -71,16 +79,19 @@ export class ProposalService {
                 orderBy: { createdAt: "desc" },
             }),
             prisma.proposal.count({
-                where: search
-                    ? {
+                where: {
+                    ...(categoryId ? { categoryId } : undefined),
+                    ...(areaId ? { areaId } : undefined),
+                    ...(status && { status: status as ProposalStatusEnum }),
+                    ...(search ? {
                         OR: [
                             { title: { contains: search, mode: "insensitive" } },
                             { area: { name: { contains: search, mode: "insensitive" } } },
                             { user: { profile: { name: { contains: search, mode: "insensitive" } } } },
-                            { category: { name: { contains: search, mode: "insensitive" } } },
-                        ],
-                    }
-                    : undefined,
+                            {customCategory: { contains : search, mode: "insensitive" }},
+                        ]
+                    } : undefined),
+                },
             }),
         ]);
 
