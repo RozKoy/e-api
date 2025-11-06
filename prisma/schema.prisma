@@ -75,6 +75,10 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+
+  chatsAsUserA ChatRoom[] @relation("UserAChats")
+  chatsAsUserB ChatRoom[] @relation("UserBChats")
+  sentMessages ChatMessage[] @relation("ChatMessage_senderIdToUser")
 }
 
 model UserProfile {
@@ -287,4 +291,32 @@ model News {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+}
+
+model ChatRoom {
+  id        String      @id @default(uuid())
+  userAId   String
+  userBId   String
+
+  userA     User        @relation("UserAChats", fields: [userAId], references: [id])
+  userB     User        @relation("UserBChats", fields: [userBId], references: [id])
+  messages  ChatMessage[]
+
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  deletedAt DateTime?
+}
+
+model ChatMessage {
+  id         String    @id @default(uuid())
+  roomId     String
+  senderId   String
+  message    String
+
+  sender     User      @relation("ChatMessage_senderIdToUser", fields: [senderId], references: [id])
+  room       ChatRoom  @relation(fields: [roomId], references: [id])
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
 }
