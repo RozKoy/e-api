@@ -31,7 +31,9 @@ export class ProposalService {
                     area: true,
                     customCategory: true,
                     category: true,
-                    user: true,
+                    user: {
+                        include: { profile: true },
+                    },
                     createdAt: true,
                     updatedAt: true,
                 },
@@ -72,7 +74,9 @@ export class ProposalService {
                     area: true,
                     category: true,
                     customCategory: true,
-                    user: true,
+                    user: {
+                        include: { profile: true },
+                    },
                     createdAt: true,
                     updatedAt: true,
                 },
@@ -105,7 +109,7 @@ export class ProposalService {
     }
 
     static async getOneById(id: string) {
-        return await prisma.proposal.findUnique({ where: { id }, include: { area: true, category: true, user: true } });
+        return await prisma.proposal.findUnique({ where: { id }, include: { area: true, category: true, user: { include: { profile: true }} } });
     }
 
     static async update(id: string, data: Prisma.ProposalUncheckedUpdateInput) {
