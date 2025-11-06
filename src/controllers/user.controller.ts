@@ -71,11 +71,11 @@ export class UserController {
 
   static async getAll(req: Request, res: Response) {
 
-    const { search, page, limit } = req.query as { search?: string, page?: number, limit?: number };
+    const { search, page, limit, roleId } = req.query as { search?: string, page?: number, limit?: number, roleId?: string };
 
     try {
 
-      const data = await UserService.getAll(search, Number(page), Number(limit));
+      const data = await UserService.getAll(search, Number(page), Number(limit), roleId);
 
       res.status(200).json({
         status: 'success',

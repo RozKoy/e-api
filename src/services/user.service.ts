@@ -7,13 +7,12 @@ export class UserService {
         return await prisma.user.create({ data });
     }
 
-    static async getAll(search?: string, page?: number, limit?: number) {
+    static async getAll(search?: string, page?: number, limit?: number, roleId?: string) {
         if (!page) {
             const users = await prisma.user.findMany({
                 where: {
-                    email: search
-                        ? { contains: search, mode: "insensitive" }
-                        : undefined,
+                    ...(roleId ? { roleId: roleId } : undefined),
+                    ...(search ? { OR: [{ profile: { name: { contains: search, mode: "insensitive" } } }, { email: { contains: search, mode: "insensitive" } }] } : undefined),
                 },
                 select: {
                     id: true,
@@ -41,9 +40,8 @@ export class UserService {
                 skip,
                 take,
                 where: {
-                    email: search
-                        ? { contains: search, mode: "insensitive" }
-                        : undefined,
+                    ...(roleId ? { roleId: roleId } : undefined),
+                    ...(search ? { OR: [{ profile: { name: { contains: search, mode: "insensitive" } } }, { email: { contains: search, mode: "insensitive" } }] } : undefined),
                 },
                 select: {
                     id: true,
