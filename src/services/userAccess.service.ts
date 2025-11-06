@@ -14,17 +14,21 @@ export class UserAccessService {
         return prisma.userAccess.findMany({ where: { userId }, orderBy: { createdAt: "desc" }, });
     }
 
-    static async getAll(search?: string, page?: number, limit?: number) {
+    static async getAll(search?: string, page?: number, limit?: number, areaId?: string, fractionId?: string) {
         if (!page) {
             const userAccesses = await prisma.userAccess.findMany({
-                where: search
-                    ? {
+                where: {
+                    ...(areaId ? { areaId: areaId } : undefined),
+                    ...(fractionId ? { fractionId: fractionId } : undefined),
+                    ...(search ? { 
                         OR: [
                             { area: { name: { contains: search, mode: "insensitive" } } },
                             { fraction: { name: { contains: search, mode: "insensitive" } } },
-                        ],
-                    }
-                    : undefined,
+                            { user: { email: { contains: search, mode: "insensitive" } } },
+                            { user: { profile: { name: { contains: search, mode: "insensitive" } } } },
+                        ]
+                     } : undefined),
+                },
                 select: {
                     id: true,
                     area: true,
@@ -50,14 +54,18 @@ export class UserAccessService {
             prisma.userAccess.findMany({
                 skip,
                 take,
-                where: search
-                    ? {
+                where: {
+                    ...(areaId ? { areaId: areaId } : undefined),
+                    ...(fractionId ? { fractionId: fractionId } : undefined),
+                    ...(search ? { 
                         OR: [
                             { area: { name: { contains: search, mode: "insensitive" } } },
                             { fraction: { name: { contains: search, mode: "insensitive" } } },
-                        ],
-                    }
-                    : undefined,
+                            { user: { email: { contains: search, mode: "insensitive" } } },
+                            { user: { profile: { name: { contains: search, mode: "insensitive" } } } },
+                        ]
+                     } : undefined),
+                },
                 select: {
                     id: true,
                     area: true,
@@ -70,14 +78,18 @@ export class UserAccessService {
                 orderBy: { createdAt: "desc" },
             }),
             prisma.userAccess.count({
-                where: search
-                    ? {
+                where: {
+                    ...(areaId ? { areaId: areaId } : undefined),
+                    ...(fractionId ? { fractionId: fractionId } : undefined),
+                    ...(search ? { 
                         OR: [
                             { area: { name: { contains: search, mode: "insensitive" } } },
                             { fraction: { name: { contains: search, mode: "insensitive" } } },
-                        ],
-                    }
-                    : undefined,
+                            { user: { email: { contains: search, mode: "insensitive" } } },
+                            { user: { profile: { name: { contains: search, mode: "insensitive" } } } },
+                        ]
+                     } : undefined),
+                },
             }),
         ]);
 

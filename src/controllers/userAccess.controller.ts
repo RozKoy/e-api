@@ -86,11 +86,11 @@ export class UserAccessController {
 
     static async getAll(req: Request, res: Response) {
 
-        const { search, page, limit } = req.query as { search?: string, page?: number, limit?: number };
+        const { search, page, limit, fractionId, areaId } = req.query as { search?: string, page?: number, limit?: number, fractionId?: string, areaId?: string };
 
         try {
 
-            const data = await UserAccessService.getAll(search, Number(page), Number(limit));
+            const data = await UserAccessService.getAll(search, Number(page), Number(limit), areaId, fractionId);
 
             res.status(200).json({
                 status: 'success',
