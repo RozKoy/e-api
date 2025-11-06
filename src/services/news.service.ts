@@ -17,12 +17,10 @@ export class NewsService {
     static async getAll(categoryId?: string, search?: string, page?: number, limit?: number) {
         if (!page) {
             const news = await prisma.news.findMany({
-                where: search
-                    ? {
-                        categoryId,
-                        title: { contains: search, mode: "insensitive" },
-                    }
-                    : { categoryId },
+                where: {
+                    ...(categoryId ? { categoryId } : undefined),
+                    ...(search ? { title: { contains: search, mode: "insensitive" } } : undefined),
+                },
                 include: {
                     category: true
                 },
@@ -46,12 +44,10 @@ export class NewsService {
             prisma.news.findMany({
                 skip,
                 take,
-                where: search
-                    ? {
-                        categoryId,
-                        title: { contains: search, mode: "insensitive" },
-                    }
-                    : { categoryId },
+                where: {
+                    ...(categoryId ? { categoryId } : undefined),
+                    ...(search ? { title: { contains: search, mode: "insensitive" } } : undefined),
+                },
                 include: {
                     category: true
                 },
@@ -60,12 +56,10 @@ export class NewsService {
                 },
             }),
             prisma.news.count({
-                where: search
-                    ? {
-                        categoryId,
-                        title: { contains: search, mode: "insensitive" },
-                    }
-                    : { categoryId },
+                where: {
+                    ...(categoryId ? { categoryId } : undefined),
+                    ...(search ? { title: { contains: search, mode: "insensitive" } } : undefined),
+                },
             }),
         ]);
 
