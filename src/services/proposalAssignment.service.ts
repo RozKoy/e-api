@@ -11,8 +11,8 @@ export class ProposalAssignmentService {
         return await prisma.proposalAssignment.create({ data }); 
     }
 
-    static async getByProposalId(proposalId: string) {
-        return await prisma.proposalAssignment.findMany({ where: { proposalId }, include: { proposal: true, role: true }, orderBy: { createdAt: "desc" }, }); 
+    static async getByProposalId(proposalId: string, roleId? : string) {
+        return await prisma.proposalAssignment.findMany({ where: { proposalId, ...(roleId ? { roleId } : undefined) }, include: { proposal: true, role: true }, orderBy: { createdAt: "desc" }, }); 
     }
 
 }

@@ -168,6 +168,8 @@ export class ProposalAssingmentController {
 
         const { proposalId } = req.params;
 
+        const { roleId } = req.query;
+
         if (!proposalId) {
             return res.status(400).json({
                 status: 'error',
@@ -177,7 +179,7 @@ export class ProposalAssingmentController {
 
         try {
 
-            const data = await ProposalAssignmentService.getByProposalId(proposalId);
+            const data = await ProposalAssignmentService.getByProposalId(proposalId, roleId as string);
 
             res.status(200).json({
                 status: 'success',
