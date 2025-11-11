@@ -193,4 +193,24 @@ export class ProposalAssingmentController {
         }
     }
 
+    static async getAll(req: AuthenticatedRequest, res: Response) {
+
+        const { roleId, proposalId, page, limit } = req.query as { roleId?: string, proposalId?: string, search?: string, page?: number, limit?: number };
+
+        try {
+
+            const data = await ProposalAssignmentService.getAll(roleId, proposalId, Number(page), Number(limit));
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Data proposal assignment berhasil didapatkan',
+                data
+            });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: 'Gagal mendapatkan data proposal assignment' });
+        }
+    }
+
 }
