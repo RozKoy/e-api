@@ -411,7 +411,7 @@ export class ProposalController {
         try {
 
             const hasAccess = await UserAccessService.getByUserId(userId);
-            
+
             if (!hasAccess) {
                 return res.status(403).json({
                     status: "error",
@@ -420,7 +420,7 @@ export class ProposalController {
             }
 
             await workbook.xlsx.readFile(file.path);
-            
+
             const worksheet = workbook.worksheets[0];
 
             const proposals: any[] = [];
@@ -465,5 +465,68 @@ export class ProposalController {
             console.error(error);
             return res.status(500).json({ error: "Gagal import data proposal" });
         }
+    }
+
+    static async export(req: Request, res: Response) {
+
+        const { areaId, startDate, endDate } = req.query as { areaId?: string, startDate?: string, endDate?: string };
+
+        const parsedStartDate = startDate ? new Date(startDate) : undefined;
+        const parsedEndDate = endDate ? new Date(endDate) : undefined;
+
+        try {
+
+            const proposals = await ProposalService.getExportData(parsedStartDate, parsedEndDate, areaId);
+
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet("Data Proposal");
+
+            worksheet.columns = [
+                { header: "No", key: "no", width: 5 },
+                { header: "Kategori", key: "category", width: 25 },
+                { header: "Judul", key: "title", width: 30 },
+                { header: "Deskripsi", key: "description", width: 50 },
+                { header: "Status", key: "status", width: 15 },
+                { header: "Area", key: "area", width: 20 },
+                { header: "Dibuat Oleh", key: "user", width: 25 },
+                { header: "Tanggal Dibuat", key: "createdAt", width: 20 },
+            ];
+
+            proposals.forEach((p, index) => {
+                worksheet.addRow({
+                    no: index + 1,
+                    category: p.category?.name || p.customCategory || "-",
+                    title: p.title,
+                    description: p.description,
+                    status: p.status.toUpperCase(),
+                    area: p.area?.name || "-",
+                    user: p.user?.profile?.name || "-",
+                    createdAt: new Date(p.createdAt).toLocaleString("id-ID"),
+                });
+            });
+
+            worksheet.getRow(1).font = { bold: true };
+            worksheet.getRow(1).alignment = { horizontal: "center" };
+
+            worksheet.autoFilter = {
+                from: "A1",
+                to: "H1",
+            };
+
+            const buffer = await workbook.xlsx.writeBuffer();
+
+            const now = new Date();
+            const dateStr = now.toISOString().split("T")[0];
+            const fileName = `proposal_export_${dateStr}.xlsx`;
+
+            res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            res.setHeader("Content-Disposition", `attachment; filename=${fileName}`);
+            res.send(buffer);
+
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: "Gagal export data proposal" });
+        }
+
     }
 }

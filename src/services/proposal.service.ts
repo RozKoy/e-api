@@ -19,7 +19,7 @@ export class ProposalService {
                             { title: { contains: search, mode: "insensitive" } },
                             { area: { name: { contains: search, mode: "insensitive" } } },
                             { user: { profile: { name: { contains: search, mode: "insensitive" } } } },
-                            {customCategory: { contains : search, mode: "insensitive" }},
+                            { customCategory: { contains: search, mode: "insensitive" } },
                         ]
                     } : undefined),
                 },
@@ -62,7 +62,7 @@ export class ProposalService {
                             { title: { contains: search, mode: "insensitive" } },
                             { area: { name: { contains: search, mode: "insensitive" } } },
                             { user: { profile: { name: { contains: search, mode: "insensitive" } } } },
-                            {customCategory: { contains : search, mode: "insensitive" }},
+                            { customCategory: { contains: search, mode: "insensitive" } },
                         ]
                     } : undefined),
                 },
@@ -92,7 +92,7 @@ export class ProposalService {
                             { title: { contains: search, mode: "insensitive" } },
                             { area: { name: { contains: search, mode: "insensitive" } } },
                             { user: { profile: { name: { contains: search, mode: "insensitive" } } } },
-                            {customCategory: { contains : search, mode: "insensitive" }},
+                            { customCategory: { contains: search, mode: "insensitive" } },
                         ]
                     } : undefined),
                 },
@@ -109,7 +109,7 @@ export class ProposalService {
     }
 
     static async getOneById(id: string) {
-        return await prisma.proposal.findUnique({ where: { id }, include: { area: true, category: true, user: { include: { profile: true }} } });
+        return await prisma.proposal.findUnique({ where: { id }, include: { area: true, category: true, user: { include: { profile: true } } } });
     }
 
     static async update(id: string, data: Prisma.ProposalUncheckedUpdateInput) {
@@ -118,5 +118,47 @@ export class ProposalService {
 
     static async delete(id: string) {
         return await prisma.proposal.delete({ where: { id } });
+    }
+
+    static async getExportData(startDate?: Date, endDate?: Date, areaId?: string) {
+        
+        const where: any = {};
+
+        if (startDate && !endDate) {
+            where.createdAt = {
+                gte: startDate,
+                lte: new Date(),
+            };
+        }
+
+        else if (startDate && endDate) {
+            where.createdAt = {
+                gte: startDate,
+                lte: endDate,
+            };
+        }
+
+        if (areaId) {
+            where.areaId = areaId;
+        }
+
+        return await prisma.proposal.findMany({
+            where,
+            select: {
+                id: true,
+                status: true,
+                title: true,
+                description: true,
+                area: true,
+                category: true,
+                customCategory: true,
+                user: {
+                    include: { profile: true },
+                },
+                createdAt: true,
+                updatedAt: true,
+            },
+            orderBy: { createdAt: "asc" },
+        });
     }
 }
