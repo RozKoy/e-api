@@ -9,10 +9,12 @@ import Validator from 'fastest-validator';
 import path from 'path';
 import { AuthenticatedRequest } from '@/types/authenticatedRequest';
 import { NotificationService } from '@/services/notification.service';
+import ExcelJS from "exceljs";
+import { UserAccessService } from '@/services/userAccess.service';
 
 export class ProposalController {
     static async create(req: AuthenticatedRequest, res: Response) {
-        
+
         const { areaId, categoryId, title, description, customCategory } = req.body;
 
         const userId = req.payload?.userId as string;
@@ -195,7 +197,7 @@ export class ProposalController {
     }
 
     static async update(req: Request, res: Response) {
-        
+
         const { id } = req.params;
 
         const { areaId, categoryId, title, description, customCategory } = req.body;
@@ -389,6 +391,79 @@ export class ProposalController {
         } catch (error) {
             console.error(error);
             return res.status(500).json({ error: "Gagal hapus data proposal" });
+        }
+    }
+
+    static async import(req: AuthenticatedRequest, res: Response) {
+
+        const file = req.file;
+        const userId = req.payload!.userId;
+
+        if (!file) {
+            return res.status(400).json({
+                status: "error",
+                message: "File wajib diisi",
+            });
+        }
+
+        const workbook = new ExcelJS.Workbook();
+
+        try {
+
+            const hasAccess = await UserAccessService.getByUserId(userId);
+            
+            if (!hasAccess) {
+                return res.status(403).json({
+                    status: "error",
+                    message: "Anda tidak memiliki akses untuk import data proposal",
+                });
+            }
+
+            await workbook.xlsx.readFile(file.path);
+            
+            const worksheet = workbook.worksheets[0];
+
+            const proposals: any[] = [];
+
+            for (let rowNumber = 2; rowNumber <= worksheet.rowCount; rowNumber++) {
+
+                const row = worksheet.getRow(rowNumber);
+
+                const categoryCell = row.getCell(2).value;
+                const titleCell = row.getCell(3).value;
+                const descriptionCell = row.getCell(4).value;
+
+                const category = categoryCell ? String(categoryCell).trim() : "";
+                const title = titleCell ? String(titleCell).trim() : "";
+                const description = descriptionCell ? String(descriptionCell).trim() : "";
+
+                if (!title) continue; // skip baris kosong
+
+                const categoryExist = await CategoryService.getOneByName(category);
+
+                const proposal = await ProposalService.create({
+                    userId,
+                    areaId: hasAccess[0].areaId,
+                    categoryId: categoryExist ? categoryExist.id : null,
+                    customCategory: categoryExist ? null : category,
+                    status: "baru",
+                    title,
+                    description,
+                });
+
+                proposals.push(proposal);
+
+            }
+
+            return res.status(201).json({
+                status: "success",
+                message: "Data proposal berhasil diimport",
+                data: proposals,
+            });
+
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: "Gagal import data proposal" });
         }
     }
 }
