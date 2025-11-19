@@ -47,8 +47,8 @@ model RolePermission {
   roleId       String
   permissionId String
 
-  role       Role       @relation(fields: [roleId], references: [id])
-  permission Permission @relation(fields: [permissionId], references: [id])
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -76,8 +76,8 @@ model User {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
-  chatsAsUserA ChatRoom[] @relation("UserAChats")
-  chatsAsUserB ChatRoom[] @relation("UserBChats")
+  chatsAsUserA ChatRoom[]    @relation("UserAChats")
+  chatsAsUserB ChatRoom[]    @relation("UserBChats")
   sentMessages ChatMessage[] @relation("ChatMessage_senderIdToUser")
 }
 
@@ -92,7 +92,7 @@ model UserProfile {
   imagePath   String?
   imageUrl    String?
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -137,9 +137,9 @@ model UserAccess {
   fractionId String
   public     Boolean
 
-  user     User     @relation(fields: [userId], references: [id])
-  area     Area     @relation(fields: [areaId], references: [id])
-  fraction Fraction @relation(fields: [fractionId], references: [id])
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  area     Area     @relation(fields: [areaId], references: [id], onDelete: Cascade)
+  fraction Fraction @relation(fields: [fractionId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -173,7 +173,7 @@ model Proposal {
 
   user     User      @relation(fields: [userId], references: [id])
   area     Area      @relation(fields: [areaId], references: [id])
-  category Category? @relation(fields: [categoryId], references: [id])
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
   votes         ProposalVote[]
   statuses      ProposalStatus[]
@@ -198,8 +198,8 @@ model ProposalVote {
   proposalId String
   agree      Boolean
 
-  user     User     @relation(fields: [userId], references: [id])
-  proposal Proposal @relation(fields: [proposalId], references: [id])
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  proposal Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -213,8 +213,8 @@ model ProposalStatus {
   status     ProposalStatusEnum
   note       String?
 
-  user     User     @relation(fields: [userId], references: [id])
-  proposal Proposal @relation(fields: [proposalId], references: [id])
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  proposal Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -226,8 +226,8 @@ model ProposalAssignment {
   proposalId String
   roleId     String
 
-  proposal Proposal @relation(fields: [proposalId], references: [id])
-  role     Role     @relation(fields: [roleId], references: [id])
+  proposal Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  role     Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -240,8 +240,8 @@ model ProposalDiscussion {
   userId     String
   message    String
 
-  proposal Proposal                 @relation(fields: [proposalId], references: [id])
-  user     User                     @relation(fields: [userId], references: [id])
+  proposal Proposal                 @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  user     User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
   votes    ProposalDiscussionVote[]
 
   createdAt DateTime  @default(now())
@@ -255,8 +255,8 @@ model ProposalDiscussionVote {
   userId               String
   agree                Boolean
 
-  discussion ProposalDiscussion @relation(fields: [proposalDiscussionId], references: [id])
-  user       User               @relation(fields: [userId], references: [id])
+  discussion ProposalDiscussion @relation(fields: [proposalDiscussionId], references: [id], onDelete: Cascade)
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -269,8 +269,8 @@ model Notification {
   proposalId String
   status     ProposalStatusEnum
 
-  user     User     @relation(fields: [userId], references: [id])
-  proposal Proposal @relation(fields: [proposalId], references: [id])
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  proposal Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -278,15 +278,15 @@ model Notification {
 }
 
 model News {
-  id   String @id @default(uuid())
-  title String
-  content String @db.Text
+  id        String  @id @default(uuid())
+  title     String
+  content   String  @db.Text
   imageName String?
   imagePath String?
   imageUrl  String?
 
-  categoryId String
-  category Category @relation(fields: [categoryId], references: [id])
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -294,29 +294,29 @@ model News {
 }
 
 model ChatRoom {
-  id        String      @id @default(uuid())
-  userAId   String
-  userBId   String
+  id      String @id @default(uuid())
+  userAId String
+  userBId String
 
-  userA     User        @relation("UserAChats", fields: [userAId], references: [id])
-  userB     User        @relation("UserBChats", fields: [userBId], references: [id])
-  messages  ChatMessage[]
+  userA    User          @relation("UserAChats", fields: [userAId], references: [id], onDelete: Cascade)
+  userB    User          @relation("UserBChats", fields: [userBId], references: [id], onDelete: Cascade)
+  messages ChatMessage[]
 
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 }
 
 model ChatMessage {
-  id         String    @id @default(uuid())
-  roomId     String
-  senderId   String
-  message    String
+  id       String @id @default(uuid())
+  roomId   String
+  senderId String
+  message  String
 
-  sender     User      @relation("ChatMessage_senderIdToUser", fields: [senderId], references: [id])
-  room       ChatRoom  @relation(fields: [roomId], references: [id])
+  sender User     @relation("ChatMessage_senderIdToUser", fields: [senderId], references: [id], onDelete: Cascade)
+  room   ChatRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
 
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  deletedAt  DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
