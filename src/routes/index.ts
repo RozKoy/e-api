@@ -18,13 +18,12 @@ import { proposalStatusRouter } from './proposalStatus.routes';
 import { notificationRouter } from './notification.routes';
 import { newsRouter } from './news.routes';
 import { chatRouter } from './chat.routes';
+import { publicRouter } from './public.routes';
 import { authentication } from '@/middlewares/authentication';
-import { NewsController } from '@/controllers/news.controller';
 
 export const router = Router();
 router.use('/auth', authRouter);
-router.get('/news/', NewsController.getAll);
-router.get('/news/:id', NewsController.getOneById);
+router.use('/public', publicRouter);
 router.use(authentication);
 router.use('/users', userRouter);
 router.use('/permissions', permissionRouter);
