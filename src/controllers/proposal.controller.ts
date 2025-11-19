@@ -488,8 +488,11 @@ export class ProposalController {
                 { header: "Deskripsi", key: "description", width: 50 },
                 { header: "Status", key: "status", width: 15 },
                 { header: "Area", key: "area", width: 20 },
+                { header: "Like", key: "like", width: 10 },
+                { header: "Dislike", key: "dislike", width: 10 },
                 { header: "Dibuat Oleh", key: "user", width: 25 },
                 { header: "Tanggal Dibuat", key: "createdAt", width: 20 },
+                { header: "Link", key: "link", width: 30 },
             ];
 
             proposals.forEach((p, index) => {
@@ -500,8 +503,11 @@ export class ProposalController {
                     description: p.description,
                     status: p.status.toUpperCase(),
                     area: p.area?.name || "-",
+                    like: p.like || 0,
+                    dislike: p.dislike || 0,
                     user: p.user?.profile?.name || "-",
                     createdAt: new Date(p.createdAt).toLocaleString("id-ID"),
+                    link: p.fileUrl || "-",
                 });
             });
 

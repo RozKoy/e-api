@@ -121,7 +121,7 @@ export class ProposalService {
     }
 
     static async getExportData(startDate?: Date, endDate?: Date, areaId?: string) {
-        
+
         const where: any = {};
 
         if (startDate && !endDate) {
@@ -142,23 +142,31 @@ export class ProposalService {
             where.areaId = areaId;
         }
 
-        return await prisma.proposal.findMany({
+        const proposals = await prisma.proposal.findMany({
             where,
             select: {
                 id: true,
                 status: true,
                 title: true,
                 description: true,
+                fileUrl: true,
                 area: true,
                 category: true,
+                votes: true,
                 customCategory: true,
                 user: {
                     include: { profile: true },
                 },
                 createdAt: true,
-                updatedAt: true,
+                updatedAt: true
             },
             orderBy: { createdAt: "asc" },
         });
+
+        return proposals.map((p) => ({
+            ...p,
+            like: p.votes.filter(v => v.agree === true).length,
+            dislike: p.votes.filter(v => v.agree === false).length,
+        }));
     }
 }
