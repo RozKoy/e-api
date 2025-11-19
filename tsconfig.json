@@ -18,13 +18,15 @@
     "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@constants/*": ["src/constants/*"],
-      "@controllers/*": ["src/controllers/*"],
-      "@routes/*": ["src/routes/*"],
-      "@middlewares/*": ["src/middlewares/*"],
-      "@libs/*": ["src/libs/*"],
-      "@utils/*": ["src/utils/*"]
+      "@/*": ["src/*", "dist/*"],
+      "@constants/*": ["src/constants/*", "dist/constants/*"],
+      "@controllers/*": ["src/controllers/*", "dist/controllers/*"],
+      "@services/*": ["src/services/*", "dist/services/*"],
+      "@routes/*": ["src/routes/*", "dist/routes/*"],
+      "@middlewares/*": ["src/middlewares/*", "dist/middlewares/*"],
+      "@libs/*": ["src/libs/*", "dist/libs/*"],
+      "@utils/*": ["src/utils/*", "dist/utils/*"],
+      "@generated/*": ["src/generated/*", "dist/generated/*"]
     }
   },
   "include": ["src/**/*"],

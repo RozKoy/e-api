@@ -1,6 +1,6 @@
 import { UserService } from '@/services/user.service';
 import { UserProfileService } from '@/services/userProfile.service';
-import { Gender } from '@prisma/client';
+import { Gender } from '@generated/prisma/client';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 import fs from "fs";

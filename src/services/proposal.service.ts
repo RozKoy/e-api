@@ -1,5 +1,5 @@
 import prisma from "@/libs/prisma";
-import { Prisma, ProposalStatusEnum } from "@prisma/client";
+import { Prisma, ProposalStatusEnum } from "@generated/prisma/client";
 
 export class ProposalService {
 

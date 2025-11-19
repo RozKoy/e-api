@@ -1,5 +1,5 @@
 import prisma from "@/libs/prisma";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@generated/prisma/client";
 
 export class UserProfileService {
     static async create(data: Prisma.UserProfileUncheckedCreateInput) {

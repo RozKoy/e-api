@@ -1,7 +1,12 @@
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+import "dotenv/config";
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '../src/generated/prisma/client'
 
-const prisma = new PrismaClient();
+const connectionString = `${process.env.DATABASE_URL}`
+
+const adapter = new PrismaPg({ connectionString })
+const prisma = new PrismaClient({ adapter })
 
 async function main() {
     console.log("🚀 Menjalankan seeding data...");
@@ -97,12 +102,12 @@ async function main() {
     });
 
     const existingPermissionIds = new Set(
-        existingRolePermissions.map((rp) => rp.permissionId)
+        existingRolePermissions.map((rp : any) => rp.permissionId)
     );
 
     const newRolePermissions = allPermissions
-        .filter((p) => !existingPermissionIds.has(p.id))
-        .map((p) => ({
+        .filter((p : any) => !existingPermissionIds.has(p.id))
+        .map((p : any) => ({
             roleId: adminRole.id,
             permissionId: p.id,
         }));
