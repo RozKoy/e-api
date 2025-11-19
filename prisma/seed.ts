@@ -30,7 +30,6 @@ async function main() {
             // === ROLE PERMISSION MANAGEMENT ===
             { name: "Lihat Hak Akses Peran", group: "Manajemen Hak Akses Peran", description: "Melihat daftar hak akses per peran" },
             { name: "Tambah Hak Akses Peran", group: "Manajemen Hak Akses Peran", description: "Menambahkan hak akses ke peran" },
-            { name: "Tambah Banyak Hak Akses Peran", group: "Manajemen Hak Akses Peran", description: "Menambahkan beberapa hak akses ke peran sekaligus" },
             { name: "Hapus Hak Akses Peran", group: "Manajemen Hak Akses Peran", description: "Menghapus hak akses dari peran" },
 
             // === PERMISSION MANAGEMENT ===
@@ -71,7 +70,15 @@ async function main() {
             { name: "Ubah Proposal", group: "Manajemen Proposal", description: "Mengubah data proposal" },
             { name: "Hapus Proposal", group: "Manajemen Proposal", description: "Menghapus proposal" },
             { name: "Disposisi Proposal", group: "Manajemen Proposal", description: "Mendisposisi proposal" },
-            { name: "Selesaikan Disposisi Proposal", group: "Manajemen Proposal", description: "Menyelesaikan disposisi proposal" },
+            { name: "Lihat Disposisi Proposal", group: "Manajemen Proposal", description: "Melihat disposisi proposal" },
+            { name: "Impor Proposal", group: "Manajemen Proposal", description: "Mengimpor proposal baru" },
+            { name: "Ekspor Proposal", group: "Manajemen Proposal", description: "Mengekspor proposal" },
+
+            // === NEWS MANAGEMENT ===
+            { name: "Buat Berita", group: "Manajemen Berita", description: "Menambahkan berita baru" },
+            { name: "Ubah Berita", group: "Manajemen Berita", description: "Mengubah data berita" },
+            { name: "Hapus Berita", group: "Manajemen Berita", description: "Menghapus berita" },
+
         ],
         skipDuplicates: true,
     });
