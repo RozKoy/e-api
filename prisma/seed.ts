@@ -11,7 +11,6 @@ async function main() {
         data: [
             // === USER MANAGEMENT ===
             { name: "Lihat Pengguna", group: "Manajemen Pengguna", description: "Melihat daftar pengguna" },
-            { name: "Lihat Detail Pengguna", group: "Manajemen Pengguna", description: "Melihat data pengguna tertentu" },
             { name: "Buat Pengguna", group: "Manajemen Pengguna", description: "Membuat pengguna baru" },
             { name: "Ubah Pengguna", group: "Manajemen Pengguna", description: "Mengubah data pengguna" },
             { name: "Hapus Pengguna", group: "Manajemen Pengguna", description: "Menghapus pengguna" },
@@ -22,7 +21,6 @@ async function main() {
 
             // === ROLE MANAGEMENT ===
             { name: "Lihat Peran", group: "Manajemen Peran", description: "Melihat daftar peran" },
-            { name: "Lihat Detail Peran", group: "Manajemen Peran", description: "Melihat data peran tertentu" },
             { name: "Buat Peran", group: "Manajemen Peran", description: "Menambahkan peran baru" },
             { name: "Ubah Peran", group: "Manajemen Peran", description: "Mengubah data peran" },
             { name: "Hapus Peran", group: "Manajemen Peran", description: "Menghapus peran" },
@@ -37,35 +35,30 @@ async function main() {
 
             // === AREA MANAGEMENT ===
             { name: "Lihat Area", group: "Manajemen Area", description: "Melihat daftar area" },
-            { name: "Lihat Detail Area", group: "Manajemen Area", description: "Melihat data area tertentu" },
             { name: "Buat Area", group: "Manajemen Area", description: "Menambahkan area baru" },
             { name: "Ubah Area", group: "Manajemen Area", description: "Mengubah data area" },
             { name: "Hapus Area", group: "Manajemen Area", description: "Menghapus area" },
 
             // === FRACTION MANAGEMENT ===
             { name: "Lihat Fraksi", group: "Manajemen Fraksi", description: "Melihat daftar fraksi" },
-            { name: "Lihat Detail Fraksi", group: "Manajemen Fraksi", description: "Melihat data fraksi tertentu" },
             { name: "Buat Fraksi", group: "Manajemen Fraksi", description: "Menambahkan fraksi baru" },
             { name: "Ubah Fraksi", group: "Manajemen Fraksi", description: "Mengubah data fraksi" },
             { name: "Hapus Fraksi", group: "Manajemen Fraksi", description: "Menghapus fraksi" },
 
             // === USER ACCESS MANAGEMENT ===
             { name: "Lihat Akses Pengguna", group: "Manajemen Akses Pengguna", description: "Melihat daftar akses pengguna" },
-            { name: "Lihat Detail Akses Pengguna", group: "Manajemen Akses Pengguna", description: "Melihat detail akses pengguna" },
             { name: "Buat Akses Pengguna", group: "Manajemen Akses Pengguna", description: "Menambahkan akses pengguna baru" },
             { name: "Ubah Akses Pengguna", group: "Manajemen Akses Pengguna", description: "Mengubah data akses pengguna" },
             { name: "Hapus Akses Pengguna", group: "Manajemen Akses Pengguna", description: "Menghapus akses pengguna" },
 
             // === CATEGORY MANAGEMENT ===
             { name: "Lihat Kategori", group: "Manajemen Kategori", description: "Melihat daftar kategori" },
-            { name: "Lihat Detail Kategori", group: "Manajemen Kategori", description: "Melihat detail kategori" },
             { name: "Buat Kategori", group: "Manajemen Kategori", description: "Menambahkan kategori baru" },
             { name: "Ubah Kategori", group: "Manajemen Kategori", description: "Mengubah data kategori" },
             { name: "Hapus Kategori", group: "Manajemen Kategori", description: "Menghapus kategori" },
 
             // === PROPOSAL MANAGEMENT ===
             { name: "Lihat Proposal", group: "Manajemen Proposal", description: "Melihat daftar proposal" },
-            { name: "Lihat Detail Proposal", group: "Manajemen Proposal", description: "Melihat data proposal tertentu" },
             { name: "Buat Proposal", group: "Manajemen Proposal", description: "Menambahkan proposal baru" },
             { name: "Ubah Proposal", group: "Manajemen Proposal", description: "Mengubah data proposal" },
             { name: "Hapus Proposal", group: "Manajemen Proposal", description: "Menghapus proposal" },

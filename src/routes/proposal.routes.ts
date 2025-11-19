@@ -9,6 +9,6 @@ proposalRouter.post('/', authorization('Buat Proposal'), upload.single('file'), 
 proposalRouter.post('/import', authorization('Impor Proposal'), upload.single('file'), ProposalController.import);
 proposalRouter.get('/export', authorization('Ekspor Proposal'), ProposalController.export);
 proposalRouter.get('/', authorization('Lihat Proposal'), ProposalController.getAll);
-proposalRouter.get('/:id', authorization('Lihat Detail Proposal'), ProposalController.getOneById);
+proposalRouter.get('/:id', authorization('Lihat Proposal'), ProposalController.getOneById);
 proposalRouter.put('/:id', authorization('Ubah Proposal'), upload.single('file'), ProposalController.update);
 proposalRouter.delete('/:id', authorization('Hapus Proposal'), ProposalController.delete);

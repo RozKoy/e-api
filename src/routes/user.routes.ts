@@ -6,6 +6,6 @@ export const userRouter = Router();
 
 userRouter.post('/', authorization('Buat Pengguna'), UserController.create);
 userRouter.get('/', authorization('Lihat Pengguna'), UserController.getAll);
-userRouter.get('/:id', authorization('Lihat Detail Pengguna'), UserController.getOneById);
+userRouter.get('/:id', authorization('Lihat Pengguna'), UserController.getOneById);
 userRouter.put('/:id', authorization('Ubah Pengguna'), UserController.update);
 userRouter.delete('/:id', authorization('Hapus Pengguna'), UserController.delete);

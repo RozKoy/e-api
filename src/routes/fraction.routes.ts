@@ -7,6 +7,6 @@ export const fractionRouter = Router();
 
 fractionRouter.post('/', authorization('Buat Fraksi'), upload.single('image'), FractionController.create);
 fractionRouter.get('/', authorization('Lihat Fraksi'), FractionController.getAll);
-fractionRouter.get('/:id', authorization('Lihat Detail Fraksi'), FractionController.getOneById);
+fractionRouter.get('/:id', authorization('Lihat Fraksi'), FractionController.getOneById);
 fractionRouter.put('/:id', authorization('Update Fraksi'), upload.single('image'), FractionController.update);
 fractionRouter.delete('/:id', authorization('Hapus Fraksi'), FractionController.delete);
