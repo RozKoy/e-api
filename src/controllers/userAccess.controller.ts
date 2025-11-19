@@ -59,7 +59,7 @@ export class UserAccessController {
                 });
             }
 
-            const userAccessExist = await UserAccessService.getOneByUserIdAndAreaIdAndFractionId(userId, areaId, fractionId);
+            const userAccessExist = await UserAccessService.getByUserId(userId);
 
             if (userAccessExist) {
                 return res.status(400).json({
@@ -68,12 +68,12 @@ export class UserAccessController {
                 });
             }
 
-            const userAccesses = await UserAccessService.create({ userId, areaId, fractionId, public: publicUser });
+            const userAccess = await UserAccessService.create({ userId, areaId, fractionId, public: publicUser });
 
             return res.status(201).json({
                 status: 'success',
                 message: 'Data user akses berhasil ditambahkan',
-                data: userAccesses
+                data: userAccess
             });
 
         } catch (error) {
