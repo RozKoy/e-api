@@ -56,11 +56,13 @@ model RolePermission {
 model User {
   id           String    @id @default(uuid())
   roleId       String?
+  positionId   String?
   email        String    @unique
   password     String
   lastActiveAt DateTime?
 
   role                    Role?                    @relation(fields: [roleId], references: [id])
+  position                Position?                @relation(fields: [positionId], references: [id], onDelete: SetNull)
   profile                 UserProfile?
   accesses                UserAccess[]
   proposals               Proposal[]
@@ -77,6 +79,44 @@ model User {
   chatsAsUserA ChatRoom[]    @relation("UserAChats")
   chatsAsUserB ChatRoom[]    @relation("UserBChats")
   sentMessages ChatMessage[] @relation("ChatMessage_senderIdToUser")
+}
+
+model Position {
+  id           String  @id @default(uuid())
+  name         String
+  category     PositionCategory
+  level        PosisionLevel
+  commissionId String?
+
+  users      User[]
+  commission Commission? @relation(fields: [commissionId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+enum PositionCategory {
+  pimpinan
+  komisi
+}
+
+enum PosisionLevel {
+  ketua
+  wakil
+  sekretaris
+  anggota
+}
+
+model Commission {
+  id   String @id @default(uuid())
+  name String
+
+  positions Position[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
 
 model UserProfile {
