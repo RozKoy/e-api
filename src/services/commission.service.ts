@@ -1,7 +1,7 @@
 import prisma  from "@/libs/prisma";
 import { Prisma } from "@generated/prisma/client";
 
-export class Commissionservice {
+export class CommissionService {
     static async create(data: Prisma.CommissionUncheckedCreateInput) {
         return await prisma.commission.create({ data });
     }

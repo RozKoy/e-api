@@ -1,4 +1,4 @@
-import { Commissionservice } from '@/services/commission.service';
+import { CommissionService } from '@/services/commission.service';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 
@@ -29,7 +29,7 @@ export class CommissionController {
 
             }
 
-            const commissionExist = await Commissionservice.getOneByName(name);
+            const commissionExist = await CommissionService.getOneByName(name);
 
             if (commissionExist) {
                 return res.status(400).json({
@@ -38,7 +38,7 @@ export class CommissionController {
                 });
             }
 
-            const data = await Commissionservice.create({ name });
+            const data = await CommissionService.create({ name });
 
             return res.status(201).json({
                 status: 'success',
@@ -58,7 +58,7 @@ export class CommissionController {
 
         try {
 
-            const data = await Commissionservice.getAll(search, Number(page), Number(limit));
+            const data = await CommissionService.getAll(search, Number(page), Number(limit));
 
             res.status(200).json({
                 status: 'success',
@@ -90,7 +90,7 @@ export class CommissionController {
 
         try {
 
-            const data = await Commissionservice.getOneById(id);
+            const data = await CommissionService.getOneById(id);
 
             res.status(200).json({
                 status: 'success',
@@ -138,7 +138,7 @@ export class CommissionController {
                 });
             }
 
-            const commissionExist = await Commissionservice.getOneById(id);
+            const commissionExist = await CommissionService.getOneById(id);
 
             if (!commissionExist) {
                 return res.status(400).json({
@@ -147,7 +147,7 @@ export class CommissionController {
                 });
             }
 
-            const commissionNameExist = await Commissionservice.getOneByName(name, id);
+            const commissionNameExist = await CommissionService.getOneByName(name, id);
 
             if (commissionNameExist) {
                 return res.status(400).json({
@@ -156,7 +156,7 @@ export class CommissionController {
                 });
             }
 
-            const data = await Commissionservice.update(id, { name });
+            const data = await CommissionService.update(id, { name });
 
             res.status(200).json({
                 status: 'success',
@@ -186,7 +186,7 @@ export class CommissionController {
 
         try {
 
-            const commissionExist = await Commissionservice.getOneById(id);
+            const commissionExist = await CommissionService.getOneById(id);
 
             if (!commissionExist) {
                 return res.status(400).json({
@@ -195,7 +195,7 @@ export class CommissionController {
                 });
             }
 
-            const data = await Commissionservice.delete(id);
+            const data = await CommissionService.delete(id);
 
             res.status(200).json({
                 status: 'success',
