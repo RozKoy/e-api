@@ -1,6 +1,7 @@
 import { PermissionService } from '@/services/permission.service';
 import { RoleService } from '@/services/role.service';
 import { RolePermissionService } from '@/services/rolePermission.service';
+import { empty } from '@prisma/client/runtime/client';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 
@@ -23,8 +24,8 @@ export class RoleController {
                         props: {
                             id: { type: "string", empty: false }
                         }
-                    }, 
-                    optional: true
+                    },
+                    empty: false 
                 }
             }
 
@@ -155,8 +156,8 @@ export class RoleController {
                         props: {
                             id: { type: "string", empty: false }
                         }
-                    }, 
-                    optional: true
+                    },
+                    empty: false 
                 }
             }
 
