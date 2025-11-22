@@ -11,6 +11,7 @@ import { AuthenticatedRequest } from '@/types/authenticatedRequest';
 import { NotificationService } from '@/services/notification.service';
 import ExcelJS from "exceljs";
 import { UserAccessService } from '@/services/userAccess.service';
+import { RolePermissionService } from '@/services/rolePermission.service';
 
 export class ProposalController {
     static async create(req: AuthenticatedRequest, res: Response) {
@@ -196,9 +197,11 @@ export class ProposalController {
         }
     }
 
-    static async update(req: Request, res: Response) {
+    static async update(req: AuthenticatedRequest, res: Response) {
 
         const { id } = req.params;
+
+        const userId = req.payload!.userId;
 
         const { areaId, categoryId, title, description, customCategory } = req.body;
 
@@ -242,6 +245,14 @@ export class ProposalController {
                 return res.status(404).json({
                     status: "error",
                     message: "Proposal tidak ditemukan"
+                });
+            }
+
+            if(proposalExist.userId !== userId) {
+                if (file) fs.unlinkSync(file.path);
+                return res.status(403).json({
+                    status: "error",
+                    message: "Anda tidak memiliki izin untuk mengubah proposal ini"
                 });
             }
 
@@ -351,10 +362,14 @@ export class ProposalController {
         }
     }
 
-    static async delete(req: Request, res: Response) {
+    static async delete(req: AuthenticatedRequest, res: Response) {
         const { id } = req.params;
 
+        const {userId, roleId} = req.payload!;
+
         try {
+
+            const userPermission = await RolePermissionService.getAllByRoleId(roleId as string);
 
             const proposalExist = await ProposalService.getOneById(id);
 
@@ -362,6 +377,20 @@ export class ProposalController {
                 return res.status(404).json({
                     status: "error",
                     message: "Proposal tidak ditemukan"
+                });
+            }
+
+            if(proposalExist.userId !== userId && !userPermission.some(permission => permission.permission.name === "Hapus Proposal")) {
+                return res.status(403).json({
+                    status: "error",
+                    message: "Anda tidak memiliki izin untuk menghapus proposal ini"
+                });
+            }
+
+            if(userId !== proposalExist.userId && proposalExist.status !== "baru") {
+                return res.status(400).json({
+                    status: "error",
+                    message: "Proposal sudah diproses"
                 });
             }
 

@@ -63,9 +63,6 @@ async function main() {
             { name: "Hapus Kategori", group: "Manajemen Kategori", description: "Menghapus kategori" },
 
             // === PROPOSAL MANAGEMENT ===
-            { name: "Lihat Proposal", group: "Manajemen Proposal", description: "Melihat daftar proposal" },
-            { name: "Buat Proposal", group: "Manajemen Proposal", description: "Menambahkan proposal baru" },
-            { name: "Ubah Proposal", group: "Manajemen Proposal", description: "Mengubah data proposal" },
             { name: "Hapus Proposal", group: "Manajemen Proposal", description: "Menghapus proposal" },
             { name: "Disposisi Proposal", group: "Manajemen Proposal", description: "Mendisposisi proposal" },
             { name: "Lihat Disposisi Proposal", group: "Manajemen Proposal", description: "Melihat disposisi proposal" },
