@@ -74,6 +74,12 @@ async function main() {
             { name: "Ubah Berita", group: "Manajemen Berita", description: "Mengubah data berita" },
             { name: "Hapus Berita", group: "Manajemen Berita", description: "Menghapus berita" },
 
+            // === COMMISSION MANAGEMENT ===
+            { name: "Lihat Komisi", group: "Manajemen komisi", description: "Melihat daftar komisi" },
+            { name: "Buat Komisi", group: "Manajemen komisi", description: "Menambahkan komisi baru" },
+            { name: "Ubah Komisi", group: "Manajemen komisi", description: "Mengubah data komisi" },
+            { name: "Hapus Komisi", group: "Manajemen komisi", description: "Menghapus area" },
+
         ],
         skipDuplicates: true,
     });
