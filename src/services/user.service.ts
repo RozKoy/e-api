@@ -1,5 +1,5 @@
 import prisma from "@/libs/prisma";
-import { Prisma } from "@generated/prisma/client";
+import { PositionCategory, Prisma } from "@generated/prisma/client";
 
 export class UserService {
 
@@ -7,11 +7,13 @@ export class UserService {
         return await prisma.user.create({ data });
     }
 
-    static async getAll(search?: string, page?: number, limit?: number, roleId?: string) {
+    static async getAll(search?: string, page?: number, limit?: number, roleId?: string, areaId?: string, fractionId?: string) {
         if (!page) {
             const users = await prisma.user.findMany({
                 where: {
                     ...(roleId ? { roleId: roleId } : undefined),
+                    ...(areaId ? { accesses: { some: { areaId: areaId } } } : undefined),
+                    ...(fractionId ? { accesses: { some: { fractionId: fractionId } } } : undefined),
                     ...(search ? { OR: [{ profile: { name: { contains: search, mode: "insensitive" } } }, { email: { contains: search, mode: "insensitive" } }] } : undefined),
                 },
                 select: {
@@ -19,6 +21,17 @@ export class UserService {
                     email: true,
                     roleId: true,
                     role: true,
+                    accesses:{
+                        include: {
+                            area: true,
+                            fraction: true,
+                        }
+                    },
+                    position: {
+                        include: {
+                            commission: true,
+                        },
+                    },
                     profile: true,
                     createdAt: true,
                     updatedAt: true,
@@ -41,6 +54,8 @@ export class UserService {
                 take,
                 where: {
                     ...(roleId ? { roleId: roleId } : undefined),
+                    ...(areaId ? { accesses: { some: { areaId: areaId } } } : undefined),
+                    ...(fractionId ? { accesses: { some: { fractionId: fractionId } } } : undefined),
                     ...(search ? { OR: [{ profile: { name: { contains: search, mode: "insensitive" } } }, { email: { contains: search, mode: "insensitive" } }] } : undefined),
                 },
                 select: {
@@ -48,6 +63,17 @@ export class UserService {
                     email: true,
                     roleId: true,
                     role: true,
+                    accesses:{
+                        include: {
+                            area: true,
+                            fraction: true,
+                        }
+                    },
+                    position: {
+                        include: {
+                            commission: true,
+                        },
+                    },
                     profile: true,
                     createdAt: true,
                     updatedAt: true,
@@ -73,7 +99,7 @@ export class UserService {
     }
 
     static async getOneById(id: string) {
-        return await prisma.user.findUnique({ where: { id }, select: { id: true, email: true, roleId: true, profile: true, role: true, createdAt: true, updatedAt: true } });
+        return await prisma.user.findUnique({ where: { id }, select: { id: true, email: true, roleId: true, profile: true, role: true, accesses: { include: { area: true, fraction: true } }, position: { include: { commission: true } }, createdAt: true, updatedAt: true } });
     }
 
     static async update(id: string, data: Prisma.UserUncheckedUpdateInput) {
@@ -89,5 +115,54 @@ export class UserService {
 
     static async delete(id: string) {
         return await prisma.user.delete({ where: { id } });
+    }
+
+    static async getStructural(){
+
+        const [leaders, commissions] = await Promise.all([
+            prisma.user.findMany({
+                where: {
+                    position: {
+                        category: PositionCategory.pimpinan
+                    },
+                },
+                select: {
+                    id: true,
+                    email: true,
+                    roleId: true,
+                    profile: true,
+                    position: true,
+                    createdAt: true,
+                    updatedAt: true,
+                },
+            }),
+
+            prisma.user.findMany({
+                where: {
+                    position: {
+                        category: PositionCategory.komisi
+                    },
+                },
+                select: {
+                    id: true,
+                    email: true,
+                    roleId: true,
+                    profile: true,
+                    position: {
+                        include: {
+                            commission: true
+                        }
+                    },
+                    createdAt: true,
+                    updatedAt: true,
+                },
+            }),
+        ])
+
+        return {
+            leaders,
+            commissions,
+            total: leaders.length + commissions.length
+        }
     }
 }
