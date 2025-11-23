@@ -80,6 +80,12 @@ async function main() {
             { name: "Ubah Komisi", group: "Manajemen komisi", description: "Mengubah data komisi" },
             { name: "Hapus Komisi", group: "Manajemen komisi", description: "Menghapus area" },
 
+            // === POSITION MANAGEMENT ===
+            { name: "Lihat Posisi", group: "Manajemen posisi", description: "Melihat daftar posisi" },
+            { name: "Buat Posisi", group: "Manajemen posisi", description: "Menambahkan posisi baru" },
+            { name: "Ubah Posisi", group: "Manajemen posisi", description: "Mengubah data posisi" },
+            { name: "Hapus Posisi", group: "Manajemen posisi", description: "Menghapus area" },
+
         ],
         skipDuplicates: true,
     });
