@@ -1,16 +1,17 @@
-import { AreaService } from '@/services/area.service';
+import { CommissionService } from '@/services/commission.service';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 
-export class AreaController {
+export class CommissionController {
+
     static async create(req: Request, res: Response) {
 
         const { name } = req.body;
 
         try {
-            
+
             const v = new Validator();
-            
+
             const schema = {
                 name: { type: "string" }
             };
@@ -25,29 +26,29 @@ export class AreaController {
                     status: 'error',
                     message: validationResponse
                 });
-            
+
             }
 
-            const areaExist = await AreaService.getOneByName(name);
+            const commissionExist = await CommissionService.getOneByName(name);
 
-            if (areaExist) {
+            if (commissionExist) {
                 return res.status(400).json({
                     status: 'error',
-                    message: 'Area sudah terdaftar'
+                    message: 'Komisi sudah ada'
                 });
             }
 
-            const data = await AreaService.create({ name });
-            
+            const data = await CommissionService.create({ name });
+
             return res.status(201).json({
                 status: 'success',
-                message: 'Data area berhasil ditambahkan',
+                message: 'Data komisi berhasil ditambahkan',
                 data
             })
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal menambahkan data area' });
+            return res.status(500).json({ error: 'Gagal menambahkan data komisi' });
         }
     }
 
@@ -57,12 +58,12 @@ export class AreaController {
 
         try {
 
-            const data = await AreaService.getAll(search, Number(page), Number(limit));
+            const data = await CommissionService.getAll(search, Number(page), Number(limit));
 
             res.status(200).json({
                 status: 'success',
-                message: 'Data area berhasil didapatkan',
-                data : data.data,
+                message: 'Data komisi berhasil didapatkan',
+                data: data.data,
                 totalData: data.totalData,
                 totalPage: data.totalPages
             });
@@ -71,7 +72,7 @@ export class AreaController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data area' });
+            return res.status(500).json({ error: 'Gagal mendapatkan data komisi' });
 
         }
     }
@@ -89,11 +90,11 @@ export class AreaController {
 
         try {
 
-            const data = await AreaService.getOneById(id);
+            const data = await CommissionService.getOneById(id);
 
             res.status(200).json({
                 status: 'success',
-                message: 'Data area berhasil didapatkan',
+                message: 'Data komisi berhasil didapatkan',
                 data
             });
 
@@ -101,7 +102,7 @@ export class AreaController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data area' });
+            return res.status(500).json({ error: 'Gagal mendapatkan data komisi' });
 
         }
     }
@@ -137,29 +138,29 @@ export class AreaController {
                 });
             }
 
-            const areaExist = await AreaService.getOneById(id);
+            const commissionExist = await CommissionService.getOneById(id);
 
-            if (!areaExist) {
+            if (!commissionExist) {
                 return res.status(400).json({
                     status: 'error',
-                    message: 'Area tidak ditemukan'
+                    message: 'Komisi tidak ditemukan'
                 });
             }
 
-            const areaNameExist = await AreaService.getOneByName(name, id);
+            const commissionNameExist = await CommissionService.getOneByName(name, id);
 
-            if (areaNameExist) {
+            if (commissionNameExist) {
                 return res.status(400).json({
                     status: 'error',
-                    message: 'Area sudah terdaftar'
+                    message: 'Komisi sudah terdaftar'
                 });
             }
 
-            const data = await AreaService.update(id, { name });
+            const data = await CommissionService.update(id, { name });
 
             res.status(200).json({
                 status: 'success',
-                message: 'Data area berhasil diubah',
+                message: 'Data komisi berhasil diubah',
                 data
             });
 
@@ -167,7 +168,7 @@ export class AreaController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mengubah data area' });
+            return res.status(500).json({ error: 'Gagal mengubah data komisi' });
 
         }
     }
@@ -185,20 +186,20 @@ export class AreaController {
 
         try {
 
-            const areaExist = await AreaService.getOneById(id);
+            const commissionExist = await CommissionService.getOneById(id);
 
-            if (!areaExist) {
+            if (!commissionExist) {
                 return res.status(400).json({
                     status: 'error',
-                    message: 'Area tidak ditemukan'
+                    message: 'Komisi tidak ditemukan'
                 });
             }
 
-            const data = await AreaService.delete(id);
+            const data = await CommissionService.delete(id);
 
             res.status(200).json({
                 status: 'success',
-                message: 'Data area berhasil dihapus',
+                message: 'Data komisi berhasil dihapus',
                 data
             });
 
@@ -206,7 +207,7 @@ export class AreaController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal menghapus data area' });
+            return res.status(500).json({ error: 'Gagal menghapus data komisi' });
 
         }
     }

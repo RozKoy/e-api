@@ -19,6 +19,8 @@ import { notificationRouter } from './notification.routes';
 import { newsRouter } from './news.routes';
 import { chatRouter } from './chat.routes';
 import { publicRouter } from './public.routes';
+import { commissionRouter } from './commission.routes';
+import { positionRouter } from './position.routes';
 import { authentication } from '@/middlewares/authentication';
 
 export const router = Router();
@@ -43,3 +45,5 @@ router.use('/proposalStatuses', proposalStatusRouter);
 router.use('/notifications', notificationRouter);
 router.use('/news', newsRouter);
 router.use('/chats', chatRouter);
+router.use('/commissions', commissionRouter);
+router.use('/positions', positionRouter);

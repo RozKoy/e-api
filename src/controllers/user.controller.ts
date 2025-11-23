@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 export class UserController {
   static async create(req: Request, res: Response) {
 
-    const { email, password, roleId } = req.body
+    const { email, password, roleId, positionId } = req.body
 
     try {
 
@@ -16,12 +16,13 @@ export class UserController {
       const schema = {
         email: { type: "email" },
         password: { type: "string", min: 8 },
-        roleId: { type: "string" }
+        roleId: { type: "string" },
+        positionId: { type: "string", optional: true }
       };
 
       const check = v.compile(schema);
 
-      const validationResponse = check({ email, password, roleId });
+      const validationResponse = check({ email, password, roleId, positionId });
 
       if (validationResponse !== true) {
         return res.status(400).json({
@@ -48,9 +49,20 @@ export class UserController {
         });
       }
 
+      if(positionId) {
+        const positionExist = await RoleService.getOneById(positionId);
+
+        if (!positionExist) {
+          return res.status(400).json({
+            status: 'error',
+            message: 'Posisi tidak ditemukan'
+          });
+        }
+      }
+
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const data = await UserService.create({ email, password: hashedPassword, roleId });
+      const data = await UserService.create({ email, password: hashedPassword, roleId, positionId });
 
       const { password: _pass, ...user } = data;
 
@@ -71,11 +83,11 @@ export class UserController {
 
   static async getAll(req: Request, res: Response) {
 
-    const { search, page, limit, roleId } = req.query as { search?: string, page?: number, limit?: number, roleId?: string };
+    const { search, page, limit, roleId, areaId, fractionId } = req.query as { search?: string, page?: number, limit?: number, roleId?: string, areaId?: string, fractionId?: string };
 
     try {
 
-      const data = await UserService.getAll(search, Number(page), Number(limit), roleId);
+      const data = await UserService.getAll(search, Number(page), Number(limit), roleId, areaId, fractionId);
 
       res.status(200).json({
         status: 'success',
@@ -84,7 +96,7 @@ export class UserController {
         totalData: data.totalData,
         totalPage: data.totalPages
       });
-      
+
     } catch (error) {
 
       console.log(error);
@@ -120,7 +132,7 @@ export class UserController {
   static async update(req: Request, res: Response) {
 
     const { id } = req.params;
-    const { email, password, roleId } = req.body;
+    const { email, password, roleId, positionId } = req.body;
 
     if (!id) {
       return res.status(400).json({
@@ -162,9 +174,22 @@ export class UserController {
 
       }
 
+      if (positionId) {
+
+        const positionExist = await RoleService.getOneById(positionId);
+
+        if (!positionExist) {
+          return res.status(400).json({
+            status: 'error',
+            message: 'Posisi tidak ditemukan'
+          });
+        }
+
+      }
+
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const updatedUser = await UserService.update(id, { email, password: hashedPassword, roleId });
+      const updatedUser = await UserService.update(id, { email, password: hashedPassword, roleId, positionId });
 
       const { password: _pass, ...data } = updatedUser;
 
@@ -212,6 +237,110 @@ export class UserController {
 
       return res.status(500).json({ error: 'Gagal hapus data user' });
 
+    }
+  }
+
+  static async getStructural(req: Request, res: Response) {
+    try {
+      const structural = await UserService.getStructural();
+
+      const grouped: {
+        pimpinan: Record<
+          string,
+          {
+            id: string;
+            name: string;
+            email: string;
+            positionCategory: string;
+            positionId: string;
+            position: string;
+            level: string;
+          }[]
+        >;
+
+        komisi: Record<
+          string,
+          Record<
+            string,
+            {
+              id: string;
+              name: string;
+              email: string;
+              positionCategory: string;
+              positionId: string;
+              position: string;
+              level: string;
+              commissionId: string;
+              commission: string;
+            }[]
+          >
+        >;
+      } = {
+        pimpinan: {
+          ketua: [],
+          wakil: [],
+          sekretaris: [],
+          anggota: [],
+        },
+        komisi: {},
+      };
+
+      structural.leaders.forEach((user) => {
+        const level = user.position?.level;
+        if (level && grouped.pimpinan[level]) {
+          grouped.pimpinan[level].push({
+            id: user.id,
+            name: user.profile?.name || '-',
+            email: user.email,
+            positionCategory: user.position?.category || '-',
+            positionId: user.position?.id || '-',
+            position: user.position?.name || '-',
+            level: user.position?.level || '-',
+          });
+        }
+      });
+
+      structural.commissions.forEach((user) => {
+        const commissionName = user.position?.commission?.name || '-';
+        const level = user.position?.level;
+
+        if (!grouped.komisi[commissionName]) {
+          grouped.komisi[commissionName] = {
+            ketua: [],
+            wakil: [],
+            sekretaris: [],
+            anggota: [],
+          };
+        }
+
+        if (level && grouped.komisi[commissionName][level]) {
+          grouped.komisi[commissionName][level].push({
+            id: user.id,
+            name: user.profile?.name || '-',
+            email: user.email,
+            positionCategory: user.position?.category || '-',
+            positionId: user.position?.id || '-',
+            position: user.position?.name || '-',
+            level: user.position?.level || '-',
+            commissionId: user.position?.commission?.id || '-',
+            commission: user.position?.commission?.name || '-',
+          });
+        }
+      });
+
+      return res.status(200).json({
+        status: 'success',
+        message: 'Struktur berhasil didapatkan',
+        data: grouped,
+        total: structural.total
+      });
+
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        status: 'error',
+        message: 'Gagal mendapatkan struktur',
+      });
     }
   }
 

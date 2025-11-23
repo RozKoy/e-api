@@ -74,6 +74,18 @@ async function main() {
             { name: "Ubah Berita", group: "Manajemen Berita", description: "Mengubah data berita" },
             { name: "Hapus Berita", group: "Manajemen Berita", description: "Menghapus berita" },
 
+            // === COMMISSION MANAGEMENT ===
+            { name: "Lihat Komisi", group: "Manajemen komisi", description: "Melihat daftar komisi" },
+            { name: "Buat Komisi", group: "Manajemen komisi", description: "Menambahkan komisi baru" },
+            { name: "Ubah Komisi", group: "Manajemen komisi", description: "Mengubah data komisi" },
+            { name: "Hapus Komisi", group: "Manajemen komisi", description: "Menghapus area" },
+
+            // === POSITION MANAGEMENT ===
+            { name: "Lihat Posisi", group: "Manajemen posisi", description: "Melihat daftar posisi" },
+            { name: "Buat Posisi", group: "Manajemen posisi", description: "Menambahkan posisi baru" },
+            { name: "Ubah Posisi", group: "Manajemen posisi", description: "Mengubah data posisi" },
+            { name: "Hapus Posisi", group: "Manajemen posisi", description: "Menghapus area" },
+
         ],
         skipDuplicates: true,
     });
