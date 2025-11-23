@@ -147,8 +147,8 @@ export class RoleController {
             const v = new Validator();
 
             const schema = {
-                name: { type: "string", optional: true, empty: false },
-                description: { type: "string", optional: true },
+                name: { type: "string", empty: false },
+                description: { type: "string", optional: true, empty: false },
                 permissionIds: {
                     type: "array", 
                     items: {
@@ -157,6 +157,7 @@ export class RoleController {
                             id: { type: "string", empty: false }
                         }
                     },
+                    optional: true,
                     empty: false 
                 }
             }

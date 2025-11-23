@@ -3,6 +3,7 @@ import { UserService } from '@/services/user.service';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 import bcrypt from 'bcrypt';
+import { empty } from '@prisma/client/runtime/client';
 
 export class UserController {
   static async create(req: Request, res: Response) {
@@ -16,8 +17,8 @@ export class UserController {
       const schema = {
         email: { type: "email" },
         password: { type: "string", min: 8 },
-        roleId: { type: "string" },
-        positionId: { type: "string", optional: true }
+        roleId: { type: "string", optional: true, empty: false },
+        positionId: { type: "string", optional: true, empty: false }
       };
 
       const check = v.compile(schema);
@@ -142,6 +143,26 @@ export class UserController {
     }
 
     try {
+
+      const v = new Validator();
+
+      const schema = {
+        email: { type: "email" },
+        password: { type: "string", min: 8 },
+        roleId: { type: "string", optional: true, empty: false },
+        positionId: { type: "string", optional: true, empty: false }
+      };
+
+      const check = v.compile(schema);
+
+      const validationResponse = check({ email, password, roleId, positionId });
+
+      if (validationResponse !== true) {
+        return res.status(400).json({
+          status: 'error',
+          message: validationResponse
+        });
+      }
 
       const userExist = await UserService.getOneById(id);
 

@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 import path from 'path';
 import fs from 'fs';
+import { empty } from '@prisma/client/runtime/client';
 
 export class NewsController {
     static async create(req: Request, res: Response) {
@@ -15,9 +16,9 @@ export class NewsController {
         const v = new Validator();
 
         const schema = {
-            title: { type: "string" },
-            content: { type: "string" },
-            categoryId: { type: "string" }
+            title: { type: "string", empty: false },
+            content: { type: "string", empty: false },
+            categoryId: { type: "string", empty: false }
         };
 
         try {
@@ -157,9 +158,9 @@ export class NewsController {
         const v = new Validator();
 
         const schema = {
-            title: { type: "string", optional: true },
-            content: { type: "string", optional: true },
-            categoryId: { type: "string", optional: true }
+            title: { type: "string", empty: false },
+            content: { type: "string", empty: false },
+            categoryId: { type: "string", empty: false }
         };
 
         try {

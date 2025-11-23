@@ -13,7 +13,7 @@ export class CommissionController {
             const v = new Validator();
 
             const schema = {
-                name: { type: "string" }
+                name: { type: "string", empty: false }
             };
 
             const check = v.compile(schema);
@@ -124,7 +124,7 @@ export class CommissionController {
             const v = new Validator();
 
             const schema = {
-                name: { type: "string", optional: true }
+                name: { type: "string", empty: false }
             };
 
             const check = v.compile(schema);

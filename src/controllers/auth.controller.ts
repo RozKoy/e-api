@@ -74,10 +74,10 @@ export class AuthController {
     const v = new Validator();
 
     const schema = {
-      email: { type: "email" },
+      email: { type: "email", },
       password: { type: "string", min: 8 },
-      name: { type: "string" },
-      roleId: { type: "string", optional: true }
+      name: { type: "string", empty: false },
+      roleId: { type: "string", optional: true, empty: false }
     };
 
     try {

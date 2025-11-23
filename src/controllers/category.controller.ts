@@ -11,7 +11,7 @@ export class CategoryController {
         const v = new Validator();
 
         const schema = {
-            name: { type: "string" }
+            name: { type: "string", empty: false }
         };
 
         try {
@@ -114,7 +114,24 @@ export class CategoryController {
             });
         }
 
+        const v = new Validator();
+
+        const schema = {
+            name: { type: "string", empty: false }
+        };
+
         try {
+
+            const check = v.compile(schema);
+
+            const validationResponse = check({ name });
+
+            if (validationResponse !== true) {
+                return res.status(400).json({
+                    status: 'error',
+                    message: validationResponse
+                });
+            }
 
             const categoryExist = await CategoryService.getOneById(id);
 

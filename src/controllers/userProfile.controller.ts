@@ -37,10 +37,10 @@ export class UserProfileController {
             const v = new Validator();
 
             const schema = {
-                name: { type: "string" },
-                age: { type: "number", optional: true },
-                gender: { type: "enum", values: Object.values(Gender), optional: true },
-                phoneNumber: { type: "string", optional: true },
+                name: { type: "string", empty: false },
+                age: { type: "number", optional: true, empty: false },
+                gender: { type: "enum", values: Object.values(Gender), optional: true, empty: false },
+                phoneNumber: { type: "string", optional: true, empty: false },
             };
 
             const check = v.compile(schema);
@@ -145,10 +145,10 @@ export class UserProfileController {
             const v = new Validator();
 
             const schema = {
-                name: { type: "string", optional: true },
-                age: { type: "number", optional: true },
-                gender: { type: "enum", values: Object.values(Gender), optional: true },
-                phoneNumber: { type: "string", optional: true },
+                name: { type: "string", optional: true, empty: false },
+                age: { type: "number", optional: true, empty: false },
+                gender: { type: "enum", values: Object.values(Gender), optional: true, empty: false },
+                phoneNumber: { type: "string", optional: true, empty: false },
             };
 
             const check = v.compile(schema);

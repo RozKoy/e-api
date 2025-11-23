@@ -25,12 +25,12 @@ export class ProposalController {
         const v = new Validator();
 
         const schema = {
-            userId: { type: "string" },
-            areaId: { type: "string" },
-            categoryId: { type: "string", optional: true },
-            title: { type: "string" },
-            description: { type: "string" },
-            customCategory: { type: "string", optional: true }
+            userId: { type: "string", empty: false },
+            areaId: { type: "string", empty: false },
+            categoryId: { type: "string", optional: true, empty: false },
+            title: { type: "string", empty: false },
+            description: { type: "string", empty: false },
+            customCategory: { type: "string", optional: true, empty: false }
         };
 
         let finalPath: string | null = null;
@@ -212,11 +212,11 @@ export class ProposalController {
         const v = new Validator();
 
         const schema = {
-            areaId: { type: "string" },
-            categoryId: { type: "string", optional: true },
-            title: { type: "string" },
-            description: { type: "string" },
-            customCategory: { type: "string", optional: true }
+            areaId: { type: "string", empty: false },
+            categoryId: { type: "string", optional: true, empty: false },
+            title: { type: "string", empty: false },
+            description: { type: "string", empty: false },
+            customCategory: { type: "string", optional: true, empty: false }
         };
 
         try {

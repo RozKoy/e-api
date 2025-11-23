@@ -3,6 +3,7 @@ import { ProposalDiscussionService } from '@/services/proposalDiscussion.service
 import { Response } from 'express';
 import Validator from 'fastest-validator';
 import { ProposalService } from '@/services/proposal.service';
+import { empty } from '@prisma/client/runtime/client';
 
 export class ProposalDiscussionController {
     static async create(req: AuthenticatedRequest, res: Response) {
@@ -23,7 +24,7 @@ export class ProposalDiscussionController {
         const v = new Validator();
 
         const schema = {
-            message: { type: "string" }
+            message: { type: "string", empty: false }
         };
 
         try {
@@ -138,7 +139,7 @@ export class ProposalDiscussionController {
             const v = new Validator();
 
             const schema = {
-                message: { type: "string", optional: true }
+                message: { type: "string", optional: true, empty: false }
             };
 
             const check = v.compile(schema);

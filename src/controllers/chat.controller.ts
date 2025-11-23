@@ -133,7 +133,24 @@ export class ChatController {
 
         const { message } = req.body;
 
+        const v = new Validator();
+
+        const schema = {
+            message: { type: "string", empty: false }
+        };
+
         try {
+
+            const check = v.compile(schema);
+
+            const validationResponse = check({ message });
+
+            if (validationResponse !== true) {
+                return res.status(400).json({
+                    status: 'error',
+                    message: validationResponse
+                });
+            }
 
             const roomExist = await ChatService.getRoomById(roomId);
 
@@ -190,8 +207,8 @@ export class ChatController {
                     message: 'Anda tidak memiliki akses untuk menghapus pesan ini'
                 });
             }
-            
-            if(messageExist.createdAt < new Date(Date.now() - 1 * 60 * 60 * 1000)) {
+
+            if (messageExist.createdAt < new Date(Date.now() - 1 * 60 * 60 * 1000)) {
                 return res.status(403).json({
                     status: 'error',
                     message: 'Anda tidak memiliki akses untuk menghapus pesan ini'

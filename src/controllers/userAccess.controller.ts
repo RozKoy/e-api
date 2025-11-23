@@ -13,10 +13,10 @@ export class UserAccessController {
         const v = new Validator();
 
         const schema = {
-            userId: { type: "string" },
-            areaId: { type: "string" },
-            fractionId: { type: "string" },
-            publicUser: { type: "boolean" }
+            userId: { type: "string", empty: false },
+            areaId: { type: "string", empty: false },
+            fractionId: { type: "string", empty: false },
+            publicUser: { type: "boolean", empty: false }
         };
 
         try {
@@ -181,10 +181,10 @@ export class UserAccessController {
         const v = new Validator();
 
         const schema = {
-            userId: { type: "string" },
-            areaId: { type: "string" },
-            fractionId: { type: "string" },
-            publicUser: { type: "boolean" }
+            userId: { type: "string", empty: false },
+            areaId: { type: "string", empty: false },
+            fractionId: { type: "string", empty: false },
+            publicUser: { type: "boolean", empty: false }
         };
 
         try {

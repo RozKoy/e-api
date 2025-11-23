@@ -1,6 +1,7 @@
 import { PosisionLevel, PositionCategory } from '@/generated/prisma/enums';
 import { CommissionService } from '@/services/commission.service';
 import { PositionService } from '@/services/positions.service';
+import { empty } from '@prisma/client/runtime/client';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 
@@ -14,10 +15,10 @@ export class PositionController {
             const v = new Validator();
 
             const schema = {
-                name: { type: "string" },
+                name: { type: "string", empty: false },
                 category: { type: "enum", values: Object.values(PositionCategory) },
                 level: { type: "enum", values: Object.values(PosisionLevel) },
-                commissionId: { type: "string", optional: true }
+                commissionId: { type: "string", optional: true, empty: false }
             };
 
             const check = v.compile(schema);
@@ -146,10 +147,10 @@ export class PositionController {
             const v = new Validator();
 
             const schema = {
-                name: { type: "string" },
+                name: { type: "string", empty: false },
                 category: { type: "enum", values: Object.values(PositionCategory) },
                 level: { type: "enum", values: Object.values(PosisionLevel) },
-                commissionId: { type: "string", optional: true }
+                commissionId: { type: "string", optional: true, empty: false }
             };
 
             const check = v.compile(schema);
