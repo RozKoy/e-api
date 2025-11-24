@@ -22,12 +22,6 @@ export class FractionService {
                         ? { contains: search, mode: "insensitive" }
                         : undefined,
                 },
-                select: {
-                    id: true,
-                    name: true,
-                    createdAt: true,
-                    updatedAt: true,
-                },
                 orderBy: { createdAt: "desc" },
             });
             return {
@@ -48,12 +42,6 @@ export class FractionService {
                     name: search
                         ? { contains: search, mode: "insensitive" }
                         : undefined,
-                },
-                select: {
-                    id: true,
-                    name: true,
-                    createdAt: true,
-                    updatedAt: true,
                 },
                 orderBy: { createdAt: "desc" },
             }),
