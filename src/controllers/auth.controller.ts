@@ -69,7 +69,7 @@ export class AuthController {
 
   static async register(req: Request, res: Response) {
 
-    const { email, password, name, roleId } = req.body;
+    const { email, password, name } = req.body;
 
     const v = new Validator();
 
@@ -77,14 +77,13 @@ export class AuthController {
       email: { type: "email", },
       password: { type: "string", min: 8 },
       name: { type: "string", empty: false },
-      roleId: { type: "string", optional: true, empty: false }
     };
 
     try {
 
       const check = v.compile(schema);
 
-      const validationResponse = check({ email, password, name, roleId });
+      const validationResponse = check({ email, password, name });
 
       if (validationResponse !== true) {
         return res.status(400).json({
@@ -102,22 +101,9 @@ export class AuthController {
         });
       }
 
-      if (roleId) {
-
-        const roleExist = await RoleService.getOneById(roleId);
-
-        if (!roleExist) {
-          return res.status(400).json({
-            status: 'error',
-            message: 'Role tidak ditemukan'
-          });
-        }
-
-      }
-
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const user = await UserService.create({ email, password: hashedPassword, roleId });
+      const user = await UserService.create({ email, password: hashedPassword });
 
       const { password: _pass, ...data } = user;
 

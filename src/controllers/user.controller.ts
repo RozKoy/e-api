@@ -4,11 +4,12 @@ import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 import bcrypt from 'bcrypt';
 import { empty } from '@prisma/client/runtime/client';
+import { UserProfileService } from '@/services/userProfile.service';
 
 export class UserController {
   static async create(req: Request, res: Response) {
 
-    const { email, password, roleId, positionId } = req.body
+    const { email, password, roleId, positionId, name } = req.body
 
     try {
 
@@ -18,12 +19,13 @@ export class UserController {
         email: { type: "email" },
         password: { type: "string", min: 8 },
         roleId: { type: "string", optional: true, empty: false },
-        positionId: { type: "string", optional: true, empty: false }
+        positionId: { type: "string", optional: true, empty: false },
+        name: { type: "string", optional: true, empty: false },
       };
 
       const check = v.compile(schema);
 
-      const validationResponse = check({ email, password, roleId, positionId });
+      const validationResponse = check({ email, password, roleId, positionId, name });
 
       if (validationResponse !== true) {
         return res.status(400).json({
@@ -63,14 +65,16 @@ export class UserController {
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const data = await UserService.create({ email, password: hashedPassword, roleId, positionId });
+      const user = await UserService.create({ email, password: hashedPassword, roleId, positionId });
 
-      const { password: _pass, ...user } = data;
+      await UserProfileService.create({ userId: user.id, name });
+
+      const { password: _pass, ...data } = user;
 
       res.status(201).json({
         status: 'success',
         message: 'User berhasil dibuat',
-        data: user
+        data
       })
 
     } catch (error) {
