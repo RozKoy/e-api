@@ -61,7 +61,7 @@ export class UserAccessController {
 
             const userAccessExist = await UserAccessService.getByUserId(userId);
 
-            if (userAccessExist) {
+            if (userAccessExist.length > 0) {
                 return res.status(400).json({
                     status: 'error',
                     message: 'User akses sudah ada'
