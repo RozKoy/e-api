@@ -3,7 +3,6 @@ import { UserService } from '@/services/user.service';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 import bcrypt from 'bcrypt';
-import { empty } from '@prisma/client/runtime/client';
 import { UserProfileService } from '@/services/userProfile.service';
 
 export class UserController {
