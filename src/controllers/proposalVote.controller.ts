@@ -12,7 +12,7 @@ export class ProposalVoteController {
 
         const { userId } = req.payload!;
 
-        if(!proposalId) {
+        if (!proposalId) {
             return res.status(400).json({
                 status: 'error',
                 message: 'Id proposal wajib diisi'
@@ -52,8 +52,8 @@ export class ProposalVoteController {
             const voteExist = await ProposalVoteService.getOneByUserIdAndProposalId(userId, proposalId);
 
             if (voteExist) {
-                
-                if(voteExist.agree == agree) {
+
+                if (voteExist.agree == agree) {
                     await ProposalVoteService.delete(voteExist.id);
                     return res.status(200).json({
                         status: 'success',
@@ -82,7 +82,10 @@ export class ProposalVoteController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal vote proposal' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal melakukan vote proposal'
+            });
 
         }
     }
@@ -90,7 +93,7 @@ export class ProposalVoteController {
     static async count(req: AuthenticatedRequest, res: Response) {
         const { proposalId } = req.params;
 
-        if(!proposalId) {
+        if (!proposalId) {
             return res.status(400).json({
                 status: 'error',
                 message: 'Id proposal wajib diisi'
@@ -120,7 +123,10 @@ export class ProposalVoteController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data vote proposal' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data vote proposal'
+            });
 
         }
     }

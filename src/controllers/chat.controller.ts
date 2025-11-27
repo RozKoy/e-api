@@ -63,7 +63,10 @@ export class ChatController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal menambahkan atau mendapatkan ruang chat' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menambahkan ruang chat'
+            });
         }
     }
 
@@ -83,7 +86,10 @@ export class ChatController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan ruang chat' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan ruang chat'
+            });
         }
     }
 
@@ -121,7 +127,10 @@ export class ChatController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan pesan' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan pesan'
+            });
         }
     }
 
@@ -180,7 +189,10 @@ export class ChatController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mengirim pesan' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mengirim pesan'
+            });
         }
     }
 
@@ -224,7 +236,10 @@ export class ChatController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal menghapus pesan' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menghapus pesan'
+            });
         }
     }
 }

@@ -81,7 +81,10 @@ export class UserController {
 
       console.log(error);
 
-      return res.status(500).json({ error: 'Gagal membuat user' });
+      return res.status(500).json({
+        status: 'error',
+        message: 'Gagal membuat user'
+      });
 
     }
   }
@@ -106,7 +109,10 @@ export class UserController {
 
       console.log(error);
 
-      return res.status(500).json({ error: 'Gagal mendapatkan data user' });
+      return res.status(500).json({
+        status: 'error',
+        message: 'Gagal mendapatkan data user'
+      });
 
     }
   }
@@ -129,7 +135,10 @@ export class UserController {
 
       console.log(error);
 
-      return res.status(500).json({ error: 'Gagal mendapatkan data user' });
+      return res.status(500).json({
+        status: 'error',
+        message: 'Gagal mendapatkan data user'
+      });
 
     }
   }
@@ -152,7 +161,10 @@ export class UserController {
 
       console.log(error);
 
-      return res.status(500).json({ error: 'Gagal mendapatkan data user' });
+      return res.status(500).json({
+        status: 'error',
+        message: 'Gagal mendapatkan data user'
+      });
 
     }
 
@@ -244,7 +256,7 @@ export class UserController {
 
       res.status(200).json({
         status: 'success',
-        message: 'Data user berhasil diupdate',
+        message: 'Data user berhasil diubah',
         data
       });
 
@@ -252,7 +264,10 @@ export class UserController {
 
       console.log(error);
 
-      return res.status(500).json({ error: 'Gagal update data user' });
+      return res.status(500).json({
+        status: 'error',
+        message: 'Gagal mengubah data user'
+      });
 
     }
   }
@@ -284,7 +299,10 @@ export class UserController {
 
       console.log(error);
 
-      return res.status(500).json({ error: 'Gagal hapus data user' });
+      return res.status(500).json({
+        status: 'error',
+        message: 'Gagal menghapus data user'
+      });
 
     }
   }

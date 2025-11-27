@@ -6,14 +6,14 @@ export class ProposalStatusController {
     static async getByProposalId(req: AuthenticatedRequest, res: Response) {
 
         const { proposalId } = req.params;
-        
+
         if (!proposalId) {
-            
+
             return res.status(400).json({
                 status: 'error',
                 message: 'Id proposal wajib diisi'
             });
-        
+
         }
 
         try {
@@ -29,9 +29,12 @@ export class ProposalStatusController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data status proposal' });
-        
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data status proposal'
+            });
+
         }
-        
+
     }
 }

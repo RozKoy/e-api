@@ -8,9 +8,9 @@ export class AreaController {
         const { name } = req.body;
 
         try {
-            
+
             const v = new Validator();
-            
+
             const schema = {
                 name: { type: "string", empty: false }
             };
@@ -25,7 +25,7 @@ export class AreaController {
                     status: 'error',
                     message: validationResponse
                 });
-            
+
             }
 
             const areaExist = await AreaService.getOneByName(name);
@@ -38,7 +38,7 @@ export class AreaController {
             }
 
             const data = await AreaService.create({ name });
-            
+
             return res.status(201).json({
                 status: 'success',
                 message: 'Data area berhasil ditambahkan',
@@ -47,7 +47,10 @@ export class AreaController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal menambahkan data area' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menambahkan data area'
+            });
         }
     }
 
@@ -62,7 +65,7 @@ export class AreaController {
             res.status(200).json({
                 status: 'success',
                 message: 'Data area berhasil didapatkan',
-                data : data.data,
+                data: data.data,
                 totalData: data.totalData,
                 totalPage: data.totalPages
             });
@@ -71,7 +74,10 @@ export class AreaController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data area' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data area'
+            });
 
         }
     }
@@ -101,7 +107,10 @@ export class AreaController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data area' });
+            return res.status(500).json({ 
+                status: 'error',
+                message: 'Gagal mendapatkan data area' 
+            });
 
         }
     }
@@ -167,7 +176,10 @@ export class AreaController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mengubah data area' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mengubah data area'
+            });
 
         }
     }
@@ -206,7 +218,10 @@ export class AreaController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal menghapus data area' });
+            return res.status(500).json({ 
+                status: 'error',
+                message: 'Gagal hapus data area'
+             });
 
         }
     }

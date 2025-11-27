@@ -1,7 +1,6 @@
 import { PosisionLevel, PositionCategory } from '@/generated/prisma/enums';
 import { CommissionService } from '@/services/commission.service';
 import { PositionService } from '@/services/positions.service';
-import { empty } from '@prisma/client/runtime/client';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 
@@ -71,7 +70,10 @@ export class PositionController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal menambahkan data posisi' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menambahkan data posisi'
+            });
         }
     }
 
@@ -95,7 +97,10 @@ export class PositionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data posisi' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data posisi'
+            });
 
         }
     }
@@ -125,7 +130,10 @@ export class PositionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data posisi' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data posisi'
+            });
 
         }
     }
@@ -212,7 +220,10 @@ export class PositionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mengubah data posisi' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mengubah data posisi'
+            });
 
         }
     }
@@ -251,7 +262,10 @@ export class PositionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal menghapus data posisi' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menghapus data posisi'
+            });
 
         }
     }

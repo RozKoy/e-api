@@ -82,7 +82,10 @@ export class FractionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal menambahkan data fraction' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menambahkan data fraction'
+            });
 
         }
 
@@ -99,7 +102,7 @@ export class FractionController {
             res.status(200).json({
                 status: 'success',
                 message: 'Data fraction berhasil didapatkan',
-                data : data.data,
+                data: data.data,
                 totalData: data.totalData,
                 totalPage: data.totalPages
             });
@@ -108,7 +111,10 @@ export class FractionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data fraction' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data fraction'
+            });
 
         }
 
@@ -132,7 +138,10 @@ export class FractionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data fraction' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data fraction'
+            });
 
         }
 
@@ -219,7 +228,7 @@ export class FractionController {
 
             res.status(200).json({
                 status: 'success',
-                message: 'Data fraction berhasil diupdate',
+                message: 'Data fraction berhasil diubah',
                 data
             });
 
@@ -235,7 +244,10 @@ export class FractionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal update data fraction' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mengubah data fraction'
+            });
 
         }
 
@@ -281,7 +293,10 @@ export class FractionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal hapus data fraction' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menghapus data fraction'
+            });
 
         }
 

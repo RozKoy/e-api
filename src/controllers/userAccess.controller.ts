@@ -79,7 +79,10 @@ export class UserAccessController {
         } catch (error) {
 
             console.log(error);
-            return res.status(500).json({ error: 'Gagal menambah data user akses' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menambahkan data user akses'
+            });
         }
 
     }
@@ -95,7 +98,7 @@ export class UserAccessController {
             res.status(200).json({
                 status: 'success',
                 message: 'Data user akses berhasil didapatkan',
-                data : data.data,
+                data: data.data,
                 totalData: data.totalData,
                 totalPage: data.totalPages
             });
@@ -103,7 +106,10 @@ export class UserAccessController {
         } catch (error) {
 
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan data user akses' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data user akses'
+            });
         }
     }
 
@@ -131,7 +137,10 @@ export class UserAccessController {
         } catch (error) {
 
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan data user akses' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data user akses'
+            });
         }
     }
 
@@ -156,10 +165,13 @@ export class UserAccessController {
                 data
             });
 
-        }catch (error) {
+        } catch (error) {
 
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan data user akses' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data user akses'
+            });
 
         }
 
@@ -249,14 +261,17 @@ export class UserAccessController {
 
             return res.status(200).json({
                 status: 'success',
-                message: 'Data user akses berhasil diupdate',
+                message: 'Data user akses berhasil diubah',
                 data: userAccesses
             });
 
         } catch (error) {
 
             console.log(error);
-            return res.status(500).json({ error: 'Gagal update data user akses' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mengubah data user akses'
+            });
         }
     }
 
@@ -293,7 +308,10 @@ export class UserAccessController {
         } catch (error) {
 
             console.log(error);
-            return res.status(500).json({ error: 'Gagal hapus data user akses' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menghapus data user akses'
+            });
         }
     }
 }

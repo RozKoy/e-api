@@ -4,7 +4,6 @@ import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 import path from 'path';
 import fs from 'fs';
-import { empty } from '@prisma/client/runtime/client';
 
 export class NewsController {
     static async create(req: Request, res: Response) {
@@ -71,7 +70,7 @@ export class NewsController {
                 imageData.fileUrl = `${process.env.APP_URL}/uploads/images/news/${news.id}/${file.filename}`;
             }
 
-            const updatedNews = await NewsService.update(news.id, {imageName: imageData.fileName, imageUrl: imageData.fileUrl, imagePath: imageData.filePath});
+            const updatedNews = await NewsService.update(news.id, { imageName: imageData.fileName, imageUrl: imageData.fileUrl, imagePath: imageData.filePath });
 
             return res.status(201).json({
                 status: 'success',
@@ -82,13 +81,16 @@ export class NewsController {
         } catch (error) {
 
             console.log(error);
-            return res.status(500).json({ error: 'Gagal membuat berita' });
-        
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal membuat berita'
+            });
+
         }
     }
 
     static async getAll(req: Request, res: Response) {
-        
+
         const { search, page, limit, categoryId } = req.query as { search?: string, page?: number, limit?: number, categoryId?: string };
 
         try {
@@ -106,8 +108,11 @@ export class NewsController {
         } catch (error) {
 
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan data berita' });
-        
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data berita'
+            });
+
         }
     }
 
@@ -135,8 +140,11 @@ export class NewsController {
         } catch (error) {
 
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan data berita' });
-        
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data berita'
+            });
+
         }
     }
 
@@ -224,7 +232,7 @@ export class NewsController {
                 imageData.fileName = file.originalname;
                 imageData.filePath = finalPath;
                 imageData.fileUrl = `${process.env.APP_URL}/uploads/images/news/${newsExist.id}/${file.filename}`;
-            
+
             }
 
             const updatedNews = await NewsService.update(id, {
@@ -238,15 +246,18 @@ export class NewsController {
 
             return res.status(200).json({
                 status: 'success',
-                message: 'Berita berhasil diperbarui',
+                message: 'Berita berhasil diubah',
                 data: updatedNews
             });
 
         } catch (error) {
 
             console.log(error);
-            return res.status(500).json({ error: 'Gagal memperbarui berita' });
-        
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mengubah berita'
+            });
+
         }
     }
 
@@ -295,8 +306,11 @@ export class NewsController {
         } catch (error) {
 
             console.log(error);
-            return res.status(500).json({ error: 'Gagal menghapus berita' });
-        
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menghapus berita'
+            });
+
         }
     }
 

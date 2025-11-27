@@ -48,7 +48,10 @@ export class CommissionController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal menambahkan data komisi' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menambahkan data komisi'
+            });
         }
     }
 
@@ -72,7 +75,10 @@ export class CommissionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data komisi' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data komisi'
+            });
 
         }
     }
@@ -102,7 +108,10 @@ export class CommissionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data komisi' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data komisi'
+            });
 
         }
     }
@@ -168,7 +177,10 @@ export class CommissionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mengubah data komisi' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mengubah data komisi'
+            });
 
         }
     }
@@ -207,7 +219,10 @@ export class CommissionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal menghapus data komisi' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menghapus data komisi'
+            });
 
         }
     }

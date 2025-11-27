@@ -1,7 +1,6 @@
 import { PermissionService } from '@/services/permission.service';
 import { RoleService } from '@/services/role.service';
 import { RolePermissionService } from '@/services/rolePermission.service';
-import { empty } from '@prisma/client/runtime/client';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 
@@ -15,17 +14,17 @@ export class RoleController {
             const v = new Validator();
 
             const schema = {
-                name: { type: "string" , empty: false },
+                name: { type: "string", empty: false },
                 description: { type: "string", optional: true },
                 permissionIds: {
-                    type: "array", 
+                    type: "array",
                     items: {
                         type: "object",
                         props: {
                             id: { type: "string", empty: false }
                         }
                     },
-                    empty: false 
+                    empty: false
                 }
             }
 
@@ -66,7 +65,7 @@ export class RoleController {
 
                 permissions.push({
                     permissionId: permission.id,
-                    roleId : data.id
+                    roleId: data.id
                 });
             }
 
@@ -84,7 +83,10 @@ export class RoleController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal menambahkan data role' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menambahkan data role'
+            });
 
         }
     }
@@ -100,7 +102,7 @@ export class RoleController {
             res.status(200).json({
                 status: 'success',
                 message: 'Data role berhasil didapatkan',
-                data : data.data,
+                data: data.data,
                 totalData: data.totalData,
                 totalPage: data.totalPages
             });
@@ -109,7 +111,10 @@ export class RoleController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data role' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data role'
+            });
 
         }
     }
@@ -132,7 +137,10 @@ export class RoleController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data role' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data role'
+            });
 
         }
     }
@@ -150,7 +158,7 @@ export class RoleController {
                 name: { type: "string", empty: false },
                 description: { type: "string", optional: true, empty: false },
                 permissionIds: {
-                    type: "array", 
+                    type: "array",
                     items: {
                         type: "object",
                         props: {
@@ -158,7 +166,7 @@ export class RoleController {
                         }
                     },
                     optional: true,
-                    empty: false 
+                    empty: false
                 }
             }
 
@@ -208,18 +216,18 @@ export class RoleController {
 
                 permissions.push({
                     permissionId: permission.id,
-                    roleId : data.id
+                    roleId: data.id
                 });
             }
 
-            if(permissions.length > 0) {
+            if (permissions.length > 0) {
                 await RolePermissionService.deleteByRoleId(data.id);
                 await RoleService.assignMany(permissions);
             }
 
             res.status(200).json({
                 status: 'success',
-                message: 'Data role berhasil diupdate',
+                message: 'Data role berhasil diubah',
                 data
             });
 
@@ -227,7 +235,10 @@ export class RoleController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal update data role' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mengubah data role'
+            });
 
         }
     }
@@ -259,7 +270,10 @@ export class RoleController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal hapus data role' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menghapus data role'
+            });
 
         }
     }

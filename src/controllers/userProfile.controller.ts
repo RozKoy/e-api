@@ -49,7 +49,10 @@ export class UserProfileController {
 
             if (validationResponse !== true) {
                 if (image) fs.unlinkSync(image.path);
-                return res.status(400).json({ error: validationResponse });
+                return res.status(400).json({
+                    status: 'error',
+                    message: validationResponse
+                });
             }
 
             const userExist = await UserService.getOneById(userId);
@@ -106,13 +109,16 @@ export class UserProfileController {
             if (finalPath && fs.existsSync(finalPath)) {
                 fs.unlinkSync(finalPath);
             }
-    
+
             if (image && (!finalPath || !fs.existsSync(finalPath))) {
                 fs.unlinkSync(image.path);
             }
 
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan data user profile' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menambahkan data user profile'
+            });
         }
     }
 
@@ -157,7 +163,10 @@ export class UserProfileController {
 
             if (validationResponse !== true) {
                 if (image) fs.unlinkSync(image.path);
-                return res.status(400).json({ error: validationResponse });
+                return res.status(400).json({
+                    status: 'error',
+                    message: validationResponse
+                });
             }
 
             const userProfileExist = await UserProfileService.getOneById(id);
@@ -207,22 +216,25 @@ export class UserProfileController {
 
             res.status(200).json({
                 status: 'success',
-                message: 'Data user profile berhasil diupdate',
+                message: 'Data user profile berhasil diubah',
                 data
             });
 
         } catch (error) {
-            
+
             if (finalPath && fs.existsSync(finalPath)) {
                 fs.unlinkSync(finalPath);
             }
-    
+
             if (image && (!finalPath || !fs.existsSync(finalPath))) {
                 fs.unlinkSync(image.path);
             }
-            
+
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan data user profile' });
+            return res.status(500).json({ 
+                status: 'error',
+                message: 'Gagal mengubah data user profile'
+             });
         }
     }
 }

@@ -21,7 +21,10 @@ export class RolePermissionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data role permission' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data role permission'
+            });
 
         }
     }
@@ -64,7 +67,7 @@ export class RolePermissionController {
                 message: validationResponse
             });
         }
-        
+
         try {
 
             const rolePermissionExist = await RolePermissionService.getAllByRoleId(roleId);
@@ -72,7 +75,7 @@ export class RolePermissionController {
             if (rolePermissionExist.length > 0) {
                 await RolePermissionService.deleteByRoleId(roleId);
             }
-            
+
             for (const permissionId of permissionIds) {
 
                 const permissionExist = await PermissionService.getOneById(permissionId.id);
@@ -83,14 +86,14 @@ export class RolePermissionController {
                         message: `Permission ${permissionId.id} tidak ditemukan`
                     });
                 }
-                
+
                 await RolePermissionService.assign({
                     roleId,
                     permissionId: permissionId.id
                 });
-    
+
             }
-            
+
             res.status(201).json({
                 status: 'success',
                 message: 'Data role permission berhasil ditambahkan',
@@ -100,7 +103,10 @@ export class RolePermissionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal menambah data role permission' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menambah data role permission'
+            });
 
         }
     }
@@ -134,7 +140,7 @@ export class RolePermissionController {
                 message: validationResponse
             });
         }
-        
+
         try {
 
             const permissionExist = await PermissionService.getOneById(permissionId);
@@ -145,12 +151,12 @@ export class RolePermissionController {
                     message: 'Permission tidak ditemukan'
                 });
             }
-            
+
             await RolePermissionService.assign({
                 roleId,
                 permissionId
             });
-            
+
             res.status(201).json({
                 status: 'success',
                 message: 'Data role permission berhasil ditambahkan',
@@ -160,7 +166,10 @@ export class RolePermissionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal menambah data role permission' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menambah data role permission'
+            });
 
         }
     }
@@ -199,7 +208,10 @@ export class RolePermissionController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal hapus data role permission' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menghapus data role permission'
+            });
 
         }
     }

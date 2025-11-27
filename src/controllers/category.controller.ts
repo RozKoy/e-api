@@ -36,7 +36,7 @@ export class CategoryController {
                 });
             }
 
-            const category = await CategoryService.create({name});
+            const category = await CategoryService.create({ name });
 
             return res.status(201).json({
                 status: 'success',
@@ -48,7 +48,10 @@ export class CategoryController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal membuat kategori' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal membuat kategori'
+            });
 
         }
 
@@ -57,7 +60,7 @@ export class CategoryController {
     static async getAll(req: Request, res: Response) {
 
         const { search, page, limit } = req.query as { search?: string, page?: number, limit?: number };
-        
+
         try {
 
             const data = await CategoryService.getAll(search, Number(page), Number(limit));
@@ -74,7 +77,10 @@ export class CategoryController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data kategori' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data kategori'
+            });
 
         }
     }
@@ -97,7 +103,10 @@ export class CategoryController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data kategori' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data kategori'
+            });
 
         }
     }
@@ -155,7 +164,7 @@ export class CategoryController {
 
             return res.status(200).json({
                 status: 'success',
-                message: 'Kategori berhasil diupdate',
+                message: 'Data kategori berhasil diubah',
                 data: category
             });
 
@@ -163,7 +172,10 @@ export class CategoryController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal update kategori' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mengubah data kategori'
+            });
 
         }
     }
@@ -195,7 +207,10 @@ export class CategoryController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal hapus data kategori' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menghapus data kategori'
+            });
 
         }
     }

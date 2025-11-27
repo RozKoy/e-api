@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 import bcrypt from 'bcrypt';
 import { generateAccessToken } from '@/utils/jwt';
-import { RoleService } from '@/services/role.service';
 import { UserProfileService } from '@/services/userProfile.service';
 import jwt from "jsonwebtoken";
 
@@ -62,7 +61,10 @@ export class AuthController {
 
       console.log(error);
 
-      return res.status(500).json({ error: 'Gagal melakukan login' });
+      return res.status(500).json({
+        status: 'error',
+        message: 'Gagal login'
+      });
 
     }
   }
@@ -119,7 +121,10 @@ export class AuthController {
 
       console.log(error);
 
-      return res.status(500).json({ error: 'Gagal membuat user' });
+      return res.status(500).json({
+        status: 'error',
+        message: 'Gagal membuat user'
+      });
 
     }
 
@@ -139,6 +144,7 @@ export class AuthController {
     const token = authHeader.split(" ")[1];
 
     const secret = process.env.JWT_ACCESS_SECRET as string;
+    
     if (!secret) {
       throw new Error("Unauthorized: Token tidak valid");
     }

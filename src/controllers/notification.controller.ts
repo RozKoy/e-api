@@ -6,14 +6,14 @@ export class NotificationController {
     static async getByUserId(req: AuthenticatedRequest, res: Response) {
 
         const { userId } = req.payload!;
-        
+
         if (!userId) {
-            
+
             return res.status(400).json({
                 status: 'error',
                 message: 'userId wajib diisi'
             });
-        
+
         }
 
         try {
@@ -29,9 +29,12 @@ export class NotificationController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data notifikasi' });
-        
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data notifikasi'
+            });
+
         }
-        
+
     }
 }

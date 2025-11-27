@@ -151,7 +151,10 @@ export class ProposalController {
             }
 
             console.error(err);
-            return res.status(500).json({ error: "Gagal membuat proposal" });
+            return res.status(500).json({
+                status: "error",
+                message: "Gagal membuat proposal"
+            });
         }
     }
 
@@ -173,7 +176,10 @@ export class ProposalController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan data proposal' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data proposal'
+            });
         }
     }
 
@@ -193,7 +199,10 @@ export class ProposalController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan data proposal' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data proposal'
+            });
         }
     }
 
@@ -248,7 +257,7 @@ export class ProposalController {
                 });
             }
 
-            if(proposalExist.userId !== userId) {
+            if (proposalExist.userId !== userId) {
                 if (file) fs.unlinkSync(file.path);
                 return res.status(403).json({
                     status: "error",
@@ -343,7 +352,7 @@ export class ProposalController {
 
             return res.status(200).json({
                 status: "success",
-                message: "Data proposal berhasil diupdate",
+                message: "Data proposal berhasil diubah",
                 data
             });
 
@@ -358,14 +367,17 @@ export class ProposalController {
             }
 
             console.error(error);
-            return res.status(500).json({ error: "Gagal update data proposal" });
+            return res.status(500).json({
+                status: "error",
+                message: "Gagal mengubah data proposal"
+            });
         }
     }
 
     static async delete(req: AuthenticatedRequest, res: Response) {
         const { id } = req.params;
 
-        const {userId, roleId} = req.payload!;
+        const { userId, roleId } = req.payload!;
 
         try {
 
@@ -380,14 +392,14 @@ export class ProposalController {
                 });
             }
 
-            if(proposalExist.userId !== userId && !userPermission.some(permission => permission.permission.name === "Hapus Proposal")) {
+            if (proposalExist.userId !== userId && !userPermission.some(permission => permission.permission.name === "Hapus Proposal")) {
                 return res.status(403).json({
                     status: "error",
                     message: "Anda tidak memiliki izin untuk menghapus proposal ini"
                 });
             }
 
-            if(userId !== proposalExist.userId && proposalExist.status !== "baru") {
+            if (userId !== proposalExist.userId && proposalExist.status !== "baru") {
                 return res.status(400).json({
                     status: "error",
                     message: "Proposal sudah diproses"
@@ -419,7 +431,10 @@ export class ProposalController {
 
         } catch (error) {
             console.error(error);
-            return res.status(500).json({ error: "Gagal hapus data proposal" });
+            return res.status(500).json({
+                status: "error",
+                message: "Gagal menghapus data proposal"
+            });
         }
     }
 
@@ -486,13 +501,16 @@ export class ProposalController {
 
             return res.status(201).json({
                 status: "success",
-                message: "Data proposal berhasil diimport",
+                message: "Data proposal berhasil diimpor",
                 data: proposals,
             });
 
         } catch (error) {
             console.error(error);
-            return res.status(500).json({ error: "Gagal import data proposal" });
+            return res.status(500).json({
+                status: "error",
+                message: "Gagal mengimpor data proposal",
+            });
         }
     }
 
@@ -560,7 +578,10 @@ export class ProposalController {
 
         } catch (error) {
             console.error(error);
-            return res.status(500).json({ error: "Gagal export data proposal" });
+            return res.status(500).json({ 
+                status: "error",
+                message: "Gagal mengekspor data proposal",
+             });
         }
 
     }

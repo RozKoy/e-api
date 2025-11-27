@@ -7,14 +7,14 @@ import { empty } from '@prisma/client/runtime/client';
 
 export class ProposalDiscussionController {
     static async create(req: AuthenticatedRequest, res: Response) {
-        
+
         const { proposalId } = req.params;
 
         const { message } = req.body;
-        
+
         const { userId } = req.payload!;
 
-        if(!proposalId) {
+        if (!proposalId) {
             return res.status(400).json({
                 status: 'error',
                 message: 'Id proposal wajib diisi'
@@ -49,7 +49,7 @@ export class ProposalDiscussionController {
                 });
             }
 
-            const data = await ProposalDiscussionService.create({proposalId, userId, message});
+            const data = await ProposalDiscussionService.create({ proposalId, userId, message });
 
             res.status(201).json({
                 status: 'success',
@@ -59,7 +59,10 @@ export class ProposalDiscussionController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal menambahkan data diskusi proposal' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menambahkan data diskusi proposal'
+            });
         }
     }
 
@@ -67,7 +70,7 @@ export class ProposalDiscussionController {
 
         const { id } = req.params;
 
-        if(!id) {
+        if (!id) {
             return res.status(400).json({
                 status: 'error',
                 message: 'Id wajib diisi'
@@ -86,7 +89,10 @@ export class ProposalDiscussionController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan data diskusi proposal' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data diskusi proposal'
+            });
         }
     }
 
@@ -96,7 +102,7 @@ export class ProposalDiscussionController {
 
         const { search, page, limit } = req.query as { search?: string, page?: number, limit?: number };
 
-        if(!proposalId) {
+        if (!proposalId) {
             return res.status(400).json({
                 status: 'error',
                 message: 'Id proposal wajib diisi'
@@ -115,7 +121,10 @@ export class ProposalDiscussionController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan data diskusi proposal' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data diskusi proposal'
+            });
         }
     }
 
@@ -127,7 +136,7 @@ export class ProposalDiscussionController {
 
         const { userId } = req.payload!;
 
-        if(!id) {
+        if (!id) {
             return res.status(400).json({
                 status: 'error',
                 message: 'Id wajib diisi'
@@ -162,10 +171,10 @@ export class ProposalDiscussionController {
                 });
             }
 
-            if(proposalDiscussionExist.userId !== userId) {
+            if (proposalDiscussionExist.userId !== userId) {
                 return res.status(403).json({
                     status: "error",
-                    message: "Anda tidak memiliki akses untuk memperbarui data diskusi proposal ini"
+                    message: "Anda tidak memiliki akses untuk mengubah data diskusi proposal ini"
                 });
             }
 
@@ -173,13 +182,16 @@ export class ProposalDiscussionController {
 
             res.status(200).json({
                 status: 'success',
-                message: 'Data diskusi proposal berhasil diupdate',
+                message: 'Data diskusi proposal berhasil diubah',
                 data
             });
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal memperbarui data diskusi proposal' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mengubah data diskusi proposal'
+            });
         }
     }
 
@@ -189,7 +201,7 @@ export class ProposalDiscussionController {
 
         const { userId } = req.payload!;
 
-        if(!id) {
+        if (!id) {
             return res.status(400).json({
                 status: 'error',
                 message: 'Id wajib diisi'
@@ -207,7 +219,7 @@ export class ProposalDiscussionController {
                 });
             }
 
-            if(proposalDiscussionExist.userId !== userId) {
+            if (proposalDiscussionExist.userId !== userId) {
                 return res.status(403).json({
                     status: "error",
                     message: "Anda tidak memiliki akses untuk menghapus data diskusi proposal ini"
@@ -224,7 +236,10 @@ export class ProposalDiscussionController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal menghapus data diskusi proposal' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menghapus data diskusi proposal'
+            });
         }
     }
 }

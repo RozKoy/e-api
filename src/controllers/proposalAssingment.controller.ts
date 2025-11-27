@@ -64,7 +64,7 @@ export class ProposalAssingmentController {
 
                 const lastAssignedRole = await ProposalAssignmentService.getLastAssignedRole(proposalId);
 
-                
+
                 if (lastAssignedRole && lastAssignedRole.roleId !== userRoleId) {
                     return res.status(403).json({
                         status: 'error',
@@ -101,7 +101,10 @@ export class ProposalAssingmentController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal menambahkan proposal assignment' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menambahkan proposal assignment'
+            });
         }
     }
 
@@ -160,7 +163,10 @@ export class ProposalAssingmentController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal menyelesaikan disposisi proposal' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal menyelesaikan disposisi proposal'
+            });
         }
     }
 
@@ -189,7 +195,10 @@ export class ProposalAssingmentController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan data proposal assignment' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data proposal assignment'
+            });
         }
     }
 
@@ -209,7 +218,10 @@ export class ProposalAssingmentController {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Gagal mendapatkan data proposal assignment' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data proposal assignment'
+            });
         }
     }
 

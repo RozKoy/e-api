@@ -12,7 +12,7 @@ export class ProposalDiscussionVoteController {
 
         const { userId } = req.payload!;
 
-        if(!proposalDiscussionId) {
+        if (!proposalDiscussionId) {
             return res.status(400).json({
                 status: 'error',
                 message: 'Id diskusi proposal wajib diisi'
@@ -52,8 +52,8 @@ export class ProposalDiscussionVoteController {
             const voteExist = await ProposalDiscussionVoteService.getOneByUserIdAndProposalDiscussionId(userId, proposalDiscussionId);
 
             if (voteExist) {
-                
-                if(voteExist.agree == agree) {
+
+                if (voteExist.agree == agree) {
                     await ProposalDiscussionVoteService.delete(voteExist.id);
                     return res.status(200).json({
                         status: 'success',
@@ -82,7 +82,10 @@ export class ProposalDiscussionVoteController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal vote diskusi proposal' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal melakukan vote diskusi proposal'
+            });
 
         }
     }
@@ -90,7 +93,7 @@ export class ProposalDiscussionVoteController {
     static async count(req: AuthenticatedRequest, res: Response) {
         const { proposalDiscussionId } = req.params;
 
-        if(!proposalDiscussionId) {
+        if (!proposalDiscussionId) {
             return res.status(400).json({
                 status: 'error',
                 message: 'Id diskusi proposal wajib diisi'
@@ -120,7 +123,10 @@ export class ProposalDiscussionVoteController {
 
             console.log(error);
 
-            return res.status(500).json({ error: 'Gagal mendapatkan data vote diskusi proposal' });
+            return res.status(500).json({
+                status: 'error',
+                message: 'Gagal mendapatkan data vote diskusi proposal'
+            });
 
         }
     }
