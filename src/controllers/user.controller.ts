@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 import bcrypt from 'bcrypt';
 import { UserProfileService } from '@/services/userProfile.service';
+import { AuthenticatedRequest } from '@/types/authenticatedRequest';
 
 export class UserController {
   static async create(req: Request, res: Response) {
@@ -51,7 +52,7 @@ export class UserController {
         });
       }
 
-      if(positionId) {
+      if (positionId) {
         const positionExist = await RoleService.getOneById(positionId);
 
         if (!positionExist) {
@@ -131,6 +132,30 @@ export class UserController {
       return res.status(500).json({ error: 'Gagal mendapatkan data user' });
 
     }
+  }
+
+  static async profile(req: AuthenticatedRequest, res: Response) {
+
+    const userId = req.payload!.userId;
+
+    try {
+
+      const data = await UserService.getOneById(userId);
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Data user berhasil didapatkan',
+        data
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+      return res.status(500).json({ error: 'Gagal mendapatkan data user' });
+
+    }
+
   }
 
   static async update(req: Request, res: Response) {
