@@ -5,6 +5,7 @@ import Validator from 'fastest-validator';
 import bcrypt from 'bcrypt';
 import { UserProfileService } from '@/services/userProfile.service';
 import { AuthenticatedRequest } from '@/types/authenticatedRequest';
+import { PositionService } from '@/services/positions.service';
 
 export class UserController {
   static async create(req: Request, res: Response) {
@@ -53,7 +54,7 @@ export class UserController {
       }
 
       if (positionId) {
-        const positionExist = await RoleService.getOneById(positionId);
+        const positionExist = await PositionService.getOneById(positionId);
 
         if (!positionExist) {
           return res.status(400).json({
@@ -237,7 +238,7 @@ export class UserController {
 
       if (positionId) {
 
-        const positionExist = await RoleService.getOneById(positionId);
+        const positionExist = await PositionService.getOneById(positionId);
 
         if (!positionExist) {
           return res.status(400).json({
