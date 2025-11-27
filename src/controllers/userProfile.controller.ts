@@ -1,5 +1,6 @@
 import { UserService } from '@/services/user.service';
 import { UserProfileService } from '@/services/userProfile.service';
+import { AuthenticatedRequest } from '@/types/authenticatedRequest';
 import { Gender } from '@generated/prisma/client';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
@@ -213,6 +214,114 @@ export class UserProfileController {
             }
 
             const data = await UserProfileService.update(id, newProfileData);
+
+            res.status(200).json({
+                status: 'success',
+                message: 'Data user profile berhasil diubah',
+                data
+            });
+
+        } catch (error) {
+
+            if (finalPath && fs.existsSync(finalPath)) {
+                fs.unlinkSync(finalPath);
+            }
+
+            if (image && (!finalPath || !fs.existsSync(finalPath))) {
+                fs.unlinkSync(image.path);
+            }
+
+            console.log(error);
+            return res.status(500).json({ 
+                status: 'error',
+                message: 'Gagal mengubah data user profile'
+             });
+        }
+    }
+
+    static async updateSelf(req: AuthenticatedRequest, res: Response) {
+
+        const { userId } = req.payload!;
+
+        const {
+            name,
+            age,
+            gender,
+            phoneNumber,
+        } = req.body;
+
+        const image = req.file;
+
+        let finalPath: string | null = null;
+
+        const parsedAge = age ? Number(age) : undefined;
+
+        try {
+
+            const v = new Validator();
+
+            const schema = {
+                name: { type: "string", optional: true, empty: false },
+                age: { type: "number", optional: true, empty: false },
+                gender: { type: "enum", values: Object.values(Gender), optional: true, empty: false },
+                phoneNumber: { type: "string", optional: true, empty: false },
+            };
+
+            const check = v.compile(schema);
+
+            const validationResponse = check({ name, parsedAge, gender, phoneNumber });
+
+            if (validationResponse !== true) {
+                if (image) fs.unlinkSync(image.path);
+                return res.status(400).json({
+                    status: 'error',
+                    message: validationResponse
+                });
+            }
+
+            const userProfileExist = await UserProfileService.getOneByUserId(userId);
+
+            if (!userProfileExist) {
+                if (image) fs.unlinkSync(image.path);
+                return res.status(400).json({
+                    status: 'error',
+                    message: 'User profile tidak ditemukan'
+                });
+            }
+
+            const newProfileData: any = {
+                name,
+                age: parsedAge,
+                gender,
+                phoneNumber,
+            };
+
+            if (image) {
+
+                const oldImagePath = userProfileExist.imagePath;
+
+                if (oldImagePath && fs.existsSync(oldImagePath)) {
+                    try {
+                        fs.unlinkSync(oldImagePath);
+                        console.log("🗑️ File lama dihapus:", oldImagePath);
+                    } catch (err) {
+                        console.error("❌ Gagal menghapus file lama:", err);
+                    }
+                }
+
+                const finalFolder = path.join(__dirname, "../../uploads/images/profiles", userProfileExist.userId);
+                if (!fs.existsSync(finalFolder)) fs.mkdirSync(finalFolder, { recursive: true });
+
+                finalPath = path.join(finalFolder, image.filename);
+
+                fs.renameSync(image.path, finalPath);
+
+                newProfileData.imageName = image.originalname;
+                newProfileData.imagePath = finalPath;
+                newProfileData.imageUrl = `${process.env.APP_URL}/uploads/images/profiles/${userProfileExist.userId}/${image.filename}`;
+            }
+
+            const data = await UserProfileService.update(userProfileExist.id, newProfileData);
 
             res.status(200).json({
                 status: 'success',
