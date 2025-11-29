@@ -19,9 +19,9 @@ export class UserController {
       const schema = {
         email: { type: "email" },
         password: { type: "string", min: 8 },
-        roleId: { type: "string", optional: true, empty: false },
+        roleId: { type: "string", empty: false },
         positionId: { type: "string", optional: true, empty: false },
-        name: { type: "string", optional: true, empty: false },
+        name: { type: "string", empty: false },
       };
 
       const check = v.compile(schema);
