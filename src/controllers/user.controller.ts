@@ -189,7 +189,7 @@ export class UserController {
 
       const schema = {
         email: { type: "email" },
-        password: { type: "string", min: 8 },
+        password: { type: "string", optional: true, min: 8 },
         roleId: { type: "string", optional: true, empty: false },
         positionId: { type: "string", optional: true, empty: false }
       };
@@ -249,9 +249,7 @@ export class UserController {
 
       }
 
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      const updatedUser = await UserService.update(id, { email, password: hashedPassword, roleId, positionId });
+      const updatedUser = await UserService.update(id, { email, password: password ? await bcrypt.hash(password, 10) : undefined, roleId, positionId });
 
       const { password: _pass, ...data } = updatedUser;
 
