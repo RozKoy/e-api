@@ -158,7 +158,7 @@ export class PositionController {
                 name: { type: "string", empty: false },
                 category: { type: "enum", values: Object.values(PositionCategory) },
                 level: { type: "enum", values: Object.values(PosisionLevel) },
-                commissionId: { type: "string", optional: true, empty: false }
+                commissionId: { type: "string", optional: true }
             };
 
             const check = v.compile(schema);

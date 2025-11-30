@@ -222,10 +222,10 @@ export class ProposalController {
 
         const schema = {
             areaId: { type: "string", empty: false },
-            categoryId: { type: "string", optional: true, empty: false },
+            categoryId: { type: "string", optional: true },
             title: { type: "string", empty: false },
             description: { type: "string", empty: false },
-            customCategory: { type: "string", optional: true, empty: false }
+            customCategory: { type: "string", optional: true }
         };
 
         try {

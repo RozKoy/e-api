@@ -1,6 +1,7 @@
 import { PermissionService } from '@/services/permission.service';
 import { RoleService } from '@/services/role.service';
 import { RolePermissionService } from '@/services/rolePermission.service';
+import { empty } from '@prisma/client/runtime/client';
 import { Request, Response } from 'express';
 import Validator from 'fastest-validator';
 
@@ -156,7 +157,7 @@ export class RoleController {
 
             const schema = {
                 name: { type: "string", empty: false },
-                description: { type: "string", optional: true, empty: false },
+                description: { type: "string", optional: true },
                 permissionIds: {
                     type: "array",
                     items: {
@@ -166,7 +167,6 @@ export class RoleController {
                         }
                     },
                     optional: true,
-                    empty: false
                 }
             }
 

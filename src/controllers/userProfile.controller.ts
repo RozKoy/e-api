@@ -262,9 +262,9 @@ export class UserProfileController {
 
             const schema = {
                 name: { type: "string", optional: true, empty: false },
-                age: { type: "number", optional: true, empty: false },
-                gender: { type: "enum", values: Object.values(Gender), optional: true, empty: false },
-                phoneNumber: { type: "string", optional: true, empty: false },
+                age: { type: "number", optional: true },
+                gender: { type: "enum", values: Object.values(Gender), optional: true },
+                phoneNumber: { type: "string", optional: true },
             };
 
             const check = v.compile(schema);

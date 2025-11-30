@@ -191,7 +191,7 @@ export class UserController {
         email: { type: "email" },
         password: { type: "string", optional: true, min: 8 },
         roleId: { type: "string", optional: true, empty: false },
-        positionId: { type: "string", optional: true, empty: false }
+        positionId: { type: "string", optional: true }
       };
 
       const check = v.compile(schema);
