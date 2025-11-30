@@ -49,7 +49,7 @@ export class CommissionService {
                 },
                 orderBy: { createdAt: "desc" },
             }),
-            prisma.area.count({
+            prisma.commission.count({
                 where: {
                     name: search
                         ? { contains: search, mode: "insensitive" }
