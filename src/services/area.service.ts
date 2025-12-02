@@ -25,6 +25,7 @@ export class AreaService {
                 select: {
                     id: true,
                     name: true,
+                    code: true,
                     createdAt: true,
                     updatedAt: true,
                 },
@@ -52,6 +53,7 @@ export class AreaService {
                 select: {
                     id: true,
                     name: true,
+                    code: true,
                     createdAt: true,
                     updatedAt: true,
                 },

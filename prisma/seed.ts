@@ -111,12 +111,12 @@ async function main() {
     });
 
     const existingPermissionIds = new Set(
-        existingRolePermissions.map((rp : any) => rp.permissionId)
+        existingRolePermissions.map((rp: any) => rp.permissionId)
     );
 
     const newRolePermissions = allPermissions
-        .filter((p : any) => !existingPermissionIds.has(p.id))
-        .map((p : any) => ({
+        .filter((p: any) => !existingPermissionIds.has(p.id))
+        .map((p: any) => ({
             roleId: adminRole.id,
             permissionId: p.id,
         }));
@@ -152,6 +152,47 @@ async function main() {
 
     console.log("✅ User admin berhasil dibuat dengan email:", adminEmail);
     console.log("🔑 Password: Password123!");
+
+    // === 5. Seed Area (Dapil) ===
+    await prisma.area.createMany({
+        data: [
+            {
+                code: 1,
+                name: "Dapil 1 - Kota Bandar Lampung"
+            },
+            {
+                code: 2,
+                name: "Dapil 2 - Kabupaten Lampung Selatan"
+            },
+            {
+                code: 3,
+                name: "Dapil 3 - Kabupaten Pesawaran, Kabupaten Pringsewu, Kota Metro"
+            },
+            {
+                code: 4,
+                name: "Dapil 4 - Kabupaten Tanggamus, Kabupaten Lampung Barat, Kabupaten Pesisir Barat"
+            },
+            {
+                code: 5,
+                name: "Dapil 5 - Kabupaten Way Kanan, Kabupaten Lampung Utara"
+            },
+            {
+                code: 6,
+                name: "Dapil 6 - Kabupaten Mesuji, Kabupaten Tulang Bawang, Kabupaten Tulang Bawang Barat"
+            },
+            {
+                code: 7,
+                name: "Dapil 7 - Kabupaten Lampung Tengah"
+            },
+            {
+                code: 8,
+                name: "Dapil 8 - Kabupaten Lampung Timur"
+            },
+        ],
+        skipDuplicates: true,
+    });
+
+    console.log("✅ Area (Dapil) berhasil di-seed");
 }
 
 main()
