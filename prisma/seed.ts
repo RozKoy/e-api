@@ -193,6 +193,39 @@ async function main() {
     });
 
     console.log("✅ Area (Dapil) berhasil di-seed");
+
+    // === 6. Seed Kategori ===
+
+    await prisma.category.createMany({
+        data: [
+            { name: "Infrastruktur" },
+            { name: "Pendidikan" },
+            { name: "Kesehatan" },
+            { name: "Ekonomi/UMKM" },
+            { name: "Pertanian/Perikanan" },
+            { name: "Sosial & Keagamaan" },
+            { name: "Lingkungan" },
+            { name: "Lainnya (custom)" },
+        ],
+        skipDuplicates: true,
+    });
+
+    console.log("✅ Kategori berhasil di-seed");
+
+    // === 7. Seed Komisi ===
+
+    await prisma.commission.createMany({
+        data: [
+            { name: "Komisi I (Pemerintahan, Hukum, & Perizinan)" },
+            { name: "Komisi II (Perekonomian)" },
+            { name: "Komisi III (Keuangan)" },
+            { name: "Komisi IV (Pembangunan)" },
+            { name: "Komisi V (Kesejahteraan Rakyat)" },
+        ],
+        skipDuplicates: true,
+    });
+
+    console.log("✅ Komisi berhasil di-seed");
 }
 
 main()
