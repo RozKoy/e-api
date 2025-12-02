@@ -21,6 +21,7 @@ import { chatRouter } from './chat.routes';
 import { publicRouter } from './public.routes';
 import { commissionRouter } from './commission.routes';
 import { positionRouter } from './position.routes';
+import { dashboardRouter } from './dashboard.routes';
 import { authentication } from '@/middlewares/authentication';
 
 export const router = Router();
@@ -47,3 +48,4 @@ router.use('/news', newsRouter);
 router.use('/chats', chatRouter);
 router.use('/commissions', commissionRouter);
 router.use('/positions', positionRouter);
+router.use('/dashboards', dashboardRouter);

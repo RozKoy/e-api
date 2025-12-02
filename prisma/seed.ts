@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import "dotenv/config";
 import { PrismaPg } from '@prisma/adapter-pg'
-import { PrismaClient } from '../src/generated/prisma/client'
+import { PrismaClient, ProposalStatusEnum } from '../src/generated/prisma/client'
 
 const connectionString = `${process.env.DATABASE_URL}`
 
@@ -226,6 +226,58 @@ async function main() {
     });
 
     console.log("✅ Komisi berhasil di-seed");
+
+    // === 8. Seed Dummy Proposal untuk Tahun Ini & Tahun Lalu ===
+
+    // Ambil data pendukung
+    const admin = await prisma.user.findFirst({ where: { email: adminEmail } });
+    const areas = await prisma.area.findMany();
+    const categories = await prisma.category.findMany();
+
+    if (!admin || areas.length === 0) {
+        console.log("❌ Gagal seeding proposal: user/area/category tidak lengkap");
+    } else {
+        const statuses = [
+            ProposalStatusEnum.baru,
+            ProposalStatusEnum.diproses,
+            ProposalStatusEnum.selesai,
+        ];
+
+        const currentYear = new Date().getFullYear();
+        const yearsToSeed = [currentYear, currentYear - 1];
+
+        const proposalsToInsert: any[] = [];
+
+        for (const year of yearsToSeed) {
+            for (let i = 1; i <= 20; i++) {
+                const randomArea = areas[Math.floor(Math.random() * areas.length)];
+                const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+                const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+
+                // buat tanggal random per tahun
+                const randomMonth = Math.floor(Math.random() * 12); // 0–11
+                const randomDay = Math.floor(Math.random() * 28) + 1;
+                const createdAt = new Date(year, randomMonth, randomDay);
+
+                proposalsToInsert.push({
+                    userId: admin.id,
+                    areaId: randomArea.id,
+                    categoryId: randomCategory.id,
+                    status: randomStatus,
+                    title: `Proposal Dummy ${i} - Tahun ${year}`,
+                    description: `Deskripsi dummy untuk proposal nomor ${i} di tahun ${year}.`,
+                    createdAt,
+                    updatedAt: createdAt,
+                });
+            }
+        }
+
+        await prisma.proposal.createMany({
+            data: proposalsToInsert,
+        });
+
+        console.log(`✅ Dummy Proposal berhasil dibuat untuk tahun ${currentYear} dan ${currentYear - 1} (total ${proposalsToInsert.length})`);
+    }
 }
 
 main()
