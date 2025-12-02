@@ -32,7 +32,7 @@ router.use('/permissions', permissionRouter);
 router.use('/roles', roleRouter);
 router.use('/rolePermissions', rolePermissionRouter);
 router.use('/userProfiles', userProfileRoutes);
-// router.use('/areas', areaRouter);
+router.use('/areas', areaRouter);
 router.use('/fractions', fractionRouter);
 router.use('/userAccesses', userAccessRouter);
 router.use('/categories', categoryRouter);
