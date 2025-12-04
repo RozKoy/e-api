@@ -98,6 +98,101 @@ export class UserService {
         };
     }
 
+    static async getAllPublic(search?: string, page?: number, limit?: number, roleId?: string, areaId?: string, fractionId?: string) {
+        if (!page) {
+            const users = await prisma.user.findMany({
+                where: {
+                    accesses: { some: { public: true } },
+                    ...(roleId ? { roleId: roleId } : undefined),
+                    ...(areaId ? { accesses: { some: { areaId: areaId } } } : undefined),
+                    ...(fractionId ? { accesses: { some: { fractionId: fractionId } } } : undefined),
+                    ...(search ? { OR: [{ profile: { name: { contains: search, mode: "insensitive" } } }, { email: { contains: search, mode: "insensitive" } }] } : undefined),
+                },
+                select: {
+                    id: true,
+                    email: true,
+                    roleId: true,
+                    role: true,
+                    accesses:{
+                        include: {
+                            area: true,
+                            fraction: true,
+                        }
+                    },
+                    position: {
+                        include: {
+                            commission: true,
+                        },
+                    },
+                    profile: true,
+                    createdAt: true,
+                    updatedAt: true,
+                },
+                orderBy: { createdAt: "desc" },
+            });
+            return {
+                data: users,
+                totalData: users.length,
+                totalPages: 1,
+            };
+        }
+
+        const take = limit && !isNaN(limit) ? limit : 10;
+        const skip = (page - 1) * take;
+
+        const [users, totalData] = await Promise.all([
+            prisma.user.findMany({
+                skip,
+                take,
+                where: {
+                    accesses: { some: { public: true } },
+                    ...(roleId ? { roleId: roleId } : undefined),
+                    ...(areaId ? { accesses: { some: { areaId: areaId } } } : undefined),
+                    ...(fractionId ? { accesses: { some: { fractionId: fractionId } } } : undefined),
+                    ...(search ? { OR: [{ profile: { name: { contains: search, mode: "insensitive" } } }, { email: { contains: search, mode: "insensitive" } }] } : undefined),
+                },
+                select: {
+                    id: true,
+                    email: true,
+                    roleId: true,
+                    role: true,
+                    accesses:{
+                        include: {
+                            area: true,
+                            fraction: true,
+                        }
+                    },
+                    position: {
+                        include: {
+                            commission: true,
+                        },
+                    },
+                    profile: true,
+                    createdAt: true,
+                    updatedAt: true,
+                },
+                orderBy: { createdAt: "desc" },
+            }),
+            prisma.user.count({
+                where: {
+                    accesses: { some: { public: true } },
+                    ...(roleId ? { roleId: roleId } : undefined),
+                    ...(areaId ? { accesses: { some: { areaId: areaId } } } : undefined),
+                    ...(fractionId ? { accesses: { some: { fractionId: fractionId } } } : undefined),
+                    ...(search ? { OR: [{ profile: { name: { contains: search, mode: "insensitive" } } }, { email: { contains: search, mode: "insensitive" } }] } : undefined),
+                },
+            }),
+        ]);
+
+        const totalPages = Math.ceil(totalData / take);
+
+        return {
+            data: users,
+            totalData,
+            totalPages,
+        };
+    }
+
     static async getOneById(id: string) {
         return await prisma.user.findUnique({ where: { id }, select: { id: true, email: true, roleId: true, profile: true, role: true, accesses: { include: { area: true, fraction: true } }, position: { include: { commission: true } }, createdAt: true, updatedAt: true } });
     }

@@ -118,6 +118,34 @@ export class UserController {
     }
   }
 
+  static async getAllPublic(req: Request, res: Response) {
+
+    const { search, page, limit, roleId, areaId, fractionId } = req.query as { search?: string, page?: number, limit?: number, roleId?: string, areaId?: string, fractionId?: string };
+
+    try {
+
+      const data = await UserService.getAllPublic(search, Number(page), Number(limit), roleId, areaId, fractionId);
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Data user public berhasil didapatkan',
+        data: data.data,
+        totalData: data.totalData,
+        totalPage: data.totalPages
+      });
+
+    } catch (error) {
+
+      console.log(error);
+
+      return res.status(500).json({
+        status: 'error',
+        message: 'Gagal mendapatkan data user public'
+      });
+
+    }
+  }
+
   static async getOneById(req: Request, res: Response) {
 
     const { id } = req.params;
