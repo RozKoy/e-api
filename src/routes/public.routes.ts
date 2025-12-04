@@ -9,6 +9,7 @@ export const publicRouter = Router();
 publicRouter.get('/areas/', AreaController.getAll);
 publicRouter.get('/news/', NewsController.getAll);
 publicRouter.get('/proposals', ProposalController.getAll);
+publicRouter.get('/proposals/year', ProposalController.getProposalYears);
 publicRouter.get('/users/', UserController.getAllPublic);
 publicRouter.get('/users/structural', UserController.getStructural);
 publicRouter.get('/news/:id', NewsController.getOneById);

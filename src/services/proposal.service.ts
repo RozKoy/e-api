@@ -169,4 +169,18 @@ export class ProposalService {
             dislike: p.votes.filter(v => v.agree === false).length,
         }));
     }
+
+    static async getProposalYears() {
+        const years = await prisma.proposal.findMany({
+            select: {
+                createdAt: true,
+            },
+            orderBy: {
+                createdAt: 'desc',
+            },
+        });
+
+        return [...new Set(years.map(y => y.createdAt.getFullYear()))];
+    }
+
 }
