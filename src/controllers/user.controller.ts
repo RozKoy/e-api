@@ -341,32 +341,14 @@ export class UserController {
       const grouped: {
         pimpinan: Record<
           string,
-          {
-            id: string;
-            name: string;
-            email: string;
-            positionCategory: string;
-            positionId: string;
-            position: string;
-            level: string;
-          }[]
+          any[]
         >;
 
         komisi: Record<
           string,
           Record<
             string,
-            {
-              id: string;
-              name: string;
-              email: string;
-              positionCategory: string;
-              positionId: string;
-              position: string;
-              level: string;
-              commissionId: string;
-              commission: string;
-            }[]
+            any[]
           >
         >;
       } = {
@@ -382,15 +364,7 @@ export class UserController {
       structural.leaders.forEach((user) => {
         const level = user.position?.level;
         if (level && grouped.pimpinan[level]) {
-          grouped.pimpinan[level].push({
-            id: user.id,
-            name: user.profile?.name || '-',
-            email: user.email,
-            positionCategory: user.position?.category || '-',
-            positionId: user.position?.id || '-',
-            position: user.position?.name || '-',
-            level: user.position?.level || '-',
-          });
+          grouped.pimpinan[level].push(user);
         }
       });
 
@@ -408,17 +382,7 @@ export class UserController {
         }
 
         if (level && grouped.komisi[commissionName][level]) {
-          grouped.komisi[commissionName][level].push({
-            id: user.id,
-            name: user.profile?.name || '-',
-            email: user.email,
-            positionCategory: user.position?.category || '-',
-            positionId: user.position?.id || '-',
-            position: user.position?.name || '-',
-            level: user.position?.level || '-',
-            commissionId: user.position?.commission?.id || '-',
-            commission: user.position?.commission?.name || '-',
-          });
+          grouped.komisi[commissionName][level].push(user);
         }
       });
 

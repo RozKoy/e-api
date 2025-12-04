@@ -226,6 +226,12 @@ export class UserService {
                     email: true,
                     roleId: true,
                     profile: true,
+                    accesses: {
+                        include: {
+                            area: true,
+                            fraction: true,
+                        }
+                    },
                     position: true,
                     createdAt: true,
                     updatedAt: true,
@@ -243,6 +249,12 @@ export class UserService {
                     email: true,
                     roleId: true,
                     profile: true,
+                    accesses: {
+                        include: {
+                            area: true,
+                            fraction: true,
+                        }
+                    },
                     position: {
                         include: {
                             commission: true
