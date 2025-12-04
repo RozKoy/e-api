@@ -8,7 +8,7 @@ import fs from 'fs';
 export class NewsController {
     static async create(req: Request, res: Response) {
 
-        const { title, content, categoryId } = req.body;
+        const { title, content, categoryId, date } = req.body;
 
         const file = req.file;
 
@@ -17,14 +17,15 @@ export class NewsController {
         const schema = {
             title: { type: "string", empty: false },
             content: { type: "string", empty: false },
-            categoryId: { type: "string", empty: false }
+            categoryId: { type: "string", empty: false },
+            date: { type: "string", empty: false }
         };
 
         try {
 
             const check = v.compile(schema);
 
-            const validationResponse = check({ title, content, categoryId });
+            const validationResponse = check({ title, content, categoryId, date });
 
             if (validationResponse !== true) {
                 return res.status(400).json({
@@ -51,7 +52,7 @@ export class NewsController {
                 });
             }
 
-            const news = await NewsService.create({ title, content, categoryId });
+            const news = await NewsService.create({ title, content, categoryId, date: new Date(date) });
 
             const imageData: any = {};
 
@@ -159,23 +160,24 @@ export class NewsController {
             });
         }
 
-        const { title, content, categoryId } = req.body;
+        const { title, content, categoryId, date } = req.body;
 
         const file = req.file;
 
         const v = new Validator();
 
         const schema = {
-            title: { type: "string", empty: false },
-            content: { type: "string", empty: false },
-            categoryId: { type: "string", empty: false }
+            title: { type: "string", optional: true, empty: false },
+            content: { type: "string", optional: true, empty: false },
+            categoryId: { type: "string", optional: true, empty: false },
+            date: { type: "string", optional: true, empty: false }
         };
 
         try {
 
             const check = v.compile(schema);
 
-            const validationResponse = check({ title, content, categoryId });
+            const validationResponse = check({ title, content, categoryId, date });
 
             if (validationResponse !== true) {
                 if (file) fs.unlinkSync(file.path);
@@ -241,7 +243,8 @@ export class NewsController {
                 categoryId,
                 imageName: imageData.fileName,
                 imageUrl: imageData.fileUrl,
-                imagePath: imageData.filePath
+                imagePath: imageData.filePath,
+                date: date ? new Date(date) : undefined
             });
 
             return res.status(200).json({

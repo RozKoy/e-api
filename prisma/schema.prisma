@@ -317,9 +317,10 @@ model Notification {
 }
 
 model News {
-  id        String  @id @default(uuid())
+  id        String   @id @default(uuid())
   title     String
-  content   String  @db.Text
+  content   String   @db.Text
+  date      DateTime
   imageName String?
   imagePath String?
   imageUrl  String?
