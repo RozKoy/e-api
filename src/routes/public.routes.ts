@@ -3,11 +3,13 @@ import { AreaController } from '../controllers/area.controller';
 import { NewsController } from '@/controllers/news.controller';
 import { ProposalController } from '@/controllers/proposal.controller';
 import { UserController } from '@/controllers/user.controller';
+import { CategoryController } from '@/controllers/category.controller';
 
 export const publicRouter = Router();
 
 publicRouter.get('/areas/', AreaController.getAll);
 publicRouter.get('/news/', NewsController.getAll);
+publicRouter.get('/categories', CategoryController.getAll);
 publicRouter.get('/proposals', ProposalController.getAll);
 publicRouter.get('/proposals/year', ProposalController.getProposalYears);
 publicRouter.get('/users/', UserController.getAllPublic);
