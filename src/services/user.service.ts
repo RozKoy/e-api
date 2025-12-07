@@ -21,7 +21,7 @@ export class UserService {
                     email: true,
                     roleId: true,
                     role: true,
-                    accesses:{
+                    accesses: {
                         include: {
                             area: true,
                             fraction: true,
@@ -63,7 +63,7 @@ export class UserService {
                     email: true,
                     roleId: true,
                     role: true,
-                    accesses:{
+                    accesses: {
                         include: {
                             area: true,
                             fraction: true,
@@ -113,7 +113,7 @@ export class UserService {
                     email: true,
                     roleId: true,
                     role: true,
-                    accesses:{
+                    accesses: {
                         include: {
                             area: true,
                             fraction: true,
@@ -156,7 +156,7 @@ export class UserService {
                     email: true,
                     roleId: true,
                     role: true,
-                    accesses:{
+                    accesses: {
                         include: {
                             area: true,
                             fraction: true,
@@ -194,7 +194,7 @@ export class UserService {
     }
 
     static async getOneById(id: string) {
-        return await prisma.user.findUnique({ where: { id }, select: { id: true, email: true, roleId: true, profile: true, role: true, accesses: { include: { area: true, fraction: true } }, position: { include: { commission: true } }, createdAt: true, updatedAt: true } });
+        return await prisma.user.findUnique({ where: { id }, select: { id: true, email: true, roleId: true, profile: true, role: { include: { rolePermissions: { include: { permission: true } } } }, accesses: { include: { area: true, fraction: true } }, position: { include: { commission: true } }, createdAt: true, updatedAt: true } });
     }
 
     static async update(id: string, data: Prisma.UserUncheckedUpdateInput) {
@@ -212,7 +212,7 @@ export class UserService {
         return await prisma.user.delete({ where: { id } });
     }
 
-    static async getStructural(){
+    static async getStructural() {
 
         const [leaders, commissions] = await Promise.all([
             prisma.user.findMany({
