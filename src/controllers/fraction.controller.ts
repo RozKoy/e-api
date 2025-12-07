@@ -197,6 +197,9 @@ export class FractionController {
 
             const newFractionData: any = {
                 name,
+                imageName: fractionExist.imageName,
+                imagePath: fractionExist.imagePath,
+                imageUrl: fractionExist.imageUrl
             };
 
             if (image) {
@@ -212,7 +215,7 @@ export class FractionController {
                     }
                 }
 
-                const finalFolder = path.join(__dirname, "../../uploads/images/fractions");
+                const finalFolder = path.join(__dirname, "../../uploads/images/fractions", fractionExist.id);
                 if (!fs.existsSync(finalFolder)) fs.mkdirSync(finalFolder, { recursive: true });
 
                 finalPath = path.join(finalFolder, image.filename);
