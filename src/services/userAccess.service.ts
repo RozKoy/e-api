@@ -33,7 +33,13 @@ export class UserAccessService {
                     id: true,
                     area: true,
                     fraction: true,
-                    user: true,
+                    user: {
+                        select: {
+                            id: true, email: true, roleId: true, role: true, positionId: true, profile: true, position: true, accesses: {
+                                include: { area: true, fraction: true }
+                            }
+                        }
+                    },
                     public: true,
                     createdAt: true,
                     updatedAt: true,
@@ -70,7 +76,13 @@ export class UserAccessService {
                     id: true,
                     area: true,
                     fraction: true,
-                    user: true,
+                    user: {
+                        select: {
+                            id: true, email: true, roleId: true, role: true, positionId: true, profile: true, position: true, accesses: {
+                                include: { area: true, fraction: true }
+                            }
+                        }
+                    },
                     public: true,
                     createdAt: true,
                     updatedAt: true,
