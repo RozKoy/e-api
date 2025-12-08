@@ -160,11 +160,11 @@ export class ProposalController {
 
     static async getAll(req: Request, res: Response) {
 
-        const { search, page, limit } = req.query as { search?: string, page?: number, limit?: number };
+        const { search, page, limit, areaId, status, categoryId } = req.query as { search?: string, page?: number, limit?: number, areaId?: string, status?: string, categoryId?: string };
 
         try {
 
-            const data = await ProposalService.getAll(search, Number(page), Number(limit));
+            const data = await ProposalService.getAll(search, Number(page), Number(limit), areaId, status, categoryId);
 
             res.status(200).json({
                 status: 'success',
