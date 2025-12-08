@@ -32,7 +32,11 @@ export class ProposalService {
                     customCategory: true,
                     category: true,
                     user: {
-                        include: { profile: true },
+                        select: {
+                            id: true, email: true, roleId: true, role: true, positionId: true, profile: true, position: true, accesses: {
+                                include: { area: true, fraction: true }
+                            }
+                        }
                     },
                     createdAt: true,
                     updatedAt: true,
@@ -75,7 +79,11 @@ export class ProposalService {
                     category: true,
                     customCategory: true,
                     user: {
-                        include: { profile: true },
+                        select: {
+                            id: true, email: true, roleId: true, role: true, positionId: true, profile: true, position: true, accesses: {
+                                include: { area: true, fraction: true }
+                            }
+                        }
                     },
                     createdAt: true,
                     updatedAt: true,
@@ -109,7 +117,19 @@ export class ProposalService {
     }
 
     static async getOneById(id: string) {
-        return await prisma.proposal.findUnique({ where: { id }, include: { area: true, category: true, user: { include: { profile: true } } } });
+        return await prisma.proposal.findUnique({
+            where: { id }, include: {
+                area: true,
+                category: true,
+                user: {
+                    select: {
+                        id: true, email: true, roleId: true, role: true, positionId: true, profile: true, position: true, accesses: {
+                            include: { area: true, fraction: true }
+                        }
+                    }
+                },
+            }
+        });
     }
 
     static async update(id: string, data: Prisma.ProposalUncheckedUpdateInput) {
