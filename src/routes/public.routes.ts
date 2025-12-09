@@ -4,6 +4,7 @@ import { NewsController } from '@/controllers/news.controller';
 import { ProposalController } from '@/controllers/proposal.controller';
 import { UserController } from '@/controllers/user.controller';
 import { CategoryController } from '@/controllers/category.controller';
+import { ProposalVoteController } from '@/controllers/proposalVote.controller';
 
 export const publicRouter = Router();
 
@@ -11,6 +12,7 @@ publicRouter.get('/areas/', AreaController.getAll);
 publicRouter.get('/news/', NewsController.getAll);
 publicRouter.get('/categories', CategoryController.getAll);
 publicRouter.get('/proposals', ProposalController.getAll);
+publicRouter.get('/proposalVotes/count/:proposalId', ProposalVoteController.count);
 publicRouter.get('/proposals/year', ProposalController.getProposalYears);
 publicRouter.get('/users/', UserController.getAllPublic);
 publicRouter.get('/users/structural', UserController.getStructural);
