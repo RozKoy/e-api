@@ -116,4 +116,13 @@ export class ProposalDiscussionService {
         return await prisma.proposalDiscussion.delete({ where: { id } });
     }
 
+    static async getByProposalIdAndUserId(proposalId: string, userId: string) {
+        return await prisma.proposalDiscussion.findMany({
+            where: {
+                proposalId,
+                userId,
+            },
+        });
+    }
+
 }

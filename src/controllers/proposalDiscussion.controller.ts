@@ -49,6 +49,15 @@ export class ProposalDiscussionController {
                 });
             }
 
+            const discussionExist = await ProposalDiscussionService.getByProposalIdAndUserId(proposalId, userId); 
+
+            if (discussionExist.length >= 5) {
+                return res.status(400).json({
+                    status: "error",
+                    message: "Anda telah mencapai batas maksimum diskusi untuk proposal ini"
+                });
+            }
+
             const data = await ProposalDiscussionService.create({ proposalId, userId, message });
 
             res.status(201).json({
