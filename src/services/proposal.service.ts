@@ -2,26 +2,60 @@ import prisma from "@/libs/prisma";
 import { Prisma, ProposalStatusEnum } from "@generated/prisma/client";
 
 export class ProposalService {
-
     static async create(data: Prisma.ProposalUncheckedCreateInput) {
         return await prisma.proposal.create({ data });
     }
 
-    static async getAll(search?: string, page?: number, limit?: number, areaId?: string, status?: string, categoryId?: string) {
+    static async getAll(
+        search?: string,
+        page?: number,
+        limit?: number,
+        areaId?: string,
+        status?: string,
+        categoryId?: string
+    ) {
         if (!page) {
             const proposals = await prisma.proposal.findMany({
                 where: {
                     ...(categoryId ? { categoryId } : undefined),
                     ...(areaId ? { areaId } : undefined),
                     ...(status && { status: status as ProposalStatusEnum }),
-                    ...(search ? {
-                        OR: [
-                            { title: { contains: search, mode: "insensitive" } },
-                            { area: { name: { contains: search, mode: "insensitive" } } },
-                            { user: { profile: { name: { contains: search, mode: "insensitive" } } } },
-                            { customCategory: { contains: search, mode: "insensitive" } },
-                        ]
-                    } : undefined),
+                    ...(search
+                        ? {
+                              OR: [
+                                  {
+                                      title: {
+                                          contains: search,
+                                          mode: "insensitive",
+                                      },
+                                  },
+                                  {
+                                      area: {
+                                          name: {
+                                              contains: search,
+                                              mode: "insensitive",
+                                          },
+                                      },
+                                  },
+                                  {
+                                      user: {
+                                          profile: {
+                                              name: {
+                                                  contains: search,
+                                                  mode: "insensitive",
+                                              },
+                                          },
+                                      },
+                                  },
+                                  {
+                                      customCategory: {
+                                          contains: search,
+                                          mode: "insensitive",
+                                      },
+                                  },
+                              ],
+                          }
+                        : undefined),
                 },
                 select: {
                     id: true,
@@ -33,15 +67,32 @@ export class ProposalService {
                     category: true,
                     user: {
                         select: {
-                            id: true, email: true, roleId: true, role: true, positionId: true, profile: true, position: true, accesses: {
-                                include: { area: true, fraction: true }
-                            }
-                        }
+                            id: true,
+                            email: true,
+                            roleId: true,
+                            role: true,
+                            positionId: true,
+                            profile: true,
+                            position: true,
+                            accesses: {
+                                include: { area: true, fraction: true },
+                            },
+                        },
+                    },
+                    assignments: {
+                        include: {
+                            role: true,
+                        },
+                        orderBy: {
+                            createdAt: "desc",
+                        },
                     },
                     createdAt: true,
                     updatedAt: true,
                 },
-                orderBy: { createdAt: "desc" },
+                orderBy: {
+                    createdAt: "desc",
+                },
             });
             return {
                 data: proposals,
@@ -61,14 +112,42 @@ export class ProposalService {
                     ...(categoryId ? { categoryId } : undefined),
                     ...(areaId ? { areaId } : undefined),
                     ...(status && { status: status as ProposalStatusEnum }),
-                    ...(search ? {
-                        OR: [
-                            { title: { contains: search, mode: "insensitive" } },
-                            { area: { name: { contains: search, mode: "insensitive" } } },
-                            { user: { profile: { name: { contains: search, mode: "insensitive" } } } },
-                            { customCategory: { contains: search, mode: "insensitive" } },
-                        ]
-                    } : undefined),
+                    ...(search
+                        ? {
+                              OR: [
+                                  {
+                                      title: {
+                                          contains: search,
+                                          mode: "insensitive",
+                                      },
+                                  },
+                                  {
+                                      area: {
+                                          name: {
+                                              contains: search,
+                                              mode: "insensitive",
+                                          },
+                                      },
+                                  },
+                                  {
+                                      user: {
+                                          profile: {
+                                              name: {
+                                                  contains: search,
+                                                  mode: "insensitive",
+                                              },
+                                          },
+                                      },
+                                  },
+                                  {
+                                      customCategory: {
+                                          contains: search,
+                                          mode: "insensitive",
+                                      },
+                                  },
+                              ],
+                          }
+                        : undefined),
                 },
                 select: {
                     id: true,
@@ -80,29 +159,74 @@ export class ProposalService {
                     customCategory: true,
                     user: {
                         select: {
-                            id: true, email: true, roleId: true, role: true, positionId: true, profile: true, position: true, accesses: {
-                                include: { area: true, fraction: true }
-                            }
-                        }
+                            id: true,
+                            email: true,
+                            roleId: true,
+                            role: true,
+                            positionId: true,
+                            profile: true,
+                            position: true,
+                            accesses: {
+                                include: { area: true, fraction: true },
+                            },
+                        },
+                    },
+                    assignments: {
+                        include: {
+                            role: true,
+                        },
+                        orderBy: {
+                            createdAt: "desc",
+                        },
                     },
                     createdAt: true,
                     updatedAt: true,
                 },
-                orderBy: { createdAt: "desc" },
+                orderBy: {
+                    createdAt: "desc",
+                },
             }),
             prisma.proposal.count({
                 where: {
                     ...(categoryId ? { categoryId } : undefined),
                     ...(areaId ? { areaId } : undefined),
                     ...(status && { status: status as ProposalStatusEnum }),
-                    ...(search ? {
-                        OR: [
-                            { title: { contains: search, mode: "insensitive" } },
-                            { area: { name: { contains: search, mode: "insensitive" } } },
-                            { user: { profile: { name: { contains: search, mode: "insensitive" } } } },
-                            { customCategory: { contains: search, mode: "insensitive" } },
-                        ]
-                    } : undefined),
+                    ...(search
+                        ? {
+                              OR: [
+                                  {
+                                      title: {
+                                          contains: search,
+                                          mode: "insensitive",
+                                      },
+                                  },
+                                  {
+                                      area: {
+                                          name: {
+                                              contains: search,
+                                              mode: "insensitive",
+                                          },
+                                      },
+                                  },
+                                  {
+                                      user: {
+                                          profile: {
+                                              name: {
+                                                  contains: search,
+                                                  mode: "insensitive",
+                                              },
+                                          },
+                                      },
+                                  },
+                                  {
+                                      customCategory: {
+                                          contains: search,
+                                          mode: "insensitive",
+                                      },
+                                  },
+                              ],
+                          }
+                        : undefined),
                 },
             }),
         ]);
@@ -118,17 +242,25 @@ export class ProposalService {
 
     static async getOneById(id: string) {
         return await prisma.proposal.findUnique({
-            where: { id }, include: {
+            where: { id },
+            include: {
                 area: true,
                 category: true,
                 user: {
                     select: {
-                        id: true, email: true, roleId: true, role: true, positionId: true, profile: true, position: true, accesses: {
-                            include: { area: true, fraction: true }
-                        }
-                    }
+                        id: true,
+                        email: true,
+                        roleId: true,
+                        role: true,
+                        positionId: true,
+                        profile: true,
+                        position: true,
+                        accesses: {
+                            include: { area: true, fraction: true },
+                        },
+                    },
                 },
-            }
+            },
         });
     }
 
@@ -140,8 +272,11 @@ export class ProposalService {
         return await prisma.proposal.delete({ where: { id } });
     }
 
-    static async getExportData(startDate?: Date, endDate?: Date, areaId?: string) {
-
+    static async getExportData(
+        startDate?: Date,
+        endDate?: Date,
+        areaId?: string
+    ) {
         const where: any = {};
 
         if (startDate && !endDate) {
@@ -149,9 +284,7 @@ export class ProposalService {
                 gte: startDate,
                 lte: new Date(),
             };
-        }
-
-        else if (startDate && endDate) {
+        } else if (startDate && endDate) {
             where.createdAt = {
                 gte: startDate,
                 lte: endDate,
@@ -178,15 +311,15 @@ export class ProposalService {
                     include: { profile: true },
                 },
                 createdAt: true,
-                updatedAt: true
+                updatedAt: true,
             },
             orderBy: { createdAt: "asc" },
         });
 
         return proposals.map((p) => ({
             ...p,
-            like: p.votes.filter(v => v.agree === true).length,
-            dislike: p.votes.filter(v => v.agree === false).length,
+            like: p.votes.filter((v) => v.agree === true).length,
+            dislike: p.votes.filter((v) => v.agree === false).length,
         }));
     }
 
@@ -196,11 +329,10 @@ export class ProposalService {
                 createdAt: true,
             },
             orderBy: {
-                createdAt: 'desc',
+                createdAt: "desc",
             },
         });
 
-        return [...new Set(years.map(y => y.createdAt.getFullYear()))];
+        return [...new Set(years.map((y) => y.createdAt.getFullYear()))];
     }
-
 }
