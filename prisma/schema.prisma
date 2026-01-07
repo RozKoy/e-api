@@ -65,7 +65,7 @@ model User {
   position                Position?                @relation(fields: [positionId], references: [id], onDelete: SetNull)
   profile                 UserProfile?
   accesses                UserAccess[]
-  proposals               Proposal[]
+  proposals               Proposal[]               @relation("ProposalCreator")
   proposalVotes           ProposalVote[]
   proposalStatuses        ProposalStatus[]
   proposalDiscussions     ProposalDiscussion[]
@@ -79,6 +79,7 @@ model User {
   chatsAsUserA ChatRoom[]    @relation("UserAChats")
   chatsAsUserB ChatRoom[]    @relation("UserBChats")
   sentMessages ChatMessage[] @relation("ChatMessage_senderIdToUser")
+  ProposalInCharges Proposal[] @relation("PeopleInCharge")
 }
 
 model Position {
@@ -198,27 +199,31 @@ model Category {
 }
 
 model Proposal {
-  id             String             @id @default(uuid())
-  userId         String
-  areaId         String
-  categoryId     String?
-  status         ProposalStatusEnum
-  title          String
-  description    String
-  customCategory String?
-  fileName       String?
-  filePath       String?
-  fileUrl        String?
+  id               String             @id @default(uuid())
+  userId           String
+  areaId           String
+  categoryId       String?
+  status           ProposalStatusEnum
+  title            String
+  description      String
+  customCategory   String?
+  longitude        String?
+  latitude         String?
+  peopleInChargeId String?
+  fileName         String?
+  filePath         String?
+  fileUrl          String?
 
-  user     User      @relation(fields: [userId], references: [id])
+  user     User      @relation("ProposalCreator", fields: [userId], references: [id])
   area     Area      @relation(fields: [areaId], references: [id])
   category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
-  votes         ProposalVote[]
-  statuses      ProposalStatus[]
-  assignments   ProposalAssignment[]
-  discussions   ProposalDiscussion[]
-  notifications Notification[]
+  votes           ProposalVote[]
+  statuses        ProposalStatus[]
+  assignments     ProposalAssignment[]
+  discussions     ProposalDiscussion[]
+  notifications   Notification[]
+  peopleInCharges User?                @relation("PeopleInCharge", fields: [peopleInChargeId], references: [id], onDelete: SetNull)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

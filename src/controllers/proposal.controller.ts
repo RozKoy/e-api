@@ -16,7 +16,7 @@ import { RolePermissionService } from '@/services/rolePermission.service';
 export class ProposalController {
     static async create(req: AuthenticatedRequest, res: Response) {
 
-        const { areaId, categoryId, title, description, customCategory } = req.body;
+        const { areaId, categoryId, title, description, customCategory, longitude, latitude, peopleInChargeId } = req.body;
 
         const userId = req.payload?.userId as string;
 
@@ -30,14 +30,17 @@ export class ProposalController {
             categoryId: { type: "string", optional: true, empty: false },
             title: { type: "string", empty: false },
             description: { type: "string", empty: false },
-            customCategory: { type: "string", optional: true, empty: false }
+            customCategory: { type: "string", optional: true, empty: false },
+            longitude: { type: "string", optional: true, empty: false },
+            latitude: { type: "string", optional: true, empty: false },
+            peopleInChargeId: { type: "string", optional: true, empty: false }
         };
 
         let finalPath: string | null = null;
 
         try {
             const check = v.compile(schema);
-            const validationResponse = check({ userId, areaId, categoryId, title, description, customCategory });
+            const validationResponse = check({ userId, areaId, categoryId, title, description, customCategory, longitude, latitude, peopleInChargeId });
 
             if (validationResponse !== true) {
                 if (file) fs.unlinkSync(file.path);
@@ -62,6 +65,17 @@ export class ProposalController {
                     status: "error",
                     message: "User tidak ditemukan"
                 });
+            }
+
+            if (peopleInChargeId) {
+                const peopleInCharegeExist = await UserService.getOneById(peopleInChargeId);
+                if (!peopleInCharegeExist) {
+                    if (file) fs.unlinkSync(file.path);
+                    return res.status(400).json({
+                        status: "error",
+                        message: "User ditujukan tidak ditemukan"
+                    });
+                }
             }
 
             const areaExist = await AreaService.getOneById(areaId);
@@ -110,7 +124,10 @@ export class ProposalController {
                 status: "baru",
                 title,
                 description,
-                customCategory: finalCustomCategory
+                customCategory: finalCustomCategory,
+                longitude,
+                latitude,
+                peopleInChargeId: peopleInChargeId || null
             });
 
             await ProposalStatusService.create({ proposalId: data.id, userId, status: "baru" });
@@ -212,7 +229,7 @@ export class ProposalController {
 
         const userId = req.payload!.userId;
 
-        const { areaId, categoryId, title, description, customCategory } = req.body;
+        const { areaId, categoryId, title, description, customCategory, longitude, latitude, peopleInChargeId } = req.body;
 
         const file = req.file;
 
@@ -225,12 +242,15 @@ export class ProposalController {
             categoryId: { type: "string", optional: true },
             title: { type: "string", empty: false },
             description: { type: "string", empty: false },
-            customCategory: { type: "string", optional: true }
+            customCategory: { type: "string", optional: true },
+            longitude: { type: "string", optional: true },
+            latitude: { type: "string", optional: true },
+            peopleInChargeId: { type: "string", optional: true }
         };
 
         try {
             const check = v.compile(schema);
-            const validationResponse = check({ areaId, categoryId, title, description, customCategory });
+            const validationResponse = check({ areaId, categoryId, title, description, customCategory, longitude, latitude, peopleInChargeId });
 
             if (validationResponse !== true) {
                 if (file) fs.unlinkSync(file.path);
@@ -255,6 +275,17 @@ export class ProposalController {
                     status: "error",
                     message: "Proposal tidak ditemukan"
                 });
+            }
+
+            if (peopleInChargeId) {
+                const peopleInCharegeExist = await UserService.getOneById(peopleInChargeId);
+                if (!peopleInCharegeExist) {
+                    if (file) fs.unlinkSync(file.path);
+                    return res.status(400).json({
+                        status: "error",
+                        message: "User ditujukan tidak ditemukan"
+                    });
+                }
             }
 
             if (proposalExist.userId !== userId) {
@@ -347,7 +378,10 @@ export class ProposalController {
                 customCategory: finalCustomCategory,
                 fileName: fileData.fileName,
                 filePath: fileData.filePath,
-                fileUrl: fileData.fileUrl
+                fileUrl: fileData.fileUrl,
+                longitude,
+                latitude,
+                peopleInChargeId
             });
 
             return res.status(200).json({

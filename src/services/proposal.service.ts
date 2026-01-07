@@ -65,6 +65,8 @@ export class ProposalService {
                     area: true,
                     customCategory: true,
                     category: true,
+                    longitude: true,
+                    latitude: true,
                     user: {
                         select: {
                             id: true,
@@ -85,6 +87,23 @@ export class ProposalService {
                         },
                         orderBy: {
                             createdAt: "desc",
+                        },
+                    },
+                    peopleInCharges: {
+                        select: {
+                            id: true,
+                            position: true,
+                            profile: {
+                                select: {
+                                    name: true,
+                                },
+                            },
+                            accesses: {
+                                select:{
+                                    area: true,
+                                    fraction: true
+                                }
+                            }
                         },
                     },
                     createdAt: true,
@@ -157,6 +176,8 @@ export class ProposalService {
                     area: true,
                     category: true,
                     customCategory: true,
+                    longitude: true,
+                    latitude: true,
                     user: {
                         select: {
                             id: true,
@@ -169,6 +190,23 @@ export class ProposalService {
                             accesses: {
                                 include: { area: true, fraction: true },
                             },
+                        },
+                    },
+                    peopleInCharges: {
+                        select: {
+                            id: true,
+                            position: true,
+                            profile: {
+                                select: {
+                                    name: true,
+                                },
+                            },
+                            accesses: {
+                                select:{
+                                    area: true,
+                                    fraction: true
+                                }
+                            }
                         },
                     },
                     assignments: {
@@ -259,6 +297,23 @@ export class ProposalService {
                             include: { area: true, fraction: true },
                         },
                     },
+                },
+                peopleInCharges: {
+                        select: {
+                            id: true,
+                            position: true,
+                            profile: {
+                                select: {
+                                    name: true,
+                                },
+                            },
+                            accesses: {
+                                select:{
+                                    area: true,
+                                    fraction: true
+                                }
+                            }
+                        },
                 },
             },
         });
