@@ -863,510 +863,1088 @@ async function main() {
             email: "yozi.rizal@gmail.com",
             password: "yozi.rizalangka2025",
             fraction: "PARTAI DEMOKRAT",
+            area: 5,
+            position : {
+                name: "Wakil Ketua - Komisi III",
+                category: "komisi",
+                level: "wakil",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "MUHAMMAD JUNAIDI",
             email: "muhammad.junaidi@gmail.com",
             password: "muhammad.junaidiangka2025",
             fraction: "PARTAI DEMOKRAT",
+            area: 2,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "ANGGA SATRIA PRATAMA, S.I.KOM., M.B.A.",
             email: "angga.satria.pratama@gmail.com",
             password: "angga.satria.pratamaangka2025",
             fraction: "PARTAI DEMOKRAT",
+            area: 3,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "HI. BUDIMAN AS",
             email: "budiman.as@gmail.com",
             password: "budiman.asangka2025",
             fraction: "PARTAI DEMOKRAT",
+            area: 1,
+            position : {
+                name: "Anggota - Komisi I",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi I (Pemerintahan, Hukum, & Perizinan)",
+            }
         },
         {
             name: "HI. AMALUDDIN, S.H.",
             email: "amaluddin@gmail.com",
             password: "amaluddinangka2025",
             fraction: "PARTAI DEMOKRAT",
+            area: 4,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "DENI RIBOWO, S.E.",
             email: "deni.ribowo@gmail.com",
             password: "deni.ribowoangka2025",
             fraction: "PARTAI DEMOKRAT",
+            area: 5,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "HANIFAL, S.P.",
             email: "hanifal@gmail.com",
             password: "hanifalangka2025",
             fraction: "PARTAI DEMOKRAT",
+            area: 6,
+            position : {
+                name: "Anggota - Komisi II",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "H. SINGA ERSA AWANGGA",
             email: "singa.ersa.awangga@gmail.com",
             password: "singa.ersa.awanggaangka2025",
             fraction: "PARTAI DEMOKRAT",
+            area: 7,
+            position : {
+                name: "Anggota - Komisi II",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "MUHAMMAD KHADAFI AZWAR",
             email: "muhammad.khadafi.azwar@gmail.com",
             password: "muhammad.khadafi.azwarangka2025",
             fraction: "PARTAI DEMOKRAT",
+            area: 8,
+            position : {
+                name: "Anggota - Komisi III",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "H. FAHRORROZI, S.T., M.M.",
             email: "fahrorrozi@gmail.com",
             password: "fahrorroziangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 2,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "DRS. H. MIKDAR ILYAS, M.M.",
             email: "mikdar.ilyas@gmail.com",
             password: "mikdar.ilyasangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 5,
+            position : {
+                name: "Anggota - Komisi II",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "IKHWAN FADIL IBRAHIM, S.H.",
             email: "ikhwan.fadil.ibrahim@gmail.com",
             password: "ikhwan.fadil.ibrahimangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 1,
+            position : {
+                name: "Sekretaris - Komisi III",
+                category: "komisi",
+                level: "sekretaris",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "INTAN REHANA, S.KED.",
             email: "intan.rehana@gmail.com",
             password: "intan.rehanaangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 3,
+            position : {
+                name: "Anggota - Komisi I",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi I (Pemerintahan, Hukum, & Perizinan)",
+            }
         },
         {
             name: "AHMAD GIRI AKBAR, S.E., M.B.A.",
             email: "ahmad.giri.akbar@gmail.com",
             password: "ahmad.giri.akbarangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 8,
+            position : {
+                name: "Ketua - DPRD Provinsi Lampung",
+                category: "pimpinan",
+                level: "ketua",
+            }
         },
         {
             name: "MOHAMMAD REZA",
             email: "mohammad.reza@gmail.com",
             password: "mohammad.rezaangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 4,
+            position : {
+                name: "Anggota - Komisi I",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi I (Pemerintahan, Hukum, & Perizinan)",
+            }
         },
         {
             name: "HJ. ELLY WAHYUNI, S.E., M.M.",
             email: "elly.wahyuni@gmail.com",
             password: "elly.wahyuniangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 3,
+            position : {
+                name: "Sekretaris - Komisi V",
+                category: "komisi",
+                level: "sekretaris",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "DRS. MUKHLIS BASRI, M.SI.",
             email: "mukhlis.basri@gmail.com",
             password: "mukhlis.basriangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 4,
+            position : {
+                name: "Ketua - Komisi IV",
+                category: "komisi",
+                level: "ketua",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "DR. MIRZALIE, S.S., S.H., M.KN.",
             email: "mirzalie@gmail.com",
             password: "mirzalieangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 4,
+            position : {
+                name: "Anggota - Komisi III",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "I MADE SUARJAYA, S.H.",
             email: "imade.suarjaya@gmail.com",
             password: "imade.suarjayaangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 7,
+            position : {
+                name: "Anggota - Komisi II",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "VERI AGUSLI HTB, S.E.",
             email: "veri.agusli@gmail.com",
             password: "veri.agusliangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 6,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "ANDIKA WIBAWA SEPULAU RAYA, S.E.",
             email: "andika.wibawa@gmail.com",
             password: "andika.wibawaangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 1,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "WAHRUL FAUZI SILALAHI, S.H.",
             email: "wahrul.fauzi@gmail.com",
             password: "wahrul.fauziangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 2,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "H. FAUZI HERI, S.T., S.H., M.H.",
             email: "fauzi.heri@gmail.com",
             password: "fauzi.heriangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 1,
+            position : {
+                name: "Anggota - Komisi II",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "GALANG PUTRA RAHMAN",
             email: "galang.putra@gmail.com",
             password: "galang.putraangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 5,
+            position : {
+                name: "Anggota - Komisi III",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "RAHMAT VISA RIDI ARIFIN",
             email: "rahmat.visa@gmail.com",
             password: "rahmat.visaangka2025",
             fraction: "PARTAI GERAKAN INDONESIA RAYA (GERINDRA)",
+            area: 8,
+            position : {
+                name: "Anggota - Komisi I",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi I (Pemerintahan, Hukum, & Perizinan)",
+            }
         },
         {
             name: "FATIKHÁTUL KHOIRIYAH, S.H.I., M.H.",
             email: "fatikhatul.khoiriyah@gmail.com",
             password: "fatikhatul.khoiriyahangka2025",
             fraction: "PARTAI KEBANGKITAN BANGSA (PKB)",
+            area: 5,
+            position : {
+                name: "Anggota - Komisi II",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "DR. SASA CHALIM, M.M.",
             email: "sasa.chalim@gmail.com",
             password: "sasa.chalimangka2025",
             fraction: "PARTAI KEBANGKITAN BANGSA (PKB)",
+            area: 8,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "H. AHMAD BASUKI, M.PD.",
             email: "ahmad.basuki@gmail.com",
             password: "ahmad.basukiangka2025",
             fraction: "PARTAI KEBANGKITAN BANGSA (PKB)",
+            area: 2,
+            position : {
+                name: "Ketua - Komisi II",
+                category: "komisi",
+                level: "ketua",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "NAJIULLAH SYARIF, S.T., M.T.",
             email: "najiullah.syarif@gmail.com",
             password: "najiullah.syarifangka2025",
             fraction: "PARTAI KEBANGKITAN BANGSA (PKB)",
+            area: 1,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "H. TAUFIK RAHMAN, S.AG.",
             email: "taufik.rahman@gmail.com",
             password: "taufik.rahmanangka2025",
             fraction: "PARTAI KEBANGKITAN BANGSA (PKB)",
+            area: 1,
+            position : {
+                name: "Anggota - Komisi III",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "MAULIDAH ZAUROH, M.A.PD.",
             email: "maulidah.zauroh@gmail.com",
             password: "maulidah.zaurohangka2025",
             fraction: "PARTAI KEBANGKITAN BANGSA (PKB)",
+            area: 6,
+            position : {
+                name: "Wakil Ketua III - DPRD Provinsi Lampung",
+                category: "pimpinan",
+                level: "wakil",
+            }
         },
         {
             name: "BUDI HADI YUNANTO",
             email: "budi.hadi@gmail.com",
             password: "budi.hadiangka2025",
             fraction: "PARTAI KEBANGKITAN BANGSA (PKB)",
+            area: 7,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "HANIFAH, S.E.",
             email: "hanifah@gmail.com",
             password: "hanifahangka2025",
             fraction: "PARTAI KEBANGKITAN BANGSA (PKB)",
+            area: 3,
+            position : {
+                name: "Sekretaris - Komisi I",
+                category: "komisi",
+                level: "sekretaris",
+                commission: "Komisi I (Pemerintahan, Hukum, & Perizinan)",
+            }
         },
         {
             name: "MUNIR ABDUL HARIS, S.SOS.I",
             email: "munir.haris@gmail.com",
             password: "munir.harisangka2025",
             fraction: "PARTAI KEBANGKITAN BANGSA (PKB)",
+            area: 7,
+            position : {
+                name: "Anggota - Komisi III",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "ABDUL AZIZ",
             email: "abdul.aziz@gmail.com",
             password: "abdul.azizangka2025",
             fraction: "PARTAI KEBANGKITAN BANGSA (PKB)",
+            area: 8,
         },
         {
             name: "SEH AJEMAN, S.AG.",
             email: "seh.ajeman@gmail.com",
             password: "seh.ajemanangka2025",
             fraction: "PARTAI KEBANGKITAN BANGSA (PKB)",
+            area: 4,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "H. ADE UTAMI IBNU, S.E.",
             email: "ade.utami@gmail.com",
             password: "ade.utamiangka2025",
             fraction: "PARTAI KEADILAN SEJAHTERA (PKS)",
+            area: 1,
+            position : {
+                name: "Wakil Ketua - Komisi I",
+                category: "komisi",
+                level: "wakil",
+                commission: "Komisi I (Pemerintahan, Hukum, & Perizinan)",
+            }
         },
         {
             name: "H. YUSNADI, S.T.",
             email: "yusnadi@gmail.com",
             password: "yusnadiangka2025",
             fraction: "PARTAI KEADILAN SEJAHTERA (PKS)",
+            area: 8,
+            position : {
+                name: "Sekretaris - Komisi IV",
+                category: "komisi",
+                level: "sekretaris",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "M. SYUKRON MUCHTAR, LC., M.AG.",
             email: "syukron.muchtar@gmail.com",
             password: "syukron.muchtarangka2025",
             fraction: "PARTAI KEADILAN SEJAHTERA (PKS)",
+            area: 3,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "MUHAMMAD GHOFUR, S.SI.",
             email: "muhammad.ghofur@gmail.com",
             password: "muhammad.ghofurangka2025",
             fraction: "PARTAI KEADILAN SEJAHTERA (PKS)",
+            area: 7,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "H. AMRULLAH BS",
             email: "amrullah.bs@gmail.com",
             password: "amrullah.bsangka2025",
             fraction: "PARTAI KEADILAN SEJAHTERA (PKS)",
+            area: 5,
+            position : {
+                name: "Anggota - Komisi II",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "H. HENI SUSILO, S.PD., M.PD.",
             email: "heni.susilo@gmail.com",
             password: "heni.susiloangka2025",
             fraction: "PARTAI KEADILAN SEJAHTERA (PKS)",
+            area: 4,
+            position : {
+                name: "Anggota - Komisi III",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "H. PUJI SARTONO, S.H., S.KEP.",
             email: "puji.sartono@gmail.com",
             password: "puji.sartonoangka2025",
             fraction: "PARTAI KEADILAN SEJAHTERA (PKS)",
+            area: 2,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "H. M. HAZIZI, S.E.",
             email: "hazizi@gmail.com",
             password: "haziziangka2025",
             fraction: "PARTAI AMANAT NASIONAL (PAN)",
+            area: 2,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "H. ABDULLAH SURA JAYA, S.H., M.H.",
             email: "abdullah.sura@gmail.com",
             password: "abdullah.suraangka2025",
             fraction: "PARTAI AMANAT NASIONAL (PAN)",
+            area: 7,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "H. AKHMAD ISWAN HENDI CAYA, S.H., M.H.",
             email: "iswan.hendi@gmail.com",
             password: "iswan.hendiangka2025",
             fraction: "PARTAI AMANAT NASIONAL (PAN)",
+            area: 3,
+            position : {
+                name: "Wakil Ketua - Komisi IV",
+                category: "komisi",
+                level: "wakil",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "ANDRIANO DWIKI AGUSTA, S.SN.",
             email: "andriano.dwiki@gmail.com",
             password: "andriano.dwikiangka2025",
             fraction: "PARTAI AMANAT NASIONAL (PAN)",
+            area: 5,
+            position : {
+                name: "Anggota - Komisi II",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "H. YUSIRWAN, S.E., M.H.",
             email: "yusirwan@gmail.com",
             password: "yusirwanangka2025",
             fraction: "PARTAI AMANAT NASIONAL (PAN)",
+            area: 1,
+            position : {
+                name: "Anggota - Komisi I",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi I (Pemerintahan, Hukum, & Perizinan)",
+            }
         },
         {
             name: "IMELDA, S.H.",
             email: "imelda@gmail.com",
             password: "imeldaangka2025",
             fraction: "PARTAI AMANAT NASIONAL (PAN)",
+            area: 4,
         },
         {
             name: "H. MORISWAN, S.T.",
             email: "moriswan@gmail.com",
             password: "moriswanangka2025",
             fraction: "PARTAI AMANAT NASIONAL (PAN)",
+            area: 6,
+            position : {
+                name: "Anggota - Komisi II",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "HJ. DIAH DHARMA YANTI, S.H.",
             email: "diah.dharma@gmail.com",
             password: "diah.dharmaangka2025",
             fraction: "PARTAI AMANAT NASIONAL (PAN)",
+            area: 8,
+            position : {
+                name: "Anggota - Komisi III",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "HI. SUPRIADI HAMZAH, S.H.",
             email: "supriadi.hamzah@gmail.com",
             password: "supriadi.hamzahangka2025",
             fraction: "PARTAI GOLKAR",
+            area: 4,
+            position : {
+                name: "Ketua - Komisi III",
+                category: "komisi",
+                level: "ketua",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "AGUS SUTANTO, S.T.",
             email: "agus.sutanto@gmail.com",
             password: "agus.sutantoangka2025",
             fraction: "PARTAI GOLKAR",
+            area: 2,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "H. ISMET RONI, S.H., M.H.",
             email: "ismet.roni@gmail.com",
             password: "ismet.roniangka2025",
             fraction: "PARTAI GOLKAR",
+            area: 6,
+            position : {
+                name: "Wakil Ketua II - DPRD Provinsi Lampung",
+                category: "pimpinan",
+                level: "wakil",
+            }
         },
         {
             name: "H. ARNOL, S.H.",
             email: "arnol@gmail.com",
             password: "arnolangka2025",
             fraction: "PARTAI GOLKAR",
+            area: 5,
+            position : {
+                name: "Wakil Ketua - Komisi II",
+                category: "komisi",
+                level: "wakil",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "H. PUTRA JAYA UMAR",
             email: "putra.jaya@gmail.com",
             password: "putra.jayaangka2025",
             fraction: "PARTAI GOLKAR",
+            area: 6,
+            position : {
+                name: "Anggota - Komisi I",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi I (Pemerintahan, Hukum, & Perizinan)",
+            }
         },
         {
             name: "H. HANDITYA NARAPATI SZP, S.H.",
             email: "handitya.narapati@gmail.com",
             password: "handitya.narapatiangka2025",
             fraction: "PARTAI GOLKAR",
+            area: 1,
+            position : {
+                name: "Anggota - Komisi II",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "TONDI MUAMMAR GADDAFI NASUTION, S.T.",
             email: "tondi.muammar@gmail.com",
             password: "tondi.muammarangka2025",
             fraction: "PARTAI GOLKAR",
+            area: 3,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "ELSAN TOMI SAGITA",
             email: "elsan.tomi@gmail.com",
             password: "elsan.tomiangka2025",
             fraction: "PARTAI GOLKAR",
+            area: 7,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "MARSHA DHITA PYTALOKA, S.I.P.",
             email: "marsha.dhita@gmail.com",
             password: "marsha.dhitaangka2025",
             fraction: "PARTAI GOLKAR",
+            area: 7,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "ADHITIA PRATAMA, S.H., M.H.",
             email: "adhitia.pratama@gmail.com",
             password: "adhitia.pratamaangka2025",
             fraction: "PARTAI GOLKAR",
+            area: 8,
+            position : {
+                name: "Anggota - Komisi III",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "MUSTIKA BAHRUM, S.E., M.M.",
             email: "mustika.bahrum@gmail.com",
             password: "mustika.bahrumangka2025",
             fraction: "PARTAI GOLKAR",
+            area: 3,
+            position : {
+                name: "Anggota - Komisi I",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi I (Pemerintahan, Hukum, & Perizinan)",
+            }
         },
         {
             name: "H. FAUZAN SIBRÓN, S.E., A.KT.",
             email: "fauzan.sibron@gmail.com",
             password: "fauzan.sibronangka2025",
             fraction: "PARTAI NASDEM",
+            area: 1,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "H. GARINCA REZA PAHLÉVI, S.I.KOM., M.M.",
             email: "garinca.reza@gmail.com",
             password: "garinca.rezaangka2025",
             fraction: "PARTAI NASDEM",
+            area: 8,
+            position : {
+                name: "Ketua - Komisi I",
+                category: "komisi",
+                level: "ketua",
+                commission: "Komisi I (Pemerintahan, Hukum, & Perizinan)",
+            }
         },
         {
             name: "MARDIANA, S.T., M.T.",
             email: "mardiana@gmail.com",
             password: "mardianaangka2025",
             fraction: "PARTAI NASDEM",
+            area: 5,
+            position : {
+                name: "Wakil Ketua - Komisi V",
+                category: "komisi",
+                level: "wakil",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "NURIL ANWAR, S.SOS.",
             email: "nuril.anwar@gmail.com",
             password: "nuril.anwarangka2025",
             fraction: "PARTAI NASDEM",
+            area: 4,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "BUDI YUHANDA, S.H., M.KN.",
             email: "budi.yuhanda@gmail.com",
             password: "budi.yuhandaangka2025",
             fraction: "PARTAI NASDEM",
+            area: 6,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "YUDHA AL HADJID",
             email: "yudha.hadjid@gmail.com",
             password: "yudha.hadjidangka2025",
             fraction: "PARTAI NASDEM",
+            area: 3,
+            position : {
+                name: "Anggota - Komisi III",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "DRS. H. JASRONI, M.M.",
             email: "jasroni@gmail.com",
             password: "jasroniangka2025",
             fraction: "PARTAI NASDEM",
+            area: 2,
+            position : {
+                name: "Anggota - Komisi II",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "H. MISWAN RODY, S.IP.",
             email: "miswan.rody@gmail.com",
             password: "miswan.rodyangka2025",
             fraction: "PARTAI NASDEM",
+            area: 7,
+            position : {
+                name: "Anggota - Komisi I",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi I (Pemerintahan, Hukum, & Perizinan)",
+            }
         },
         {
             name: "NALDI RINARA S. RIZAL, S.E., M.M.",
             email: "naldi.rinara@gmail.com",
             password: "naldi.rinaraangka2025",
             fraction: "PARTAI NASDEM",
+            area: 1,
+            position : {
+                name: "Wakil Ketua IV - DPRD Provinsi Lampung",
+                category: "pimpinan",
+                level: "wakil",
+            }
         },
         {
             name: "YUSEE, S.H.",
             email: "yusee@gmail.com",
             password: "yuseeangka2025",
             fraction: "PARTAI NASDEM",
+            area: 5,
+            position : {
+                name: "Anggota - Komisi III",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "LESTY PUTRI UTAMI, S.H., M.KN.",
             email: "lesty.putri@gmail.com",
             password: "lesty.putriangka2025",
             fraction: "PARTAI DEMOKRASI INDONESIA PERJUANGAN (PDI PERJUANGAN)",
+            area: 2,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "BUDHI CONNDROWATI, S.E.",
             email: "budhi.condrowati@gmail.com",
             password: "budhi.condrowatiangka2025",
             fraction: "PARTAI DEMOKRASI INDONESIA PERJUANGAN (PDI PERJUANGAN)",
+            area: 6,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "KETUT RAMEO",
             email: "ketut.rameo@gmail.com",
             password: "ketut.rameoangka2025",
             fraction: "PARTAI DEMOKRASI INDONESIA PERJUANGAN (PDI PERJUANGAN)",
+            area: 6,
+            position : {
+                name: "Anggota - Komisi V",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "FERLISKA RAMADHITA JOHAN, S.H.",
             email: "ferliska.ramadhita@gmail.com",
             password: "ferliska.ramadhitaangka2025",
             fraction: "PARTAI DEMOKRASI INDONESIA PERJUANGAN (PDI PERJUANGAN)",
+            area: 8,
+            position : {
+                name: "Anggota - Komisi III",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "NI KETUT DEWI NADI, S.T.",
             email: "dewi.nadi@gmail.com",
             password: "dewi.nadiangka2025",
             fraction: "PARTAI DEMOKRASI INDONESIA PERJUANGAN (PDI PERJUANGAN)",
+            area: 7,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "KOSTIANA, S.E., M.H.",
             email: "kostiana@gmail.com",
             password: "kostianaangka2025",
             fraction: "PARTAI DEMOKRASI INDONESIA PERJUANGAN (PDI PERJUANGAN)",
+            area: 1,
+            position : {
+                name: "Wakil Ketua I - DPRD Provinsi Lampung",
+                category: "pimpinan",
+                level: "wakil",
+            }
         },
         {
             name: "DR. H. YANUAR IRAWAN, S.E., M.M.",
             email: "yanuar.irawan@gmail.com",
             password: "yanuar.irawanangka2025",
             fraction: "PARTAI DEMOKRASI INDONESIA PERJUANGAN (PDI PERJUANGAN)",
+            area: 4,
+            position : {
+                name: "Ketua - Komisi V",
+                category: "komisi",
+                level: "ketua",
+                commission: "Komisi V (Kesejahteraan Rakyat)",
+            }
         },
         {
             name: "ARIBUN SAYUNIS, S.SOS., M.M.",
             email: "aribun.sayunis@gmail.com",
             password: "aribun.sayunisangka2025",
             fraction: "PARTAI DEMOKRASI INDONESIA PERJUANGAN (PDI PERJUANGAN)",
+            area: 2,
+            position : {
+                name: "Sekretaris - Komisi II",
+                category: "komisi",
+                level: "sekretaris",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "SHOLIHIN, S.PD., M.H.",
             email: "sholihin@gmail.com",
             password: "sholihinangka2025",
             fraction: "PARTAI DEMOKRASI INDONESIA PERJUANGAN (PDI PERJUANGAN)",
+            area: 3,
+            position : {
+                name: "Anggota - Komisi II",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi II (Perekonomian)",
+            }
         },
         {
             name: "ANDY ROBY, S.H.",
             email: "andy.roby@gmail.com",
             password: "andy.robyangka2025",
             fraction: "PARTAI DEMOKRASI INDONESIA PERJUANGAN (PDI PERJUANGAN)",
+            area: 3,
+            position : {
+                name: "Anggota - Komisi III",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi III (Keuangan)",
+            }
         },
         {
             name: "H. AM. SYAFI’I, S.AG.",
             email: "am.syafii@gmail.com",
             password: "am.syafiiangka2025",
             fraction: "PARTAI DEMOKRASI INDONESIA PERJUANGAN (PDI PERJUANGAN)",
+            area: 4,
+            position : {
+                name: "Anggota - Komisi I",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi I (Pemerintahan, Hukum, & Perizinan)",
+            }
         },
         {
             name: "SAHDANA, S.PD.",
             email: "sahdana@gmail.com",
             password: "sahdanaangka2025",
             fraction: "PARTAI DEMOKRASI INDONESIA PERJUANGAN (PDI PERJUANGAN)",
+            area: 5,
+            position : {
+                name: "Anggota - Komisi IV",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi IV (Pembangunan)",
+            }
         },
         {
             name: "H. EDWARD RASYID, S.E.",
             email: "edward.rasyid@gmail.com",
             password: "edward.rasyidangka2025",
             fraction: "PARTAI DEMOKRASI INDONESIA PERJUANGAN (PDI PERJUANGAN)",
+            area: 7,
+            position : {
+                name: "Anggota - Komisi I",
+                category: "komisi",
+                level: "anggota",
+                commission: "Komisi I (Pemerintahan, Hukum, & Perizinan)",
+            }
         },
     ];
 
@@ -1375,7 +1953,66 @@ async function main() {
     });
 
     for (const user of users) {
+
         const password = await bcrypt.hash(user.password, 10);
+
+        const fractionExists = await prisma.fraction.findFirst({
+            where: { name: user.fraction },
+        });
+
+        const areaExists = await prisma.area.findFirst({
+            where: { code: user.area },
+        });
+        
+        const positionExists = await prisma.position.findFirst({
+            where: { name: user.position?.name },
+        }); 
+
+        if (!positionExists && user.position) {
+
+            if(user.position.category === "pimpinan") {
+
+                await prisma.position.create({
+                    data: {
+                        name: user.position.name,
+                        category: user.position.category,
+                        level: user.position.level,
+                    },
+                });
+
+            }else{
+
+                const commissionExists = await prisma.commission.findFirst({
+                    where: { name: user.position.commission },
+                });
+
+                if (!commissionExists) {
+                    prisma.commission.create({
+                        data: {
+                            name: user.position.commission as string,
+                        },
+                    });
+                }
+
+                const commission = await prisma.commission.findFirst({
+                    where: { name: user.position.commission },
+                });
+
+                await prisma.position.create({
+                    data: {
+                        name: user.position.name,
+                        category: user.position.category,
+                        level: user.position.level,
+                        commissionId: commission?.id as string,
+                    },
+                });
+            }
+
+        }
+
+        const position = await prisma.position.findFirst({
+            where: { name: user.position?.name },
+        });
 
         const newUser = await prisma.user.upsert({
             where: { email: user.email },
@@ -1384,6 +2021,7 @@ async function main() {
                 email: user.email,
                 password: password,
                 roleId: memberRole?.id,
+                positionId: user.position ? position?.id : null,
             },
         });
 
@@ -1395,6 +2033,17 @@ async function main() {
                 name: user.name,
             },
         });
+
+        await prisma.userAccess.upsert({
+            where: { userId: newUser.id },
+            update: {},
+            create: {
+                userId: newUser.id,
+                areaId: areaExists?.id as string,
+                fractionId: fractionExists?.id as string,
+                public: true,
+            },
+        })
     }
 
     // === 12. Seed Dummy Proposal untuk Tahun Ini & Tahun Lalu ===
