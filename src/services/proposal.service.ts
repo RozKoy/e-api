@@ -359,6 +359,8 @@ export class ProposalService {
                 description: true,
                 fileUrl: true,
                 area: true,
+                longitude: true,
+                latitude: true,
                 category: true,
                 votes: true,
                 customCategory: true,

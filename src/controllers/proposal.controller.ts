@@ -557,7 +557,7 @@ export class ProposalController {
     try {
       const hasAccess = await UserAccessService.getByUserId(userId);
 
-      if (!hasAccess) {
+      if (hasAccess.length === 0) {
         return res.status(403).json({
           status: "error",
           message: "Anda tidak memiliki akses untuk import data proposal",
@@ -576,12 +576,20 @@ export class ProposalController {
         const categoryCell = row.getCell(2).value;
         const titleCell = row.getCell(3).value;
         const descriptionCell = row.getCell(4).value;
+        const longitudeCell = row.getCell(5).value;
+        const latitudeCell = row.getCell(6).value;
 
         const category = categoryCell ? String(categoryCell).trim() : "";
         const title = titleCell ? String(titleCell).trim() : "";
         const description = descriptionCell
           ? String(descriptionCell).trim()
           : "";
+        const longitude = longitudeCell
+          ? String(longitudeCell).trim()
+          : undefined;
+        const latitude = latitudeCell
+          ? String(latitudeCell).trim()
+          : undefined;
 
         if (!title) continue; // skip baris kosong
 
@@ -589,12 +597,14 @@ export class ProposalController {
 
         const proposal = await ProposalService.create({
           userId,
-          areaId: hasAccess[0].areaId,
+          areaId: hasAccess[0]?.areaId,
           categoryId: categoryExist ? categoryExist.id : null,
           customCategory: categoryExist ? null : category,
           status: "baru",
           title,
           description,
+          longitude,
+          latitude,
         });
 
         proposals.push(proposal);
@@ -641,6 +651,8 @@ export class ProposalController {
         { header: "Deskripsi", key: "description", width: 50 },
         { header: "Status", key: "status", width: 15 },
         { header: "Area", key: "area", width: 20 },
+        { header: "Longitude", key: "longitude", width: 30 },
+        { header: "Latitude", key: "latitude", width: 30 },
         { header: "Like", key: "like", width: 10 },
         { header: "Dislike", key: "dislike", width: 10 },
         { header: "Dibuat Oleh", key: "user", width: 25 },
@@ -656,6 +668,8 @@ export class ProposalController {
           description: p.description,
           status: p.status.toUpperCase(),
           area: p.area?.name || "-",
+          longitude: p.longitude || "-",
+          latitude: p.latitude || "-",
           like: p.like || 0,
           dislike: p.dislike || 0,
           user: p.user?.profile?.name || "-",
